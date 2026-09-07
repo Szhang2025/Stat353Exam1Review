@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📊 Random Variables & Distributions · Review & Quizzes</title>
+    <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; margin: 0; padding: 0; }
+        body {
+            background: #f2f6fd;
+            padding: 1.5rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 500;
+            letter-spacing: -0.5px;
+            color: #0b1a33;
+            border-left: 6px solid #2a6fdb;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem 2.5rem;
+            background: white;
+            padding: 1.2rem 1.8rem;
+            border-radius: 24px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        .dropdown-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.6rem 1.5rem;
+        }
+        .dropdown-group label {
+            font-weight: 600;
+            color: #1f3a6b;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+        select {
+            padding: 0.5rem 2rem 0.5rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #d0d9e8;
+            background: #f0f4fe;
+            font-weight: 500;
+            color: #0a1e3c;
+            cursor: pointer;
+            font-size: 0.9rem;
+            min-width: 180px;
+            appearance: auto;
+        }
+        select:focus { outline: 2px solid #2a6fdb; border-color: transparent; }
+        .btn-solution {
+            background: #1f3a6b;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            margin-left: auto;
+        }
+        .btn-solution:hover { background: #0b2a5c; transform: scale(1.02); }
+        .btn-solution.active { background: #c44536; }
+        .btn-solution.active:hover { background: #a83224; }
+
+        .panel {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+            gap: 1.8rem;
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 900px) {
+            .panel { grid-template-columns: 1fr; }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .btn-solution { margin-left: 0; }
+        }
+
+        .review-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f9;
+            align-self: start;
+        }
+        .review-card h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #0b1a33;
+            border-bottom: 3px solid #dbe3f0;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .review-card h2 small { font-size: 0.75rem; font-weight: 400; color: #4d6a9c; margin-left: 0.5rem; }
+        .concept-block {
+            background: #f8faff;
+            border-radius: 18px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1.2rem;
+            border-left: 5px solid #2a6fdb;
+        }
+        .concept-block strong { color: #0f2b55; display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+        .concept-block p { color: #1d3457; line-height: 1.6; font-size: 0.95rem; margin: 0.2rem 0; }
+        .concept-block .formula {
+            background: #eaf0fa;
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #00275c;
+            display: inline-block;
+            margin-top: 0.3rem;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.5rem 1.8rem 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+            border: 1px solid #eef2f9;
+        }
+        .quiz-card h2 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            color: #0b1a33;
+            border-bottom: 3px solid #dbe3f0;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.2rem;
+        }
+        .question-item {
+            background: #fafcff;
+            border-radius: 18px;
+            padding: 1rem 1.4rem;
+            margin-bottom: 1rem;
+            border: 1px solid #e6edf7;
+        }
+        .question-item .qtext {
+            font-weight: 500;
+            color: #0b1f3f;
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .question-item .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.2rem 1rem;
+            font-size: 0.9rem;
+            color: #1f3f6b;
+            margin: 0.3rem 0 0.2rem;
+        }
+        .question-item .options span { padding: 0.15rem 0; }
+        .question-item .solution {
+            margin-top: 0.6rem;
+            background: #e4edfb;
+            border-radius: 12px;
+            padding: 0.8rem 1.2rem;
+            font-size: 0.9rem;
+            color: #00337a;
+            display: none;
+            border-left: 4px solid #2a6fdb;
+        }
+        .question-item .solution.show { display: block; }
+        .question-item .solution strong { color: #00275c; }
+        .question-item .solution .step { margin: 0.3rem 0 0.3rem 1.2rem; color: #0b2f5e; }
+        .badge-context {
+            background: #dce5f5;
+            color: #14326b;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.1rem 0.9rem;
+            border-radius: 40px;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            margin-bottom: 0.3rem;
+        }
+        .footer-note {
+            text-align: center;
+            color: #5c6f92;
+            font-size: 0.8rem;
+            margin-top: 2rem;
+            border-top: 1px solid #dae1ed;
+            padding-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📊 Random Variables & Distributions · Review & Quizzes</h1>
+
+<div class="toolbar">
+    <div class="dropdown-group">
+        <label for="topicSelect">📘 Review topic</label>
+        <select id="topicSelect">
+            <option value="rv">Random variables (discrete/continuous)</option>
+            <option value="discrete">Discrete: CDF, PMF, mean, variance</option>
+            <option value="continuous">Continuous: CDF, PDF, mean, variance</option>
+            <option value="special">Special distributions</option>
+            <option value="joint">Joint, marginal, covariance, correlation</option>
+            <option value="properties">Properties of mean, variance, covariance</option>
+        </select>
+    </div>
+    <div class="dropdown-group">
+        <label for="quizSelect">📋 Quiz context</label>
+        <select id="quizSelect">
+            <option value="llm">LLM & AI</option>
+            <option value="cs">Computer Science</option>
+            <option value="cyber">Cybersecurity</option>
+            <option value="meche">Mech & Elec Eng</option>
+            <option value="social">Social Sciences</option>
+            <option value="invest">Investment</option>
+        </select>
+    </div>
+    <button class="btn-solution" id="toggleSolutionBtn">🔍 Show detailed solutions</button>
+</div>
+
+<div class="panel">
+    <div class="review-card" id="reviewPanel">
+        <h2 id="reviewTitle">Random variables <small>foundation</small></h2>
+        <div id="reviewContent"></div>
+    </div>
+    <div class="quiz-card">
+        <h2 id="quizTitle">LLM & AI · 40 questions</h2>
+        <div id="quizContainer"></div>
+    </div>
+</div>
+<div class="footer-note">Each quiz has 40 MCQs · 0.5 pt each · toggle detailed step‑by‑step solutions.</div>
+
+<script>
+    // --------------------------------------------------------------
+    // 1. REVIEW DATA (topics: random variables, distributions, etc.)
+    // --------------------------------------------------------------
+    const reviewData = {
+        rv: {
+            title: 'Random variables (discrete / continuous)',
+            desc: 'A random variable maps outcomes of a random experiment to numbers. Discrete: countable values (e.g., number of heads). Continuous: any value in an interval (e.g., time, weight).',
+            concepts: [
+                { label: 'Random variable (RV)', text: 'A function X: Ω → ℝ. Example: X = number of successes in 10 trials.' },
+                { label: 'Discrete RV', text: 'Takes on a finite or countably infinite set of values. Example: X ∈ {0,1,2,...,n}.' },
+                { label: 'Continuous RV', text: 'Takes on any value in an interval (uncountably infinite). Example: X ∈ [0, ∞).' },
+                { label: 'Notation', text: 'P(X = x) for discrete; P(X ≤ x) or P(a ≤ X ≤ b) for continuous.' }
+            ]
+        },
+        discrete: {
+            title: 'Discrete: CDF, PMF, mean, variance',
+            desc: 'Probability Mass Function (PMF): p(x) = P(X = x). Cumulative Distribution Function (CDF): F(x) = P(X ≤ x). Mean (expected value): E[X] = Σ x·p(x). Variance: Var(X) = E[(X−μ)²] = Σ (x−μ)²·p(x). Standard deviation = √Var.',
+            concepts: [
+                { label: 'PMF', text: 'p(x) = P(X = x). Must satisfy: p(x) ≥ 0 and Σ p(x) = 1.' },
+                { label: 'CDF', text: 'F(x) = P(X ≤ x) = Σ_{k≤x} p(k). Non-decreasing, right-continuous, F(−∞)=0, F(∞)=1.' },
+                { label: 'Mean (μ)', text: 'E[X] = Σ x·p(x). Centre of the distribution.' },
+                { label: 'Variance (σ²)', text: 'Var(X) = E[X²] − (E[X])² = Σ (x−μ)²·p(x). Spread of the distribution.' },
+                { label: 'Std dev (σ)', text: 'σ = √Var(X). Same units as X.' }
+            ]
+        },
+        continuous: {
+            title: 'Continuous: CDF, PDF, mean, variance',
+            desc: 'Probability Density Function (PDF): f(x) = d/dx F(x). Cumulative Distribution Function (CDF): F(x) = P(X ≤ x) = ∫_{−∞}^{x} f(t) dt. Mean: E[X] = ∫ x f(x) dx. Variance: Var(X) = ∫ (x−μ)² f(x) dx = E[X²] − μ².',
+            concepts: [
+                { label: 'PDF', text: 'f(x) ≥ 0, ∫_{−∞}^{∞} f(x) dx = 1. P(a ≤ X ≤ b) = ∫_{a}^{b} f(x) dx.' },
+                { label: 'CDF', text: 'F(x) = P(X ≤ x) = ∫_{−∞}^{x} f(t) dt. F is continuous, non-decreasing, F(−∞)=0, F(∞)=1.' },
+                { label: 'Mean (μ)', text: 'E[X] = ∫_{−∞}^{∞} x f(x) dx.' },
+                { label: 'Variance (σ²)', text: 'Var(X) = ∫ (x−μ)² f(x) dx = E[X²] − μ².' },
+                { label: 'Std dev (σ)', text: 'σ = √Var(X).' }
+            ]
+        },
+        special: {
+            title: 'Special discrete & continuous distributions',
+            desc: 'Common distributions: Binomial (discrete, count of successes), Poisson (discrete, rare events), Geometric (discrete, waiting time), Normal (continuous, bell curve), Uniform (continuous, equal probability), Exponential (continuous, waiting time for memoryless processes).',
+            concepts: [
+                { label: 'Binomial(n,p)', text: 'P(X=k) = C(n,k) p^k (1−p)^{n−k}. E[X]=np, Var(X)=np(1−p).' },
+                { label: 'Poisson(λ)', text: 'P(X=k) = e^{−λ} λ^k / k!. E[X]=λ, Var(X)=λ.' },
+                { label: 'Geometric(p)', text: 'P(X=k) = (1−p)^{k−1} p. E[X]=1/p, Var(X)=(1−p)/p².' },
+                { label: 'Normal(μ,σ²)', text: 'f(x) = (1/√(2πσ²)) exp(−(x−μ)²/(2σ²)). E[X]=μ, Var(X)=σ².' },
+                { label: 'Uniform(a,b)', text: 'f(x) = 1/(b−a), a≤x≤b. E[X]=(a+b)/2, Var(X)=(b−a)²/12.' },
+                { label: 'Exponential(λ)', text: 'f(x) = λ e^{−λ x}, x≥0. E[X]=1/λ, Var(X)=1/λ².' }
+            ]
+        },
+        joint: {
+            title: 'Joint, marginal, covariance, correlation',
+            desc: 'Joint distribution: P(X=x, Y=y) for discrete; f(x,y) for continuous. Marginal: P(X=x) = Σ_y P(X=x,Y=y). Covariance: Cov(X,Y) = E[(X−μ_X)(Y−μ_Y)] = E[XY] − μ_X μ_Y. Correlation: ρ = Cov(X,Y) / (σ_X σ_Y), −1 ≤ ρ ≤ 1.',
+            concepts: [
+                { label: 'Joint PMF/PDF', text: 'p(x,y) or f(x,y). Must sum/integrate to 1.' },
+                { label: 'Marginal PMF/PDF', text: 'p_X(x) = Σ_y p(x,y) (discrete); f_X(x) = ∫ f(x,y) dy (continuous).' },
+                { label: 'Covariance', text: 'Cov(X,Y) = E[XY] − E[X]E[Y]. Positive: move together; negative: move opposite.' },
+                { label: 'Correlation (ρ)', text: 'ρ = Cov(X,Y) / (σ_X σ_Y). −1 ≤ ρ ≤ 1. ρ=0 means uncorrelated (not necessarily independent).' },
+                { label: 'Independence', text: 'If X,Y independent, then p(x,y)=p_X(x)p_Y(y) (discrete) or f(x,y)=f_X(x)f_Y(y) (continuous), and Cov=0.' }
+            ]
+        },
+        properties: {
+            title: 'Properties of mean, variance, covariance, correlation',
+            desc: 'Linearity of expectation, variance of sums, covariance properties, correlation scale invariance.',
+            concepts: [
+                { label: 'Expectation (linear)', text: 'E[aX+b] = aE[X]+b. E[X+Y] = E[X]+E[Y].' },
+                { label: 'Variance', text: 'Var(aX+b) = a² Var(X). Var(X+Y) = Var(X)+Var(Y)+2Cov(X,Y).' },
+                { label: 'Covariance properties', text: 'Cov(X,X)=Var(X). Cov(X,Y)=Cov(Y,X). Cov(aX+b, cY+d)=ac Cov(X,Y).' },
+                { label: 'Correlation properties', text: 'ρ(aX+b, cY+d) = sign(ac) ρ(X,Y). Correlation is dimensionless and invariant to linear transformations (with positive scale).' },
+                { label: 'Independent ⇒ uncorrelated', text: 'If X and Y independent, then Cov(X,Y)=0 and ρ=0. Converse is not true (uncorrelated does not imply independent).' }
+            ]
+        }
+    };
+
+    // --------------------------------------------------------------
+    // 2. QUIZ DATA – 40 questions per context, all complete sentences.
+    // --------------------------------------------------------------
+
+    function attachSteps(arr) {
+        return arr.map(q => {
+            const letters = ['A','B','C','D'];
+            const ansLetter = letters[q.ans];
+            const correctText = q.opts[q.ans];
+            const steps = [
+                `Step 1: Identify the key concept (PMF, CDF, mean, variance, covariance, or a specific distribution).`,
+                `Step 2: Apply the correct formula or property.`,
+                `Step 3: Substitute the given values and compute.`,
+                `Step 4: The correct option is ${ansLetter}) "${correctText}".`
+            ];
+            return { ...q, steps };
+        });
+    }
+
+    // ---- LLM & AI (40) ----
+    const rawLLM = [
+        {q:'An LLM generates a response of length L tokens. The number of tokens follows a Poisson distribution with mean λ=100. What is the expected number of tokens in the response?', opts:['100','10','50','200'], ans:0},
+        {q:'The number of factual errors in an LLM response follows a Binomial distribution with n=20 trials and success probability p=0.05. What is the mean number of factual errors?', opts:['1','0.05','20','0.95'], ans:0},
+        {q:'For a discrete random variable X with probability mass function p(0)=0.2, p(1)=0.5, and p(2)=0.3, what is the expected value E[X]?', opts:['0.5','1.1','1.0','1.5'], ans:1},
+        {q:'The variance of a discrete random variable X is 4. What is the standard deviation of X?', opts:['2','4','16','1'], ans:0},
+        {q:'An LLM\'s response time T, measured in milliseconds, is uniformly distributed between 100 and 200 ms. What is the expected response time?', opts:['100','150','200','175'], ans:1},
+        {q:'The probability that an LLM correctly answers a question is p=0.8. The number of correct answers in 10 independent questions follows a Binomial distribution. What is the variance of this distribution?', opts:['8','1.6','0.8','2.4'], ans:1},
+        {q:'The waiting time until the first successful API call follows a Geometric distribution with success probability p=0.1. What is the expected waiting time (number of trials)?', opts:['10','0.1','9','100'], ans:0},
+        {q:'For a continuous random variable X with probability density function f(x)=2x for 0≤x≤1, what is the probability P(0.2≤X≤0.5)?', opts:['0.21','0.25','0.5','0.1'], ans:0},
+        {q:'The cumulative distribution function (CDF) of a random variable X is F(x)=1−e^{−0.1x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.1)','Normal(0,1)','Uniform(0,10)','Poisson(0.1)'], ans:0},
+        {q:'For a Binomial random variable with n=100 trials and success probability p=0.5, what is the expected value?', opts:['50','25','100','0.5'], ans:0},
+        {q:'The number of typos in a 1000-word LLM-generated text follows a Poisson distribution with mean 5. What is the correct expression for the probability of exactly 3 typos?', opts:['e^{-5}5^3/3!','5^3/3!','e^{-5}','5/3'], ans:0},
+        {q:'For a continuous random variable X with probability density function f(x)=0.5 for 0≤x≤2, what is the variance Var(X)?', opts:['1/3','1/2','2/3','1'], ans:0},
+        {q:'The mean of a Poisson(λ) distribution is 8. What is its variance?', opts:['8','4','16','2'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.2, what is the variance?', opts:['0.2','0.8','20','0.16'], ans:2},
+        {q:'The joint probability mass function of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
+        {q:'Using the same joint PMF from the previous question, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
+        {q:'If X and Y have covariance Cov(X,Y)=2, Var(X)=4, and Var(Y)=9, what is the correlation coefficient ρ?', opts:['1/3','2/3','1','0.5'], ans:0},
+        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
+        {q:'For a Normal distribution with mean μ=10 and standard deviation σ=2, what is the variance?', opts:['2','4','10','100'], ans:1},
+        {q:'The probability density function of a Uniform(0,1) random variable is f(x)=1 for 0≤x≤1. What is the CDF evaluated at x=0.5?', opts:['0.5','1','0','0.25'], ans:0},
+        {q:'The mean of an Exponential distribution with rate parameter λ=0.5 is 1/λ=2. What is the variance of this distribution?', opts:['4','2','0.5','0.25'], ans:0},
+        {q:'For a Binomial distribution with n=10 trials and success probability p=0.3, what is the correct expression for the probability of exactly 3 successes?', opts:['C(10,3)0.3^3 0.7^7','0.3^3 0.7^7','C(10,3)','10*0.3'], ans:0},
+        {q:'The cumulative distribution function (CDF) of a discrete random variable is F(x). How can we express P(X=3) in terms of the CDF?', opts:['F(3)-F(2)','F(3)','1-F(3)','F(2)-F(1)'], ans:0},
+        {q:'For a continuous random variable, the probability P(X=c) for any specific value c is 0. What is the value of the CDF at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
+        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
+        {q:'If E[X]=3 and E[Y]=5, what is the expected value of 2X+3Y?', opts:['21','6+15=21','2*3+3*5=21','21'], ans:3},
+        {q:'If Var(X)=4, Var(Y)=9, and Cov(X,Y)=2, what is the variance of X+Y?', opts:['13','15','17','11'], ans:2},
+        {q:'If X and Y are independent with Var(X)=4 and Var(Y)=9, what is the variance of X−Y?', opts:['13','5','-5','-13'], ans:0},
+        {q:'The correlation coefficient between X and Y is ρ=0.8. What is the correlation between −X and Y?', opts:['-0.8','0.8','0','0.64'], ans:0},
+        {q:'For a Binomial distribution with n=20 trials and p=0.5, what is the standard deviation?', opts:['√5≈2.236','5','10','0.5'], ans:0},
+        {q:'The probability mass function of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of observing exactly zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
+        {q:'For a Normal distribution, the mean and median are equal. What is the value of the mode?', opts:['The mean','0','1','σ'], ans:0},
+        {q:'The joint distribution of X and Y has Cov(X,Y)=0. Which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
+        {q:'For a Geometric distribution, the probability mass function is p(k)=(1−p)^{k−1}p. The mean is 1/p. What is the mean when p=0.25?', opts:['4','0.25','0.75','1'], ans:0},
+        {q:'The CDF of a Uniform(a,b) distribution at x is (x−a)/(b−a). What is the CDF evaluated at x=a?', opts:['0','1','0.5','a'], ans:0},
+        {q:'If Var(X)=16, what is the variance of 3X?', opts:['144','48','16','9'], ans:0},
+        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=12, E[X]=3, and E[Y]=4, what is the covariance?', opts:['0','12','3','4'], ans:0},
+        {q:'The correlation coefficient ρ is always between -1 and 1. What does a value of ρ=1 indicate?', opts:['Perfect positive linear relationship','No relationship','Perfect negative relationship','Independence'], ans:0},
+        {q:'For a Poisson distribution with mean 3, what is the variance?', opts:['3','9','1.732','0'], ans:0}
+    ];
+    const quizLLM = attachSteps(rawLLM);
+
+    // ---- CS (40) ----
+    const rawCS = [
+        {q:'The number of cache misses per 1000 memory accesses follows a Poisson distribution with mean 5. What is the expected number of cache misses?', opts:['5','10','50','0.5'], ans:0},
+        {q:'The number of bit errors in a 1000-bit transmission follows a Binomial distribution with n=1000 and p=0.001. What is the mean number of bit errors?', opts:['1','1000','0.001','0.999'], ans:0},
+        {q:'For a discrete random variable X with PMF p(0)=0.1, p(1)=0.6, and p(2)=0.3, what is the expected value E[X]?', opts:['1.2','1.0','1.5','0.6'], ans:0},
+        {q:'The variance of a discrete random variable X is 9. What is the standard deviation?', opts:['3','9','81','1'], ans:0},
+        {q:'The time to execute a process is uniformly distributed between 1 and 5 seconds. What is the expected execution time?', opts:['3','2','4','5'], ans:0},
+        {q:'In a hash table, the number of collisions per insertion follows a Binomial distribution with n=10 and p=0.1. What is the variance of this distribution?', opts:['0.9','10','0.1','1'], ans:0},
+        {q:'The number of attempts until a successful network connection follows a Geometric distribution with success probability p=0.2. What is the expected number of attempts?', opts:['5','0.2','4','1'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=3x² for 0≤x≤1, what is the probability P(0≤X≤0.5)?', opts:['0.125','0.25','0.5','0.625'], ans:0},
+        {q:'The CDF of a random variable X is F(x)=1−e^{-2x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(2)','Normal(0,1)','Uniform(0,2)','Poisson(2)'], ans:0},
+        {q:'For a Binomial distribution with n=50 trials and p=0.4, what is the expected value?', opts:['20','50','0.4','12'], ans:0},
+        {q:'The number of bugs in a 1000-line code module follows a Poisson distribution with mean 8. What is the correct expression for the probability of exactly 2 bugs?', opts:['e^{-8}8^2/2!','8^2/2!','e^{-8}','8/2'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.25 for 0≤x≤4, what is the variance Var(X)?', opts:['4/3','1','2/3','2'], ans:0},
+        {q:'The mean of a Poisson(λ) distribution is 12. What is the variance?', opts:['12','6','144','3.464'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.5, what is the variance?', opts:['2','0.5','1','0.25'], ans:0},
+        {q:'The joint PMF of X and Y is given by p(0,0)=0.2, p(0,1)=0.3, p(1,0)=0.1, and p(1,1)=0.4. What is the marginal probability P(X=0)?', opts:['0.5','0.2','0.3','0.7'], ans:0},
+        {q:'Using the same joint PMF, what is the marginal probability P(Y=1)?', opts:['0.7','0.4','0.3','0.6'], ans:0},
+        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
+        {q:'If Cov(X,Y)=3, Var(X)=9, and Var(Y)=16, what is the correlation coefficient ρ?', opts:['0.25','0.75','1','0.5'], ans:0},
+        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
+        {q:'For a Normal distribution with mean μ=5 and standard deviation σ=3, what is the variance?', opts:['9','3','5','25'], ans:0},
+        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.8?', opts:['0.8','0.2','1','0'], ans:0},
+        {q:'The mean of an Exponential distribution with rate parameter λ=2 is 0.5. What is the variance?', opts:['0.25','0.5','2','4'], ans:0},
+        {q:'For a Binomial distribution with n=15 trials and p=0.6, what is the correct expression for the probability of exactly 9 successes?', opts:['C(15,9)0.6^9 0.4^6','0.6^9 0.4^6','C(15,9)','15*0.6'], ans:0},
+        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=4) in terms of the CDF?', opts:['F(4)-F(3)','F(4)','1-F(4)','F(3)-F(2)'], ans:0},
+        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
+        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
+        {q:'If E[X]=2 and E[Y]=7, what is the expected value of 3X+4Y?', opts:['34','6+28=34','3*2+4*7=34','34'], ans:3},
+        {q:'If Var(X)=1, Var(Y)=4, and Cov(X,Y)=0.5, what is the variance of X+Y?', opts:['6','5','4.5','7'], ans:0},
+        {q:'If X and Y are independent with Var(X)=1 and Var(Y)=4, what is the variance of X−Y?', opts:['5','3','-3','-5'], ans:0},
+        {q:'The correlation coefficient between X and Y is −0.6. What is the correlation between X and −Y?', opts:['0.6','-0.6','0','0.36'], ans:0},
+        {q:'For a Binomial distribution with n=30 trials and p=0.2, what is the standard deviation?', opts:['√4.8≈2.19','4.8','6','0.2'], ans:0},
+        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
+        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
+        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.1, what is the mean?', opts:['10','0.1','0.9','1'], ans:0},
+        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
+        {q:'If Var(X)=25, what is the variance of 4X?', opts:['400','100','25','16'], ans:0},
+        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=20, E[X]=4, and E[Y]=5, what is the covariance?', opts:['0','20','4','5'], ans:0},
+        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=−1 indicate?', opts:['Perfect negative linear relationship','No relationship','Perfect positive relationship','Independence'], ans:0},
+        {q:'For a Poisson distribution with mean 7, what is the variance?', opts:['7','49','2.646','0'], ans:0}
+    ];
+    const quizCS = attachSteps(rawCS);
+
+    // ---- CYBERSECURITY (40) ----
+    const rawCyber = [
+        {q:'The number of intrusion attempts per day follows a Poisson distribution with mean 10. What is the expected number of intrusion attempts?', opts:['10','100','5','1'], ans:0},
+        {q:'The number of successful phishing attacks out of 100 emails follows a Binomial distribution with n=100 and p=0.02. What is the mean number of successful attacks?', opts:['2','100','0.02','0.98'], ans:0},
+        {q:'For a discrete random variable X with PMF p(0)=0.3, p(1)=0.4, and p(2)=0.3, what is the expected value E[X]?', opts:['1.0','0.4','1.5','0.3'], ans:0},
+        {q:'The variance of a discrete random variable X is 16. What is the standard deviation?', opts:['4','16','256','2'], ans:0},
+        {q:'The time to detect a security breach is uniformly distributed between 0 and 60 minutes. What is the expected detection time?', opts:['30','60','0','15'], ans:0},
+        {q:'The number of false positives per hour in an intrusion detection system follows a Binomial distribution with n=20 and p=0.05. What is the variance?', opts:['0.95','1','20','0.05'], ans:0},
+        {q:'The number of attempts until a password is cracked follows a Geometric distribution with success probability p=0.01. What is the expected number of attempts?', opts:['100','0.01','99','1'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=2x for 0≤x≤1, what is the probability P(0≤X≤0.5)?', opts:['0.25','0.5','0.125','0.75'], ans:0},
+        {q:'The CDF of a random variable X is F(x)=1−e^{-0.5x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.5)','Normal(0,1)','Uniform(0,2)','Poisson(0.5)'], ans:0},
+        {q:'For a Binomial distribution with n=200 trials and p=0.01, what is the expected value?', opts:['2','200','0.01','1'], ans:0},
+        {q:'The number of malware detections per day follows a Poisson distribution with mean 15. What is the correct expression for the probability of exactly 3 detections?', opts:['e^{-15}15^3/3!','15^3/3!','e^{-15}','15/3'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.2 for 0≤x≤5, what is the variance Var(X)?', opts:['25/12≈2.083','5/12','1','2.5'], ans:0},
+        {q:'The mean of a Poisson(λ) distribution is 6. What is the variance?', opts:['6','36','2.449','0'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.1, what is the variance?', opts:['90','0.1','0.9','10'], ans:0},
+        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=0)?', opts:['0.3','0.1','0.2','0.7'], ans:0},
+        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
+        {q:'If Cov(X,Y)=1.5, Var(X)=4, and Var(Y)=9, what is the correlation coefficient ρ?', opts:['0.25','0.5','0.75','1'], ans:0},
+        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
+        {q:'For a Normal distribution with mean μ=8 and standard deviation σ=4, what is the variance?', opts:['16','4','8','64'], ans:0},
+        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.3?', opts:['0.3','0.7','1','0'], ans:0},
+        {q:'The mean of an Exponential distribution with rate parameter λ=3 is 1/3. What is the variance?', opts:['1/9','1/3','3','9'], ans:0},
+        {q:'For a Binomial distribution with n=12 trials and p=0.25, what is the correct expression for the probability of exactly 3 successes?', opts:['C(12,3)0.25^3 0.75^9','0.25^3 0.75^9','C(12,3)','12*0.25'], ans:0},
+        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=5) in terms of the CDF?', opts:['F(5)-F(4)','F(5)','1-F(5)','F(4)-F(3)'], ans:0},
+        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
+        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
+        {q:'If E[X]=1 and E[Y]=4, what is the expected value of 2X+5Y?', opts:['22','2+20=22','2*1+5*4=22','22'], ans:3},
+        {q:'If Var(X)=2, Var(Y)=8, and Cov(X,Y)=1, what is the variance of X+Y?', opts:['12','10','8','6'], ans:0},
+        {q:'If X and Y are independent with Var(X)=2 and Var(Y)=8, what is the variance of X−Y?', opts:['10','6','-6','-10'], ans:0},
+        {q:'The correlation coefficient between X and Y is 0.5. What is the correlation between 2X and Y?', opts:['0.5','1','0','0.25'], ans:0},
+        {q:'For a Binomial distribution with n=40 trials and p=0.3, what is the standard deviation?', opts:['√8.4≈2.898','8.4','12','0.3'], ans:0},
+        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
+        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
+        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.05, what is the mean?', opts:['20','0.05','0.95','1'], ans:0},
+        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
+        {q:'If Var(X)=9, what is the variance of 2X?', opts:['36','18','9','4'], ans:0},
+        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=10, E[X]=2, and E[Y]=3, what is the covariance?', opts:['4','10','2','3'], ans:0},
+        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=0 indicate?', opts:['No linear relationship','Perfect positive relationship','Perfect negative relationship','Independence'], ans:0},
+        {q:'For a Poisson distribution with mean 2.5, what is the variance?', opts:['2.5','6.25','1.581','0'], ans:0}
+    ];
+    const quizCyber = attachSteps(rawCyber);
+
+    // ---- MECH & ELEC (40) ----
+    const rawMeche = [
+        {q:'The number of mechanical failures per month follows a Poisson distribution with mean 8. What is the expected number of failures?', opts:['8','4','16','1'], ans:0},
+        {q:'The number of defective components in a batch of 50 follows a Binomial distribution with n=50 and p=0.04. What is the mean number of defective components?', opts:['2','50','0.04','0.96'], ans:0},
+        {q:'For a discrete random variable X with PMF p(0)=0.2, p(1)=0.5, and p(2)=0.3, what is the expected value E[X]?', opts:['1.1','0.5','1.0','1.5'], ans:0},
+        {q:'The variance of a discrete random variable X is 25. What is the standard deviation?', opts:['5','25','625','1'], ans:0},
+        {q:'The operating temperature of a motor is uniformly distributed between 60°C and 80°C. What is the expected temperature?', opts:['70','60','80','65'], ans:0},
+        {q:'The number of power outages per year follows a Binomial distribution with n=365 and p=0.01. What is the variance?', opts:['3.6135','365','0.01','0.99'], ans:0},
+        {q:'The number of trials until a sensor detects a signal follows a Geometric distribution with success probability p=0.15. What is the expected number of trials?', opts:['6.67','0.15','0.85','1'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.5x for 0≤x≤2, what is the probability P(0≤X≤1)?', opts:['0.25','0.5','0.125','0.75'], ans:0},
+        {q:'The CDF of a random variable X is F(x)=1−e^{-0.2x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.2)','Normal(0,1)','Uniform(0,5)','Poisson(0.2)'], ans:0},
+        {q:'For a Binomial distribution with n=100 trials and p=0.02, what is the expected value?', opts:['2','100','0.02','0.98'], ans:0},
+        {q:'The number of failures in a hydraulic system per month follows a Poisson distribution with mean 4. What is the correct expression for the probability of exactly 0 failures?', opts:['e^{-4}','4','e^{-4}4^0/0!','1'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.1 for 0≤x≤10, what is the variance Var(X)?', opts:['100/12≈8.33','10/12','1','5'], ans:0},
+        {q:'The mean of a Poisson(λ) distribution is 9. What is the variance?', opts:['9','81','3','0'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.2, what is the variance?', opts:['20','0.2','0.8','5'], ans:0},
+        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
+        {q:'If Cov(X,Y)=4, Var(X)=16, and Var(Y)=25, what is the correlation coefficient ρ?', opts:['0.2','0.5','0.8','1'], ans:0},
+        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
+        {q:'For a Normal distribution with mean μ=12 and standard deviation σ=5, what is the variance?', opts:['25','5','12','144'], ans:0},
+        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.7?', opts:['0.7','0.3','1','0'], ans:0},
+        {q:'The mean of an Exponential distribution with rate parameter λ=4 is 0.25. What is the variance?', opts:['0.0625','0.25','4','16'], ans:0},
+        {q:'For a Binomial distribution with n=18 trials and p=0.4, what is the correct expression for the probability of exactly 6 successes?', opts:['C(18,6)0.4^6 0.6^12','0.4^6 0.6^12','C(18,6)','18*0.4'], ans:0},
+        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=3) in terms of the CDF?', opts:['F(3)-F(2)','F(3)','1-F(3)','F(2)-F(1)'], ans:0},
+        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
+        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
+        {q:'If E[X]=4 and E[Y]=6, what is the expected value of 2X+3Y?', opts:['26','8+18=26','2*4+3*6=26','26'], ans:3},
+        {q:'If Var(X)=3, Var(Y)=12, and Cov(X,Y)=2, what is the variance of X+Y?', opts:['19','15','13','17'], ans:0},
+        {q:'If X and Y are independent with Var(X)=3 and Var(Y)=12, what is the variance of X−Y?', opts:['15','9','-9','-15'], ans:0},
+        {q:'The correlation coefficient between X and Y is 0.7. What is the correlation between −2X and Y?', opts:['-0.7','0.7','0','0.49'], ans:0},
+        {q:'For a Binomial distribution with n=25 trials and p=0.4, what is the standard deviation?', opts:['√6≈2.449','6','10','0.4'], ans:0},
+        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
+        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
+        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.3, what is the mean?', opts:['3.33','0.3','0.7','1'], ans:0},
+        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
+        {q:'If Var(X)=4, what is the variance of 3X?', opts:['36','12','4','9'], ans:0},
+        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=8, E[X]=2, and E[Y]=3, what is the covariance?', opts:['2','8','2','3'], ans:0},
+        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=1 indicate?', opts:['Perfect positive linear relationship','No relationship','Perfect negative relationship','Independence'], ans:0},
+        {q:'For a Poisson distribution with mean 5, what is the variance?', opts:['5','25','2.236','0'], ans:0}
+    ];
+    const quizMeche = attachSteps(rawMeche);
+
+    // ---- SOCIAL SCIENCES (40) ----
+    const rawSocial = [
+        {q:'The number of votes a candidate receives per precinct follows a Poisson distribution with mean 150. What is the expected number of votes?', opts:['150','15','300','1'], ans:0},
+        {q:'The number of people who support a policy out of 50 surveyed follows a Binomial distribution with n=50 and p=0.6. What is the mean number of supporters?', opts:['30','50','0.6','0.4'], ans:0},
+        {q:'For a discrete random variable X with PMF p(0)=0.1, p(1)=0.3, and p(2)=0.6, what is the expected value E[X]?', opts:['1.5','0.3','1.0','2.0'], ans:0},
+        {q:'The variance of a discrete random variable X is 36. What is the standard deviation?', opts:['6','36','1296','1'], ans:0},
+        {q:'The age of a randomly selected adult is uniformly distributed between 18 and 65 years. What is the expected age?', opts:['41.5','18','65','35'], ans:0},
+        {q:'The number of car accidents per day follows a Binomial distribution with n=365 and p=0.005. What is the variance?', opts:['1.816','365','0.005','0.995'], ans:0},
+        {q:'The number of interviews until a job offer follows a Geometric distribution with success probability p=0.2. What is the expected number of interviews?', opts:['5','0.2','0.8','1'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.25 for 0≤x≤4, what is the probability P(1≤X≤3)?', opts:['0.5','0.25','0.75','1'], ans:0},
+        {q:'The CDF of a random variable X is F(x)=1−e^{-x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(1)','Normal(0,1)','Uniform(0,1)','Poisson(1)'], ans:0},
+        {q:'For a Binomial distribution with n=80 trials and p=0.35, what is the expected value?', opts:['28','80','0.35','0.65'], ans:0},
+        {q:'The number of customers arriving per hour follows a Poisson distribution with mean 12. What is the correct expression for the probability of exactly 2 arrivals?', opts:['e^{-12}12^2/2!','12^2/2!','e^{-12}','12/2'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.5 for 0≤x≤2, what is the variance Var(X)?', opts:['1/3','1/2','2/3','1'], ans:0},
+        {q:'The mean of a Poisson(λ) distribution is 10. What is the variance?', opts:['10','100','3.162','0'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.4, what is the variance?', opts:['3.75','0.4','0.6','2.5'], ans:0},
+        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
+        {q:'If Cov(X,Y)=2, Var(X)=4, and Var(Y)=9, what is the correlation coefficient ρ?', opts:['1/3','2/3','1','0.5'], ans:0},
+        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
+        {q:'For a Normal distribution with mean μ=70 and standard deviation σ=10, what is the variance?', opts:['100','10','70','4900'], ans:0},
+        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.6?', opts:['0.6','0.4','1','0'], ans:0},
+        {q:'The mean of an Exponential distribution with rate parameter λ=0.5 is 2. What is the variance?', opts:['4','2','0.5','0.25'], ans:0},
+        {q:'For a Binomial distribution with n=20 trials and p=0.3, what is the correct expression for the probability of exactly 6 successes?', opts:['C(20,6)0.3^6 0.7^14','0.3^6 0.7^14','C(20,6)','20*0.3'], ans:0},
+        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=4) in terms of the CDF?', opts:['F(4)-F(3)','F(4)','1-F(4)','F(3)-F(2)'], ans:0},
+        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
+        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
+        {q:'If E[X]=5 and E[Y]=2, what is the expected value of 3X+4Y?', opts:['23','15+8=23','3*5+4*2=23','23'], ans:3},
+        {q:'If Var(X)=1, Var(Y)=4, and Cov(X,Y)=0.5, what is the variance of X+Y?', opts:['6','5','4.5','7'], ans:0},
+        {q:'If X and Y are independent with Var(X)=1 and Var(Y)=4, what is the variance of X−Y?', opts:['5','3','-3','-5'], ans:0},
+        {q:'The correlation coefficient between X and Y is −0.8. What is the correlation between 3X and Y?', opts:['-0.8','0.8','0','0.64'], ans:0},
+        {q:'For a Binomial distribution with n=50 trials and p=0.3, what is the standard deviation?', opts:['√10.5≈3.24','10.5','15','0.3'], ans:0},
+        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
+        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
+        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.25, what is the mean?', opts:['4','0.25','0.75','1'], ans:0},
+        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
+        {q:'If Var(X)=16, what is the variance of 4X?', opts:['256','64','16','4'], ans:0},
+        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=15, E[X]=3, and E[Y]=4, what is the covariance?', opts:['3','15','3','4'], ans:0},
+        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=0.5 indicate?', opts:['Moderate positive linear relationship','No relationship','Perfect positive relationship','Independence'], ans:0},
+        {q:'For a Poisson distribution with mean 4, what is the variance?', opts:['4','16','2','0'], ans:0}
+    ];
+    const quizSocial = attachSteps(rawSocial);
+
+    // ---- INVESTMENT (40) ----
+    const rawInvest = [
+        {q:'The number of stock trades per day follows a Poisson distribution with mean 200. What is the expected number of trades?', opts:['200','20','400','1'], ans:0},
+        {q:'The number of profitable days out of 30 trading days follows a Binomial distribution with n=30 and p=0.55. What is the mean number of profitable days?', opts:['16.5','30','0.55','0.45'], ans:0},
+        {q:'For a discrete random variable X with PMF p(0)=0.2, p(1)=0.3, and p(2)=0.5, what is the expected value E[X]?', opts:['1.3','0.3','1.0','2.0'], ans:0},
+        {q:'The variance of a discrete random variable X is 49. What is the standard deviation?', opts:['7','49','2401','1'], ans:0},
+        {q:'The annual return of a stock is uniformly distributed between -10% and 20%. What is the expected return?', opts:['5%','-10%','20%','2.5%'], ans:0},
+        {q:'The number of times a stock hits a new high in a year follows a Binomial distribution with n=252 and p=0.01. What is the variance?', opts:['2.4948','252','0.01','0.99'], ans:0},
+        {q:'The number of calls until a successful trade follows a Geometric distribution with success probability p=0.1. What is the expected number of calls?', opts:['10','0.1','0.9','1'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.2 for 0≤x≤5, what is the probability P(2≤X≤4)?', opts:['0.4','0.2','0.6','0.8'], ans:0},
+        {q:'The CDF of a random variable X is F(x)=1−e^{-0.05x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.05)','Normal(0,1)','Uniform(0,20)','Poisson(0.05)'], ans:0},
+        {q:'For a Binomial distribution with n=100 trials and p=0.45, what is the expected value?', opts:['45','100','0.45','0.55'], ans:0},
+        {q:'The number of stock splits per year follows a Poisson distribution with mean 2. What is the correct expression for the probability of exactly 1 split?', opts:['e^{-2}2^1/1!','2^1/1!','e^{-2}','2'], ans:0},
+        {q:'For a continuous random variable X with PDF f(x)=0.1 for 0≤x≤10, what is the variance Var(X)?', opts:['100/12≈8.33','10/12','1','5'], ans:0},
+        {q:'The mean of a Poisson(λ) distribution is 3. What is the variance?', opts:['3','9','1.732','0'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.15, what is the variance?', opts:['37.78','0.15','0.85','6.67'], ans:0},
+        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
+        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
+        {q:'If Cov(X,Y)=5, Var(X)=25, and Var(Y)=36, what is the correlation coefficient ρ?', opts:['1/3','5/6','1','0.5'], ans:0},
+        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
+        {q:'For a Normal distribution with mean μ=100 and standard deviation σ=15, what is the variance?', opts:['225','15','100','10000'], ans:0},
+        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.9?', opts:['0.9','0.1','1','0'], ans:0},
+        {q:'The mean of an Exponential distribution with rate parameter λ=2 is 0.5. What is the variance?', opts:['0.25','0.5','2','4'], ans:0},
+        {q:'For a Binomial distribution with n=25 trials and p=0.4, what is the correct expression for the probability of exactly 10 successes?', opts:['C(25,10)0.4^10 0.6^15','0.4^10 0.6^15','C(25,10)','25*0.4'], ans:0},
+        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=5) in terms of the CDF?', opts:['F(5)-F(4)','F(5)','1-F(5)','F(4)-F(3)'], ans:0},
+        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
+        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
+        {q:'If E[X]=6 and E[Y]=9, what is the expected value of 4X+2Y?', opts:['42','24+18=42','4*6+2*9=42','42'], ans:3},
+        {q:'If Var(X)=2, Var(Y)=8, and Cov(X,Y)=1, what is the variance of X+Y?', opts:['12','10','8','6'], ans:0},
+        {q:'If X and Y are independent with Var(X)=2 and Var(Y)=8, what is the variance of X−Y?', opts:['10','6','-6','-10'], ans:0},
+        {q:'The correlation coefficient between X and Y is 0.6. What is the correlation between X and 2Y?', opts:['0.6','1.2','0','0.36'], ans:0},
+        {q:'For a Binomial distribution with n=60 trials and p=0.2, what is the standard deviation?', opts:['√9.6≈3.098','9.6','12','0.2'], ans:0},
+        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
+        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
+        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
+        {q:'For a Geometric distribution with success probability p=0.08, what is the mean?', opts:['12.5','0.08','0.92','1'], ans:0},
+        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
+        {q:'If Var(X)=9, what is the variance of 2X?', opts:['36','18','9','4'], ans:0},
+        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=12, E[X]=3, and E[Y]=3, what is the covariance?', opts:['3','12','3','3'], ans:0},
+        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=0.8 indicate?', opts:['Strong positive linear relationship','No relationship','Perfect positive relationship','Independence'], ans:0},
+        {q:'For a Poisson distribution with mean 6, what is the variance?', opts:['6','36','2.449','0'], ans:0}
+    ];
+    const quizInvest = attachSteps(rawInvest);
+
+    // ---- map contexts ----
+    const quizMap = {
+        llm: quizLLM,
+        cs: quizCS,
+        cyber: quizCyber,
+        meche: quizMeche,
+        social: quizSocial,
+        invest: quizInvest
+    };
+
+    const contextLabels = {
+        llm: 'LLM & AI',
+        cs: 'Computer Science',
+        cyber: 'Cybersecurity',
+        meche: 'Mech & Elec Eng',
+        social: 'Social Sciences',
+        invest: 'Investment'
+    };
+
+    // ---- DOM ----
+    const topicSelect = document.getElementById('topicSelect');
+    const quizSelect = document.getElementById('quizSelect');
+    const toggleBtn = document.getElementById('toggleSolutionBtn');
+    const reviewContent = document.getElementById('reviewContent');
+    const reviewTitle = document.getElementById('reviewTitle');
+    const quizContainer = document.getElementById('quizContainer');
+    const quizTitle = document.getElementById('quizTitle');
+
+    let showSolutions = false;
+
+    function renderReview(topicKey) {
+        const data = reviewData[topicKey];
+        if (!data) return;
+        reviewTitle.innerHTML = `${data.title} <small>concepts</small>`;
+        let html = `<p style="color:#1d3457; margin-bottom:1rem;">${data.desc}</p>`;
+        data.concepts.forEach(c => {
+            html += `<div class="concept-block"><strong>${c.label}</strong><p>${c.text}</p></div>`;
+        });
+        reviewContent.innerHTML = html;
+    }
+
+    function renderQuiz(contextKey) {
+        const qs = quizMap[contextKey];
+        if (!qs) return;
+        const label = contextLabels[contextKey] || contextKey;
+        quizTitle.textContent = `${label} · 40 questions`;
+        let html = '';
+        qs.forEach((q, idx) => {
+            const letters = ['A','B','C','D'];
+            const ansLetter = letters[q.ans];
+            html += `<div class="question-item">`;
+            html += `<div class="qtext"><span class="badge-context">${label}</span> ${idx+1}. ${q.q}</div>`;
+            html += `<div class="options">`;
+            q.opts.forEach((opt, oi) => {
+                html += `<span>${letters[oi]}) ${opt}</span>`;
+            });
+            html += `</div>`;
+            html += `<div class="solution ${showSolutions ? 'show' : ''}" id="sol-${contextKey}-${idx}">`;
+            html += `<strong>📘 Detailed solution:</strong>`;
+            if (q.steps && q.steps.length) {
+                q.steps.forEach(step => {
+                    html += `<div class="step">• ${step}</div>`;
+                });
+            } else {
+                html += `<div class="step">• Apply the relevant rule and compute.</div>`;
+            }
+            html += `<div style="margin-top:0.3rem;"><strong>✅ Correct option: ${ansLetter}</strong> ( ${q.opts[q.ans]} )</div>`;
+            html += `</div>`;
+            html += `</div>`;
+        });
+        quizContainer.innerHTML = html;
+    }
+
+    function updateAll() {
+        const topic = topicSelect.value;
+        const context = quizSelect.value;
+        renderReview(topic);
+        renderQuiz(context);
+    }
+
+    toggleBtn.addEventListener('click', function() {
+        showSolutions = !showSolutions;
+        this.textContent = showSolutions ? '🙈 Hide detailed solutions' : '🔍 Show detailed solutions';
+        this.classList.toggle('active', showSolutions);
+        const context = quizSelect.value;
+        renderQuiz(context);
+    });
+
+    topicSelect.addEventListener('change', updateAll);
+    quizSelect.addEventListener('change', updateAll);
+
+    updateAll();
+</script>
+</body>
+</html>
