@@ -1,699 +1,934 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>📊 Random Variables & Distributions · Review & Quizzes</title>
-    <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; margin: 0; padding: 0; }
-        body {
-            background: #f2f6fd;
-            padding: 1.5rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 500;
-            letter-spacing: -0.5px;
-            color: #0b1a33;
-            border-left: 6px solid #2a6fdb;
-            padding-left: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        .toolbar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem 2.5rem;
-            background: white;
-            padding: 1.2rem 1.8rem;
-            border-radius: 24px;
-            box-shadow: 0 6px 18px rgba(0,0,0,0.04);
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        .dropdown-group {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.6rem 1.5rem;
-        }
-        .dropdown-group label {
-            font-weight: 600;
-            color: #1f3a6b;
-            font-size: 0.9rem;
-            letter-spacing: 0.3px;
-        }
-        select {
-            padding: 0.5rem 2rem 0.5rem 1rem;
-            border-radius: 40px;
-            border: 1px solid #d0d9e8;
-            background: #f0f4fe;
-            font-weight: 500;
-            color: #0a1e3c;
-            cursor: pointer;
-            font-size: 0.9rem;
-            min-width: 180px;
-            appearance: auto;
-        }
-        select:focus { outline: 2px solid #2a6fdb; border-color: transparent; }
-        .btn-solution {
-            background: #1f3a6b;
-            border: none;
-            color: white;
-            font-weight: 600;
-            padding: 0.5rem 1.8rem;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            margin-left: auto;
-        }
-        .btn-solution:hover { background: #0b2a5c; transform: scale(1.02); }
-        .btn-solution.active { background: #c44536; }
-        .btn-solution.active:hover { background: #a83224; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probability Theory · Complete Sentence Quizzes with Popups</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; margin: 0; padding: 0; }
+    body {
+      background: #f2f6fd;
+      padding: 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 500;
+      letter-spacing: -0.5px;
+      color: #0b1a33;
+      border-left: 6px solid #2a6fdb;
+      padding-left: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      background: white;
+      padding: 1.2rem 1.8rem;
+      border-radius: 24px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.04);
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    .dropdown-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1.5rem;
+    }
+    .dropdown-group label {
+      font-weight: 600;
+      color: #1f3a6b;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+    }
+    select {
+      padding: 0.5rem 2rem 0.5rem 1rem;
+      border-radius: 40px;
+      border: 1px solid #d0d9e8;
+      background: #f0f4fe;
+      font-weight: 500;
+      color: #0a1e3c;
+      cursor: pointer;
+      font-size: 0.9rem;
+      min-width: 180px;
+      appearance: auto;
+    }
+    select:focus { outline: 2px solid #2a6fdb; border-color: transparent; }
+    .btn-solution {
+      background: #1f3a6b;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 1.8rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      margin-left: auto;
+    }
+    .btn-solution:hover { background: #0b2a5c; transform: scale(1.02); }
+    .btn-solution.active { background: #c44536; }
+    .btn-solution.active:hover { background: #a83224; }
 
-        .panel {
-            display: grid;
-            grid-template-columns: 1fr 1.6fr;
-            gap: 1.8rem;
-            margin-top: 0.5rem;
-        }
-        @media (max-width: 900px) {
-            .panel { grid-template-columns: 1fr; }
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .btn-solution { margin-left: 0; }
-        }
+    .panel {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 1.8rem;
+      margin-top: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .panel { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .btn-solution { margin-left: 0; }
+    }
 
-        .review-card {
-            background: white;
-            border-radius: 28px;
-            padding: 1.5rem 1.8rem 2rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
-            border: 1px solid #eef2f9;
-            align-self: start;
-        }
-        .review-card h2 {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: #0b1a33;
-            border-bottom: 3px solid #dbe3f0;
-            padding-bottom: 0.6rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .review-card h2 small { font-size: 0.75rem; font-weight: 400; color: #4d6a9c; margin-left: 0.5rem; }
-        .concept-block {
-            background: #f8faff;
-            border-radius: 18px;
-            padding: 1rem 1.4rem;
-            margin-bottom: 1.2rem;
-            border-left: 5px solid #2a6fdb;
-        }
-        .concept-block strong { color: #0f2b55; display: block; font-size: 1rem; margin-bottom: 0.25rem; }
-        .concept-block p { color: #1d3457; line-height: 1.6; font-size: 0.95rem; margin: 0.2rem 0; }
-        .concept-block .formula {
-            background: #eaf0fa;
-            padding: 0.3rem 0.8rem;
-            border-radius: 30px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-            color: #00275c;
-            display: inline-block;
-            margin-top: 0.3rem;
-        }
+    .review-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.5rem 1.8rem 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+      border: 1px solid #eef2f9;
+      align-self: start;
+    }
+    .review-card h2 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #0b1a33;
+      border-bottom: 3px solid #dbe3f0;
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .review-card h2 small { font-size: 0.75rem; font-weight: 400; color: #4d6a9c; margin-left: 0.5rem; }
+    .concept-block {
+      background: #f8faff;
+      border-radius: 18px;
+      padding: 1rem 1.4rem;
+      margin-bottom: 1.2rem;
+      border-left: 5px solid #2a6fdb;
+    }
+    .concept-block strong { color: #0f2b55; display: block; font-size: 1rem; margin-bottom: 0.25rem; }
+    .concept-block p { color: #1d3457; line-height: 1.6; font-size: 0.95rem; margin: 0.2rem 0; }
 
-        .quiz-card {
-            background: white;
-            border-radius: 28px;
-            padding: 1.5rem 1.8rem 2rem;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.03);
-            border: 1px solid #eef2f9;
-        }
-        .quiz-card h2 {
-            font-size: 1.4rem;
-            font-weight: 500;
-            color: #0b1a33;
-            border-bottom: 3px solid #dbe3f0;
-            padding-bottom: 0.6rem;
-            margin-bottom: 1.2rem;
-        }
-        .question-item {
-            background: #fafcff;
-            border-radius: 18px;
-            padding: 1rem 1.4rem;
-            margin-bottom: 1rem;
-            border: 1px solid #e6edf7;
-        }
-        .question-item .qtext {
-            font-weight: 500;
-            color: #0b1f3f;
-            margin-bottom: 0.4rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-        .question-item .options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.2rem 1rem;
-            font-size: 0.9rem;
-            color: #1f3f6b;
-            margin: 0.3rem 0 0.2rem;
-        }
-        .question-item .options span { padding: 0.15rem 0; }
-        .question-item .solution {
-            margin-top: 0.6rem;
-            background: #e4edfb;
-            border-radius: 12px;
-            padding: 0.8rem 1.2rem;
-            font-size: 0.9rem;
-            color: #00337a;
-            display: none;
-            border-left: 4px solid #2a6fdb;
-        }
-        .question-item .solution.show { display: block; }
-        .question-item .solution strong { color: #00275c; }
-        .question-item .solution .step { margin: 0.3rem 0 0.3rem 1.2rem; color: #0b2f5e; }
-        .badge-context {
-            background: #dce5f5;
-            color: #14326b;
-            font-size: 0.7rem;
-            font-weight: 600;
-            padding: 0.1rem 0.9rem;
-            border-radius: 40px;
-            letter-spacing: 0.3px;
-            display: inline-block;
-            margin-bottom: 0.3rem;
-        }
-        .footer-note {
-            text-align: center;
-            color: #5c6f92;
-            font-size: 0.8rem;
-            margin-top: 2rem;
-            border-top: 1px solid #dae1ed;
-            padding-top: 1.5rem;
-        }
-    </style>
+    .quiz-card {
+      background: white;
+      border-radius: 28px;
+      padding: 1.5rem 1.8rem 2rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.03);
+      border: 1px solid #eef2f9;
+    }
+    .quiz-card h2 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #0b1a33;
+      border-bottom: 3px solid #dbe3f0;
+      padding-bottom: 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+    .question-item {
+      background: #fafcff;
+      border-radius: 18px;
+      padding: 1rem 1.4rem;
+      margin-bottom: 1rem;
+      border: 1px solid #e6edf7;
+    }
+    .question-item .qtext {
+      font-weight: 500;
+      color: #0b1f3f;
+      margin-bottom: 0.4rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    .question-item .qtext .glossary-term {
+      color: #1a5fb4;
+      border-bottom: 2px dashed #1a5fb4;
+      cursor: help;
+      position: relative;
+    }
+    .question-item .qtext .glossary-term:hover {
+      background: #e0edff;
+      border-radius: 4px;
+    }
+    .question-item .options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.2rem 1rem;
+      font-size: 0.9rem;
+      color: #1f3f6b;
+      margin: 0.3rem 0 0.2rem;
+    }
+    .question-item .options span { padding: 0.15rem 0; }
+    .question-item .solution {
+      margin-top: 0.6rem;
+      background: #e4edfb;
+      border-radius: 12px;
+      padding: 0.8rem 1.2rem;
+      font-size: 0.9rem;
+      color: #00337a;
+      display: none;
+      border-left: 4px solid #2a6fdb;
+    }
+    .question-item .solution.show { display: block; }
+    .question-item .solution strong { color: #00275c; }
+    .question-item .solution .step { margin: 0.3rem 0 0.3rem 1.2rem; color: #0b2f5e; }
+    .badge-context {
+      background: #dce5f5;
+      color: #14326b;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.1rem 0.9rem;
+      border-radius: 40px;
+      letter-spacing: 0.3px;
+      display: inline-block;
+      margin-bottom: 0.3rem;
+    }
+    .footer-note {
+      text-align: center;
+      color: #5c6f92;
+      font-size: 0.8rem;
+      margin-top: 2rem;
+      border-top: 1px solid #dae1ed;
+      padding-top: 1.5rem;
+    }
+
+    /* Popup/Glossary modal */
+    .glossary-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+    .glossary-popup.active {
+      display: flex;
+    }
+    .glossary-popup .popup-content {
+      background: white;
+      max-width: 500px;
+      width: 90%;
+      padding: 2rem 2rem 1.8rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      position: relative;
+      animation: fadeIn 0.25s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .glossary-popup .popup-content h3 {
+      color: #0b1a33;
+      font-size: 1.3rem;
+      margin-bottom: 0.4rem;
+      border-bottom: 3px solid #2a6fdb;
+      padding-bottom: 0.5rem;
+    }
+    .glossary-popup .popup-content .context-badge {
+      display: inline-block;
+      background: #dce5f5;
+      color: #14326b;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 0.1rem 0.9rem;
+      border-radius: 40px;
+      margin-bottom: 0.8rem;
+    }
+    .glossary-popup .popup-content p {
+      color: #1d3457;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+    .glossary-popup .popup-content .close-btn {
+      margin-top: 1.2rem;
+      background: #1f3a6b;
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 0.5rem 2rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .glossary-popup .popup-content .close-btn:hover {
+      background: #0b2a5c;
+    }
+    .glossary-popup .popup-content .popup-close-x {
+      position: absolute;
+      top: 12px;
+      right: 20px;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #5c6f92;
+      line-height: 1;
+    }
+    .glossary-popup .popup-content .popup-close-x:hover {
+      color: #0b1a33;
+    }
+  </style>
 </head>
 <body>
 
-<h1>📊 Random Variables & Distributions · Review & Quizzes</h1>
+<h1>📊 Probability Theory · Complete Sentence Quizzes with Popups</h1>
 
 <div class="toolbar">
-    <div class="dropdown-group">
-        <label for="topicSelect">📘 Review topic</label>
-        <select id="topicSelect">
-            <option value="rv">Random variables (discrete/continuous)</option>
-            <option value="discrete">Discrete: CDF, PMF, mean, variance</option>
-            <option value="continuous">Continuous: CDF, PDF, mean, variance</option>
-            <option value="special">Special distributions</option>
-            <option value="joint">Joint, marginal, covariance, correlation</option>
-            <option value="properties">Properties of mean, variance, covariance</option>
-        </select>
-    </div>
-    <div class="dropdown-group">
-        <label for="quizSelect">📋 Quiz context</label>
-        <select id="quizSelect">
-            <option value="llm">LLM & AI</option>
-            <option value="cs">Computer Science</option>
-            <option value="cyber">Cybersecurity</option>
-            <option value="meche">Mech & Elec Eng</option>
-            <option value="social">Social Sciences</option>
-            <option value="invest">Investment</option>
-        </select>
-    </div>
-    <button class="btn-solution" id="toggleSolutionBtn">🔍 Show detailed solutions</button>
+  <div class="dropdown-group">
+    <label for="topicSelect">📘 Review topic</label>
+    <select id="topicSelect">
+      <option value="sample">Sample space & counting</option>
+      <option value="events">Events & probability</option>
+      <option value="conditional">Conditional probability</option>
+      <option value="mutual">Mutually exclusive & independence</option>
+      <option value="total">Total probability & partition</option>
+      <option value="bayes">Bayes' formula</option>
+    </select>
+  </div>
+  <div class="dropdown-group">
+    <label for="quizSelect">📋 Quiz context</label>
+    <select id="quizSelect">
+      <option value="llm">LLM & AI</option>
+      <option value="cs">Computer Science</option>
+      <option value="cyber">Cybersecurity</option>
+      <option value="meche">Mech & Elec Eng</option>
+      <option value="social">Social Sciences</option>
+      <option value="invest">Investment</option>
+    </select>
+  </div>
+  <button class="btn-solution" id="toggleSolutionBtn">🔍 Show detailed solutions</button>
 </div>
 
 <div class="panel">
-    <div class="review-card" id="reviewPanel">
-        <h2 id="reviewTitle">Random variables <small>foundation</small></h2>
-        <div id="reviewContent"></div>
-    </div>
-    <div class="quiz-card">
-        <h2 id="quizTitle">LLM & AI · 40 questions</h2>
-        <div id="quizContainer"></div>
-    </div>
+  <div class="review-card" id="reviewPanel">
+    <h2 id="reviewTitle">Sample space & counting <small>foundation</small></h2>
+    <div id="reviewContent"></div>
+  </div>
+  <div class="quiz-card">
+    <h2 id="quizTitle">LLM & AI · 40 questions</h2>
+    <div id="quizContainer"></div>
+  </div>
 </div>
-<div class="footer-note">Each quiz has 40 MCQs · 0.5 pt each · toggle detailed step‑by‑step solutions.</div>
+<div class="footer-note">Each quiz has 40 multiple‑choice questions · 0.5 pt each · toggle detailed step‑by‑step solutions · <strong>Click on underlined terms</strong> for popup definitions.</div>
+
+<!-- Popup modal -->
+<div class="glossary-popup" id="glossaryPopup">
+  <div class="popup-content">
+    <span class="popup-close-x" id="popupCloseX">&times;</span>
+    <h3 id="popupTerm">Term</h3>
+    <div class="context-badge" id="popupContext">Context</div>
+    <p id="popupDefinition">Definition goes here.</p>
+    <button class="close-btn" id="popupCloseBtn">Got it</button>
+  </div>
+</div>
 
 <script>
-    // --------------------------------------------------------------
-    // 1. REVIEW DATA (topics: random variables, distributions, etc.)
-    // --------------------------------------------------------------
-    const reviewData = {
-        rv: {
-            title: 'Random variables (discrete / continuous)',
-            desc: 'A random variable maps outcomes of a random experiment to numbers. Discrete: countable values (e.g., number of heads). Continuous: any value in an interval (e.g., time, weight).',
-            concepts: [
-                { label: 'Random variable (RV)', text: 'A function X: Ω → ℝ. Example: X = number of successes in 10 trials.' },
-                { label: 'Discrete RV', text: 'Takes on a finite or countably infinite set of values. Example: X ∈ {0,1,2,...,n}.' },
-                { label: 'Continuous RV', text: 'Takes on any value in an interval (uncountably infinite). Example: X ∈ [0, ∞).' },
-                { label: 'Notation', text: 'P(X = x) for discrete; P(X ≤ x) or P(a ≤ X ≤ b) for continuous.' }
-            ]
-        },
-        discrete: {
-            title: 'Discrete: CDF, PMF, mean, variance',
-            desc: 'Probability Mass Function (PMF): p(x) = P(X = x). Cumulative Distribution Function (CDF): F(x) = P(X ≤ x). Mean (expected value): E[X] = Σ x·p(x). Variance: Var(X) = E[(X−μ)²] = Σ (x−μ)²·p(x). Standard deviation = √Var.',
-            concepts: [
-                { label: 'PMF', text: 'p(x) = P(X = x). Must satisfy: p(x) ≥ 0 and Σ p(x) = 1.' },
-                { label: 'CDF', text: 'F(x) = P(X ≤ x) = Σ_{k≤x} p(k). Non-decreasing, right-continuous, F(−∞)=0, F(∞)=1.' },
-                { label: 'Mean (μ)', text: 'E[X] = Σ x·p(x). Centre of the distribution.' },
-                { label: 'Variance (σ²)', text: 'Var(X) = E[X²] − (E[X])² = Σ (x−μ)²·p(x). Spread of the distribution.' },
-                { label: 'Std dev (σ)', text: 'σ = √Var(X). Same units as X.' }
-            ]
-        },
-        continuous: {
-            title: 'Continuous: CDF, PDF, mean, variance',
-            desc: 'Probability Density Function (PDF): f(x) = d/dx F(x). Cumulative Distribution Function (CDF): F(x) = P(X ≤ x) = ∫_{−∞}^{x} f(t) dt. Mean: E[X] = ∫ x f(x) dx. Variance: Var(X) = ∫ (x−μ)² f(x) dx = E[X²] − μ².',
-            concepts: [
-                { label: 'PDF', text: 'f(x) ≥ 0, ∫_{−∞}^{∞} f(x) dx = 1. P(a ≤ X ≤ b) = ∫_{a}^{b} f(x) dx.' },
-                { label: 'CDF', text: 'F(x) = P(X ≤ x) = ∫_{−∞}^{x} f(t) dt. F is continuous, non-decreasing, F(−∞)=0, F(∞)=1.' },
-                { label: 'Mean (μ)', text: 'E[X] = ∫_{−∞}^{∞} x f(x) dx.' },
-                { label: 'Variance (σ²)', text: 'Var(X) = ∫ (x−μ)² f(x) dx = E[X²] − μ².' },
-                { label: 'Std dev (σ)', text: 'σ = √Var(X).' }
-            ]
-        },
-        special: {
-            title: 'Special discrete & continuous distributions',
-            desc: 'Common distributions: Binomial (discrete, count of successes), Poisson (discrete, rare events), Geometric (discrete, waiting time), Normal (continuous, bell curve), Uniform (continuous, equal probability), Exponential (continuous, waiting time for memoryless processes).',
-            concepts: [
-                { label: 'Binomial(n,p)', text: 'P(X=k) = C(n,k) p^k (1−p)^{n−k}. E[X]=np, Var(X)=np(1−p).' },
-                { label: 'Poisson(λ)', text: 'P(X=k) = e^{−λ} λ^k / k!. E[X]=λ, Var(X)=λ.' },
-                { label: 'Geometric(p)', text: 'P(X=k) = (1−p)^{k−1} p. E[X]=1/p, Var(X)=(1−p)/p².' },
-                { label: 'Normal(μ,σ²)', text: 'f(x) = (1/√(2πσ²)) exp(−(x−μ)²/(2σ²)). E[X]=μ, Var(X)=σ².' },
-                { label: 'Uniform(a,b)', text: 'f(x) = 1/(b−a), a≤x≤b. E[X]=(a+b)/2, Var(X)=(b−a)²/12.' },
-                { label: 'Exponential(λ)', text: 'f(x) = λ e^{−λ x}, x≥0. E[X]=1/λ, Var(X)=1/λ².' }
-            ]
-        },
-        joint: {
-            title: 'Joint, marginal, covariance, correlation',
-            desc: 'Joint distribution: P(X=x, Y=y) for discrete; f(x,y) for continuous. Marginal: P(X=x) = Σ_y P(X=x,Y=y). Covariance: Cov(X,Y) = E[(X−μ_X)(Y−μ_Y)] = E[XY] − μ_X μ_Y. Correlation: ρ = Cov(X,Y) / (σ_X σ_Y), −1 ≤ ρ ≤ 1.',
-            concepts: [
-                { label: 'Joint PMF/PDF', text: 'p(x,y) or f(x,y). Must sum/integrate to 1.' },
-                { label: 'Marginal PMF/PDF', text: 'p_X(x) = Σ_y p(x,y) (discrete); f_X(x) = ∫ f(x,y) dy (continuous).' },
-                { label: 'Covariance', text: 'Cov(X,Y) = E[XY] − E[X]E[Y]. Positive: move together; negative: move opposite.' },
-                { label: 'Correlation (ρ)', text: 'ρ = Cov(X,Y) / (σ_X σ_Y). −1 ≤ ρ ≤ 1. ρ=0 means uncorrelated (not necessarily independent).' },
-                { label: 'Independence', text: 'If X,Y independent, then p(x,y)=p_X(x)p_Y(y) (discrete) or f(x,y)=f_X(x)f_Y(y) (continuous), and Cov=0.' }
-            ]
-        },
-        properties: {
-            title: 'Properties of mean, variance, covariance, correlation',
-            desc: 'Linearity of expectation, variance of sums, covariance properties, correlation scale invariance.',
-            concepts: [
-                { label: 'Expectation (linear)', text: 'E[aX+b] = aE[X]+b. E[X+Y] = E[X]+E[Y].' },
-                { label: 'Variance', text: 'Var(aX+b) = a² Var(X). Var(X+Y) = Var(X)+Var(Y)+2Cov(X,Y).' },
-                { label: 'Covariance properties', text: 'Cov(X,X)=Var(X). Cov(X,Y)=Cov(Y,X). Cov(aX+b, cY+d)=ac Cov(X,Y).' },
-                { label: 'Correlation properties', text: 'ρ(aX+b, cY+d) = sign(ac) ρ(X,Y). Correlation is dimensionless and invariant to linear transformations (with positive scale).' },
-                { label: 'Independent ⇒ uncorrelated', text: 'If X and Y independent, then Cov(X,Y)=0 and ρ=0. Converse is not true (uncorrelated does not imply independent).' }
-            ]
-        }
-    };
-
-    // --------------------------------------------------------------
-    // 2. QUIZ DATA – 40 questions per context, all complete sentences.
-    // --------------------------------------------------------------
-
-    function attachSteps(arr) {
-        return arr.map(q => {
-            const letters = ['A','B','C','D'];
-            const ansLetter = letters[q.ans];
-            const correctText = q.opts[q.ans];
-            const steps = [
-                `Step 1: Identify the key concept (PMF, CDF, mean, variance, covariance, or a specific distribution).`,
-                `Step 2: Apply the correct formula or property.`,
-                `Step 3: Substitute the given values and compute.`,
-                `Step 4: The correct option is ${ansLetter}) "${correctText}".`
-            ];
-            return { ...q, steps };
-        });
+  // --------------------------------------------------------------
+  // 1. REVIEW DATA
+  // --------------------------------------------------------------
+  const reviewData = {
+    sample: {
+      title: 'Sample space & counting',
+      desc: 'The set of all possible outcomes. Counting rules: product rule, permutations (order matters), combinations (order does not matter).',
+      concepts: [
+        { label: 'Sample space', text: 'All possible outcomes of an experiment. E.g., coin toss → {H, T}.' },
+        { label: 'Product rule', text: 'If event A has m outcomes and event B has n, total = m × n (independent choices).' },
+        { label: 'Permutations', text: 'Order matters: P(n,k) = n!/(n−k)! . E.g., ranking 3 candidates from 10.' },
+        { label: 'Combinations', text: 'Order does not matter: C(n,k) = n!/(k!(n−k)!). E.g., selecting 5 committee members.' }
+      ]
+    },
+    events: {
+      title: 'Events & probability',
+      desc: 'An event is a subset of the sample space. Probability P(A) = number of favourable / total. Complement, union, intersection, expectation.',
+      concepts: [
+        { label: 'Probability', text: 'P(A) = |A| / |Ω|. 0 ≤ P ≤ 1. Complement P(Aᶜ)=1−P(A).' },
+        { label: 'Union', text: 'P(A∪B) = P(A)+P(B)−P(A∩B). For mutually exclusive: P(A∪B)=P(A)+P(B).' },
+        { label: 'Independence (events)', text: 'P(A∩B) = P(A)·P(B). Occurrence of one does not affect the other.' },
+        { label: 'Expected value', text: 'E[X] = Σ x·P(X=x). For indicator events, expected count = n·p.' }
+      ]
+    },
+    conditional: {
+      title: 'Conditional probability',
+      desc: 'Probability of A given B: P(A|B) = P(A∩B) / P(B), with P(B)>0. Often used in updating beliefs.',
+      concepts: [
+        { label: 'Definition', text: 'P(A|B) = P(A∩B) / P(B). Changes the sample space to B.' },
+        { label: 'Multiplication rule', text: 'P(A∩B) = P(A|B)·P(B) = P(B|A)·P(A).' },
+        { label: 'Law of total probability', text: 'If B₁..Bₙ partition Ω, then P(A)= Σ P(A|Bᵢ)·P(Bᵢ).' },
+        { label: 'Application', text: 'Diagnostic testing, classification, retrieval systems.' }
+      ]
+    },
+    mutual: {
+      title: 'Mutually exclusive & independence',
+      desc: 'Mutually exclusive: events cannot occur together. Independence: occurrence of one does not change the other’s probability.',
+      concepts: [
+        { label: 'Mutually exclusive', text: 'A∩B = ∅ ⇒ P(A∩B)=0. E.g., "pass" and "fail" for one test.' },
+        { label: 'Independence', text: 'P(A∩B) = P(A)P(B). Not the same as mutually exclusive (unless one has prob 0).' },
+        { label: 'Check', text: 'Test independence by comparing P(A∩B) with P(A)P(B).' },
+        { label: 'Collectively exhaustive', text: 'Events cover the entire sample space (sum of probs = 1).' }
+      ]
+    },
+    total: {
+      title: 'Total probability & partition',
+      desc: 'Partition the sample space into disjoint events Bᵢ. Then P(A) = Σ P(A|Bᵢ) P(Bᵢ). The "weighted average" law.',
+      concepts: [
+        { label: 'Partition', text: 'B₁, B₂, …, Bₙ disjoint and cover Ω. Each outcome belongs to exactly one Bᵢ.' },
+        { label: 'Law of total probability', text: 'P(A) = Σᵢ P(A|Bᵢ) P(Bᵢ).' },
+        { label: 'Use case', text: 'Combine different subpopulations (e.g., income groups, sensors, models).' },
+        { label: 'Relation to Bayes', text: 'Total probability is the denominator in Bayes’ theorem.' }
+      ]
+    },
+    bayes: {
+      title: 'Bayes’ formula',
+      desc: 'P(Bᵢ|A) = P(A|Bᵢ)P(Bᵢ) / Σⱼ P(A|Bⱼ)P(Bⱼ). Update prior probabilities with new evidence.',
+      concepts: [
+        { label: 'Formula', text: 'Posterior = (Likelihood × Prior) / Evidence.' },
+        { label: 'Prior', text: 'Initial probability before observing evidence (P(Bᵢ)).' },
+        { label: 'Likelihood', text: 'Probability of evidence given the hypothesis (P(A|Bᵢ)).' },
+        { label: 'Evidence', text: 'Total probability of A (denominator).' },
+        { label: 'Application', text: 'Fraud detection, medical testing, spam filtering, credit scoring.' }
+      ]
     }
+  };
 
-    // ---- LLM & AI (40) ----
-    const rawLLM = [
-        {q:'An LLM generates a response of length L tokens. The number of tokens follows a Poisson distribution with mean λ=100. What is the expected number of tokens in the response?', opts:['100','10','50','200'], ans:0},
-        {q:'The number of factual errors in an LLM response follows a Binomial distribution with n=20 trials and success probability p=0.05. What is the mean number of factual errors?', opts:['1','0.05','20','0.95'], ans:0},
-        {q:'For a discrete random variable X with probability mass function p(0)=0.2, p(1)=0.5, and p(2)=0.3, what is the expected value E[X]?', opts:['0.5','1.1','1.0','1.5'], ans:1},
-        {q:'The variance of a discrete random variable X is 4. What is the standard deviation of X?', opts:['2','4','16','1'], ans:0},
-        {q:'An LLM\'s response time T, measured in milliseconds, is uniformly distributed between 100 and 200 ms. What is the expected response time?', opts:['100','150','200','175'], ans:1},
-        {q:'The probability that an LLM correctly answers a question is p=0.8. The number of correct answers in 10 independent questions follows a Binomial distribution. What is the variance of this distribution?', opts:['8','1.6','0.8','2.4'], ans:1},
-        {q:'The waiting time until the first successful API call follows a Geometric distribution with success probability p=0.1. What is the expected waiting time (number of trials)?', opts:['10','0.1','9','100'], ans:0},
-        {q:'For a continuous random variable X with probability density function f(x)=2x for 0≤x≤1, what is the probability P(0.2≤X≤0.5)?', opts:['0.21','0.25','0.5','0.1'], ans:0},
-        {q:'The cumulative distribution function (CDF) of a random variable X is F(x)=1−e^{−0.1x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.1)','Normal(0,1)','Uniform(0,10)','Poisson(0.1)'], ans:0},
-        {q:'For a Binomial random variable with n=100 trials and success probability p=0.5, what is the expected value?', opts:['50','25','100','0.5'], ans:0},
-        {q:'The number of typos in a 1000-word LLM-generated text follows a Poisson distribution with mean 5. What is the correct expression for the probability of exactly 3 typos?', opts:['e^{-5}5^3/3!','5^3/3!','e^{-5}','5/3'], ans:0},
-        {q:'For a continuous random variable X with probability density function f(x)=0.5 for 0≤x≤2, what is the variance Var(X)?', opts:['1/3','1/2','2/3','1'], ans:0},
-        {q:'The mean of a Poisson(λ) distribution is 8. What is its variance?', opts:['8','4','16','2'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.2, what is the variance?', opts:['0.2','0.8','20','0.16'], ans:2},
-        {q:'The joint probability mass function of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
-        {q:'Using the same joint PMF from the previous question, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
-        {q:'If X and Y have covariance Cov(X,Y)=2, Var(X)=4, and Var(Y)=9, what is the correlation coefficient ρ?', opts:['1/3','2/3','1','0.5'], ans:0},
-        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
-        {q:'For a Normal distribution with mean μ=10 and standard deviation σ=2, what is the variance?', opts:['2','4','10','100'], ans:1},
-        {q:'The probability density function of a Uniform(0,1) random variable is f(x)=1 for 0≤x≤1. What is the CDF evaluated at x=0.5?', opts:['0.5','1','0','0.25'], ans:0},
-        {q:'The mean of an Exponential distribution with rate parameter λ=0.5 is 1/λ=2. What is the variance of this distribution?', opts:['4','2','0.5','0.25'], ans:0},
-        {q:'For a Binomial distribution with n=10 trials and success probability p=0.3, what is the correct expression for the probability of exactly 3 successes?', opts:['C(10,3)0.3^3 0.7^7','0.3^3 0.7^7','C(10,3)','10*0.3'], ans:0},
-        {q:'The cumulative distribution function (CDF) of a discrete random variable is F(x). How can we express P(X=3) in terms of the CDF?', opts:['F(3)-F(2)','F(3)','1-F(3)','F(2)-F(1)'], ans:0},
-        {q:'For a continuous random variable, the probability P(X=c) for any specific value c is 0. What is the value of the CDF at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
-        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
-        {q:'If E[X]=3 and E[Y]=5, what is the expected value of 2X+3Y?', opts:['21','6+15=21','2*3+3*5=21','21'], ans:3},
-        {q:'If Var(X)=4, Var(Y)=9, and Cov(X,Y)=2, what is the variance of X+Y?', opts:['13','15','17','11'], ans:2},
-        {q:'If X and Y are independent with Var(X)=4 and Var(Y)=9, what is the variance of X−Y?', opts:['13','5','-5','-13'], ans:0},
-        {q:'The correlation coefficient between X and Y is ρ=0.8. What is the correlation between −X and Y?', opts:['-0.8','0.8','0','0.64'], ans:0},
-        {q:'For a Binomial distribution with n=20 trials and p=0.5, what is the standard deviation?', opts:['√5≈2.236','5','10','0.5'], ans:0},
-        {q:'The probability mass function of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of observing exactly zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
-        {q:'For a Normal distribution, the mean and median are equal. What is the value of the mode?', opts:['The mean','0','1','σ'], ans:0},
-        {q:'The joint distribution of X and Y has Cov(X,Y)=0. Which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
-        {q:'For a Geometric distribution, the probability mass function is p(k)=(1−p)^{k−1}p. The mean is 1/p. What is the mean when p=0.25?', opts:['4','0.25','0.75','1'], ans:0},
-        {q:'The CDF of a Uniform(a,b) distribution at x is (x−a)/(b−a). What is the CDF evaluated at x=a?', opts:['0','1','0.5','a'], ans:0},
-        {q:'If Var(X)=16, what is the variance of 3X?', opts:['144','48','16','9'], ans:0},
-        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=12, E[X]=3, and E[Y]=4, what is the covariance?', opts:['0','12','3','4'], ans:0},
-        {q:'The correlation coefficient ρ is always between -1 and 1. What does a value of ρ=1 indicate?', opts:['Perfect positive linear relationship','No relationship','Perfect negative relationship','Independence'], ans:0},
-        {q:'For a Poisson distribution with mean 3, what is the variance?', opts:['3','9','1.732','0'], ans:0}
-    ];
-    const quizLLM = attachSteps(rawLLM);
-
-    // ---- CS (40) ----
-    const rawCS = [
-        {q:'The number of cache misses per 1000 memory accesses follows a Poisson distribution with mean 5. What is the expected number of cache misses?', opts:['5','10','50','0.5'], ans:0},
-        {q:'The number of bit errors in a 1000-bit transmission follows a Binomial distribution with n=1000 and p=0.001. What is the mean number of bit errors?', opts:['1','1000','0.001','0.999'], ans:0},
-        {q:'For a discrete random variable X with PMF p(0)=0.1, p(1)=0.6, and p(2)=0.3, what is the expected value E[X]?', opts:['1.2','1.0','1.5','0.6'], ans:0},
-        {q:'The variance of a discrete random variable X is 9. What is the standard deviation?', opts:['3','9','81','1'], ans:0},
-        {q:'The time to execute a process is uniformly distributed between 1 and 5 seconds. What is the expected execution time?', opts:['3','2','4','5'], ans:0},
-        {q:'In a hash table, the number of collisions per insertion follows a Binomial distribution with n=10 and p=0.1. What is the variance of this distribution?', opts:['0.9','10','0.1','1'], ans:0},
-        {q:'The number of attempts until a successful network connection follows a Geometric distribution with success probability p=0.2. What is the expected number of attempts?', opts:['5','0.2','4','1'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=3x² for 0≤x≤1, what is the probability P(0≤X≤0.5)?', opts:['0.125','0.25','0.5','0.625'], ans:0},
-        {q:'The CDF of a random variable X is F(x)=1−e^{-2x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(2)','Normal(0,1)','Uniform(0,2)','Poisson(2)'], ans:0},
-        {q:'For a Binomial distribution with n=50 trials and p=0.4, what is the expected value?', opts:['20','50','0.4','12'], ans:0},
-        {q:'The number of bugs in a 1000-line code module follows a Poisson distribution with mean 8. What is the correct expression for the probability of exactly 2 bugs?', opts:['e^{-8}8^2/2!','8^2/2!','e^{-8}','8/2'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.25 for 0≤x≤4, what is the variance Var(X)?', opts:['4/3','1','2/3','2'], ans:0},
-        {q:'The mean of a Poisson(λ) distribution is 12. What is the variance?', opts:['12','6','144','3.464'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.5, what is the variance?', opts:['2','0.5','1','0.25'], ans:0},
-        {q:'The joint PMF of X and Y is given by p(0,0)=0.2, p(0,1)=0.3, p(1,0)=0.1, and p(1,1)=0.4. What is the marginal probability P(X=0)?', opts:['0.5','0.2','0.3','0.7'], ans:0},
-        {q:'Using the same joint PMF, what is the marginal probability P(Y=1)?', opts:['0.7','0.4','0.3','0.6'], ans:0},
-        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
-        {q:'If Cov(X,Y)=3, Var(X)=9, and Var(Y)=16, what is the correlation coefficient ρ?', opts:['0.25','0.75','1','0.5'], ans:0},
-        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
-        {q:'For a Normal distribution with mean μ=5 and standard deviation σ=3, what is the variance?', opts:['9','3','5','25'], ans:0},
-        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.8?', opts:['0.8','0.2','1','0'], ans:0},
-        {q:'The mean of an Exponential distribution with rate parameter λ=2 is 0.5. What is the variance?', opts:['0.25','0.5','2','4'], ans:0},
-        {q:'For a Binomial distribution with n=15 trials and p=0.6, what is the correct expression for the probability of exactly 9 successes?', opts:['C(15,9)0.6^9 0.4^6','0.6^9 0.4^6','C(15,9)','15*0.6'], ans:0},
-        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=4) in terms of the CDF?', opts:['F(4)-F(3)','F(4)','1-F(4)','F(3)-F(2)'], ans:0},
-        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
-        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
-        {q:'If E[X]=2 and E[Y]=7, what is the expected value of 3X+4Y?', opts:['34','6+28=34','3*2+4*7=34','34'], ans:3},
-        {q:'If Var(X)=1, Var(Y)=4, and Cov(X,Y)=0.5, what is the variance of X+Y?', opts:['6','5','4.5','7'], ans:0},
-        {q:'If X and Y are independent with Var(X)=1 and Var(Y)=4, what is the variance of X−Y?', opts:['5','3','-3','-5'], ans:0},
-        {q:'The correlation coefficient between X and Y is −0.6. What is the correlation between X and −Y?', opts:['0.6','-0.6','0','0.36'], ans:0},
-        {q:'For a Binomial distribution with n=30 trials and p=0.2, what is the standard deviation?', opts:['√4.8≈2.19','4.8','6','0.2'], ans:0},
-        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
-        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
-        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.1, what is the mean?', opts:['10','0.1','0.9','1'], ans:0},
-        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
-        {q:'If Var(X)=25, what is the variance of 4X?', opts:['400','100','25','16'], ans:0},
-        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=20, E[X]=4, and E[Y]=5, what is the covariance?', opts:['0','20','4','5'], ans:0},
-        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=−1 indicate?', opts:['Perfect negative linear relationship','No relationship','Perfect positive relationship','Independence'], ans:0},
-        {q:'For a Poisson distribution with mean 7, what is the variance?', opts:['7','49','2.646','0'], ans:0}
-    ];
-    const quizCS = attachSteps(rawCS);
-
-    // ---- CYBERSECURITY (40) ----
-    const rawCyber = [
-        {q:'The number of intrusion attempts per day follows a Poisson distribution with mean 10. What is the expected number of intrusion attempts?', opts:['10','100','5','1'], ans:0},
-        {q:'The number of successful phishing attacks out of 100 emails follows a Binomial distribution with n=100 and p=0.02. What is the mean number of successful attacks?', opts:['2','100','0.02','0.98'], ans:0},
-        {q:'For a discrete random variable X with PMF p(0)=0.3, p(1)=0.4, and p(2)=0.3, what is the expected value E[X]?', opts:['1.0','0.4','1.5','0.3'], ans:0},
-        {q:'The variance of a discrete random variable X is 16. What is the standard deviation?', opts:['4','16','256','2'], ans:0},
-        {q:'The time to detect a security breach is uniformly distributed between 0 and 60 minutes. What is the expected detection time?', opts:['30','60','0','15'], ans:0},
-        {q:'The number of false positives per hour in an intrusion detection system follows a Binomial distribution with n=20 and p=0.05. What is the variance?', opts:['0.95','1','20','0.05'], ans:0},
-        {q:'The number of attempts until a password is cracked follows a Geometric distribution with success probability p=0.01. What is the expected number of attempts?', opts:['100','0.01','99','1'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=2x for 0≤x≤1, what is the probability P(0≤X≤0.5)?', opts:['0.25','0.5','0.125','0.75'], ans:0},
-        {q:'The CDF of a random variable X is F(x)=1−e^{-0.5x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.5)','Normal(0,1)','Uniform(0,2)','Poisson(0.5)'], ans:0},
-        {q:'For a Binomial distribution with n=200 trials and p=0.01, what is the expected value?', opts:['2','200','0.01','1'], ans:0},
-        {q:'The number of malware detections per day follows a Poisson distribution with mean 15. What is the correct expression for the probability of exactly 3 detections?', opts:['e^{-15}15^3/3!','15^3/3!','e^{-15}','15/3'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.2 for 0≤x≤5, what is the variance Var(X)?', opts:['25/12≈2.083','5/12','1','2.5'], ans:0},
-        {q:'The mean of a Poisson(λ) distribution is 6. What is the variance?', opts:['6','36','2.449','0'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.1, what is the variance?', opts:['90','0.1','0.9','10'], ans:0},
-        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=0)?', opts:['0.3','0.1','0.2','0.7'], ans:0},
-        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
-        {q:'If Cov(X,Y)=1.5, Var(X)=4, and Var(Y)=9, what is the correlation coefficient ρ?', opts:['0.25','0.5','0.75','1'], ans:0},
-        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
-        {q:'For a Normal distribution with mean μ=8 and standard deviation σ=4, what is the variance?', opts:['16','4','8','64'], ans:0},
-        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.3?', opts:['0.3','0.7','1','0'], ans:0},
-        {q:'The mean of an Exponential distribution with rate parameter λ=3 is 1/3. What is the variance?', opts:['1/9','1/3','3','9'], ans:0},
-        {q:'For a Binomial distribution with n=12 trials and p=0.25, what is the correct expression for the probability of exactly 3 successes?', opts:['C(12,3)0.25^3 0.75^9','0.25^3 0.75^9','C(12,3)','12*0.25'], ans:0},
-        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=5) in terms of the CDF?', opts:['F(5)-F(4)','F(5)','1-F(5)','F(4)-F(3)'], ans:0},
-        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
-        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
-        {q:'If E[X]=1 and E[Y]=4, what is the expected value of 2X+5Y?', opts:['22','2+20=22','2*1+5*4=22','22'], ans:3},
-        {q:'If Var(X)=2, Var(Y)=8, and Cov(X,Y)=1, what is the variance of X+Y?', opts:['12','10','8','6'], ans:0},
-        {q:'If X and Y are independent with Var(X)=2 and Var(Y)=8, what is the variance of X−Y?', opts:['10','6','-6','-10'], ans:0},
-        {q:'The correlation coefficient between X and Y is 0.5. What is the correlation between 2X and Y?', opts:['0.5','1','0','0.25'], ans:0},
-        {q:'For a Binomial distribution with n=40 trials and p=0.3, what is the standard deviation?', opts:['√8.4≈2.898','8.4','12','0.3'], ans:0},
-        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
-        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
-        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.05, what is the mean?', opts:['20','0.05','0.95','1'], ans:0},
-        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
-        {q:'If Var(X)=9, what is the variance of 2X?', opts:['36','18','9','4'], ans:0},
-        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=10, E[X]=2, and E[Y]=3, what is the covariance?', opts:['4','10','2','3'], ans:0},
-        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=0 indicate?', opts:['No linear relationship','Perfect positive relationship','Perfect negative relationship','Independence'], ans:0},
-        {q:'For a Poisson distribution with mean 2.5, what is the variance?', opts:['2.5','6.25','1.581','0'], ans:0}
-    ];
-    const quizCyber = attachSteps(rawCyber);
-
-    // ---- MECH & ELEC (40) ----
-    const rawMeche = [
-        {q:'The number of mechanical failures per month follows a Poisson distribution with mean 8. What is the expected number of failures?', opts:['8','4','16','1'], ans:0},
-        {q:'The number of defective components in a batch of 50 follows a Binomial distribution with n=50 and p=0.04. What is the mean number of defective components?', opts:['2','50','0.04','0.96'], ans:0},
-        {q:'For a discrete random variable X with PMF p(0)=0.2, p(1)=0.5, and p(2)=0.3, what is the expected value E[X]?', opts:['1.1','0.5','1.0','1.5'], ans:0},
-        {q:'The variance of a discrete random variable X is 25. What is the standard deviation?', opts:['5','25','625','1'], ans:0},
-        {q:'The operating temperature of a motor is uniformly distributed between 60°C and 80°C. What is the expected temperature?', opts:['70','60','80','65'], ans:0},
-        {q:'The number of power outages per year follows a Binomial distribution with n=365 and p=0.01. What is the variance?', opts:['3.6135','365','0.01','0.99'], ans:0},
-        {q:'The number of trials until a sensor detects a signal follows a Geometric distribution with success probability p=0.15. What is the expected number of trials?', opts:['6.67','0.15','0.85','1'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.5x for 0≤x≤2, what is the probability P(0≤X≤1)?', opts:['0.25','0.5','0.125','0.75'], ans:0},
-        {q:'The CDF of a random variable X is F(x)=1−e^{-0.2x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.2)','Normal(0,1)','Uniform(0,5)','Poisson(0.2)'], ans:0},
-        {q:'For a Binomial distribution with n=100 trials and p=0.02, what is the expected value?', opts:['2','100','0.02','0.98'], ans:0},
-        {q:'The number of failures in a hydraulic system per month follows a Poisson distribution with mean 4. What is the correct expression for the probability of exactly 0 failures?', opts:['e^{-4}','4','e^{-4}4^0/0!','1'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.1 for 0≤x≤10, what is the variance Var(X)?', opts:['100/12≈8.33','10/12','1','5'], ans:0},
-        {q:'The mean of a Poisson(λ) distribution is 9. What is the variance?', opts:['9','81','3','0'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.2, what is the variance?', opts:['20','0.2','0.8','5'], ans:0},
-        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
-        {q:'If Cov(X,Y)=4, Var(X)=16, and Var(Y)=25, what is the correlation coefficient ρ?', opts:['0.2','0.5','0.8','1'], ans:0},
-        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
-        {q:'For a Normal distribution with mean μ=12 and standard deviation σ=5, what is the variance?', opts:['25','5','12','144'], ans:0},
-        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.7?', opts:['0.7','0.3','1','0'], ans:0},
-        {q:'The mean of an Exponential distribution with rate parameter λ=4 is 0.25. What is the variance?', opts:['0.0625','0.25','4','16'], ans:0},
-        {q:'For a Binomial distribution with n=18 trials and p=0.4, what is the correct expression for the probability of exactly 6 successes?', opts:['C(18,6)0.4^6 0.6^12','0.4^6 0.6^12','C(18,6)','18*0.4'], ans:0},
-        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=3) in terms of the CDF?', opts:['F(3)-F(2)','F(3)','1-F(3)','F(2)-F(1)'], ans:0},
-        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
-        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
-        {q:'If E[X]=4 and E[Y]=6, what is the expected value of 2X+3Y?', opts:['26','8+18=26','2*4+3*6=26','26'], ans:3},
-        {q:'If Var(X)=3, Var(Y)=12, and Cov(X,Y)=2, what is the variance of X+Y?', opts:['19','15','13','17'], ans:0},
-        {q:'If X and Y are independent with Var(X)=3 and Var(Y)=12, what is the variance of X−Y?', opts:['15','9','-9','-15'], ans:0},
-        {q:'The correlation coefficient between X and Y is 0.7. What is the correlation between −2X and Y?', opts:['-0.7','0.7','0','0.49'], ans:0},
-        {q:'For a Binomial distribution with n=25 trials and p=0.4, what is the standard deviation?', opts:['√6≈2.449','6','10','0.4'], ans:0},
-        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
-        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
-        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.3, what is the mean?', opts:['3.33','0.3','0.7','1'], ans:0},
-        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
-        {q:'If Var(X)=4, what is the variance of 3X?', opts:['36','12','4','9'], ans:0},
-        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=8, E[X]=2, and E[Y]=3, what is the covariance?', opts:['2','8','2','3'], ans:0},
-        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=1 indicate?', opts:['Perfect positive linear relationship','No relationship','Perfect negative relationship','Independence'], ans:0},
-        {q:'For a Poisson distribution with mean 5, what is the variance?', opts:['5','25','2.236','0'], ans:0}
-    ];
-    const quizMeche = attachSteps(rawMeche);
-
-    // ---- SOCIAL SCIENCES (40) ----
-    const rawSocial = [
-        {q:'The number of votes a candidate receives per precinct follows a Poisson distribution with mean 150. What is the expected number of votes?', opts:['150','15','300','1'], ans:0},
-        {q:'The number of people who support a policy out of 50 surveyed follows a Binomial distribution with n=50 and p=0.6. What is the mean number of supporters?', opts:['30','50','0.6','0.4'], ans:0},
-        {q:'For a discrete random variable X with PMF p(0)=0.1, p(1)=0.3, and p(2)=0.6, what is the expected value E[X]?', opts:['1.5','0.3','1.0','2.0'], ans:0},
-        {q:'The variance of a discrete random variable X is 36. What is the standard deviation?', opts:['6','36','1296','1'], ans:0},
-        {q:'The age of a randomly selected adult is uniformly distributed between 18 and 65 years. What is the expected age?', opts:['41.5','18','65','35'], ans:0},
-        {q:'The number of car accidents per day follows a Binomial distribution with n=365 and p=0.005. What is the variance?', opts:['1.816','365','0.005','0.995'], ans:0},
-        {q:'The number of interviews until a job offer follows a Geometric distribution with success probability p=0.2. What is the expected number of interviews?', opts:['5','0.2','0.8','1'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.25 for 0≤x≤4, what is the probability P(1≤X≤3)?', opts:['0.5','0.25','0.75','1'], ans:0},
-        {q:'The CDF of a random variable X is F(x)=1−e^{-x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(1)','Normal(0,1)','Uniform(0,1)','Poisson(1)'], ans:0},
-        {q:'For a Binomial distribution with n=80 trials and p=0.35, what is the expected value?', opts:['28','80','0.35','0.65'], ans:0},
-        {q:'The number of customers arriving per hour follows a Poisson distribution with mean 12. What is the correct expression for the probability of exactly 2 arrivals?', opts:['e^{-12}12^2/2!','12^2/2!','e^{-12}','12/2'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.5 for 0≤x≤2, what is the variance Var(X)?', opts:['1/3','1/2','2/3','1'], ans:0},
-        {q:'The mean of a Poisson(λ) distribution is 10. What is the variance?', opts:['10','100','3.162','0'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.4, what is the variance?', opts:['3.75','0.4','0.6','2.5'], ans:0},
-        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
-        {q:'If Cov(X,Y)=2, Var(X)=4, and Var(Y)=9, what is the correlation coefficient ρ?', opts:['1/3','2/3','1','0.5'], ans:0},
-        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
-        {q:'For a Normal distribution with mean μ=70 and standard deviation σ=10, what is the variance?', opts:['100','10','70','4900'], ans:0},
-        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.6?', opts:['0.6','0.4','1','0'], ans:0},
-        {q:'The mean of an Exponential distribution with rate parameter λ=0.5 is 2. What is the variance?', opts:['4','2','0.5','0.25'], ans:0},
-        {q:'For a Binomial distribution with n=20 trials and p=0.3, what is the correct expression for the probability of exactly 6 successes?', opts:['C(20,6)0.3^6 0.7^14','0.3^6 0.7^14','C(20,6)','20*0.3'], ans:0},
-        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=4) in terms of the CDF?', opts:['F(4)-F(3)','F(4)','1-F(4)','F(3)-F(2)'], ans:0},
-        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
-        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
-        {q:'If E[X]=5 and E[Y]=2, what is the expected value of 3X+4Y?', opts:['23','15+8=23','3*5+4*2=23','23'], ans:3},
-        {q:'If Var(X)=1, Var(Y)=4, and Cov(X,Y)=0.5, what is the variance of X+Y?', opts:['6','5','4.5','7'], ans:0},
-        {q:'If X and Y are independent with Var(X)=1 and Var(Y)=4, what is the variance of X−Y?', opts:['5','3','-3','-5'], ans:0},
-        {q:'The correlation coefficient between X and Y is −0.8. What is the correlation between 3X and Y?', opts:['-0.8','0.8','0','0.64'], ans:0},
-        {q:'For a Binomial distribution with n=50 trials and p=0.3, what is the standard deviation?', opts:['√10.5≈3.24','10.5','15','0.3'], ans:0},
-        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
-        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
-        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.25, what is the mean?', opts:['4','0.25','0.75','1'], ans:0},
-        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
-        {q:'If Var(X)=16, what is the variance of 4X?', opts:['256','64','16','4'], ans:0},
-        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=15, E[X]=3, and E[Y]=4, what is the covariance?', opts:['3','15','3','4'], ans:0},
-        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=0.5 indicate?', opts:['Moderate positive linear relationship','No relationship','Perfect positive relationship','Independence'], ans:0},
-        {q:'For a Poisson distribution with mean 4, what is the variance?', opts:['4','16','2','0'], ans:0}
-    ];
-    const quizSocial = attachSteps(rawSocial);
-
-    // ---- INVESTMENT (40) ----
-    const rawInvest = [
-        {q:'The number of stock trades per day follows a Poisson distribution with mean 200. What is the expected number of trades?', opts:['200','20','400','1'], ans:0},
-        {q:'The number of profitable days out of 30 trading days follows a Binomial distribution with n=30 and p=0.55. What is the mean number of profitable days?', opts:['16.5','30','0.55','0.45'], ans:0},
-        {q:'For a discrete random variable X with PMF p(0)=0.2, p(1)=0.3, and p(2)=0.5, what is the expected value E[X]?', opts:['1.3','0.3','1.0','2.0'], ans:0},
-        {q:'The variance of a discrete random variable X is 49. What is the standard deviation?', opts:['7','49','2401','1'], ans:0},
-        {q:'The annual return of a stock is uniformly distributed between -10% and 20%. What is the expected return?', opts:['5%','-10%','20%','2.5%'], ans:0},
-        {q:'The number of times a stock hits a new high in a year follows a Binomial distribution with n=252 and p=0.01. What is the variance?', opts:['2.4948','252','0.01','0.99'], ans:0},
-        {q:'The number of calls until a successful trade follows a Geometric distribution with success probability p=0.1. What is the expected number of calls?', opts:['10','0.1','0.9','1'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.2 for 0≤x≤5, what is the probability P(2≤X≤4)?', opts:['0.4','0.2','0.6','0.8'], ans:0},
-        {q:'The CDF of a random variable X is F(x)=1−e^{-0.05x} for x≥0. This is the CDF of which distribution?', opts:['Exponential(0.05)','Normal(0,1)','Uniform(0,20)','Poisson(0.05)'], ans:0},
-        {q:'For a Binomial distribution with n=100 trials and p=0.45, what is the expected value?', opts:['45','100','0.45','0.55'], ans:0},
-        {q:'The number of stock splits per year follows a Poisson distribution with mean 2. What is the correct expression for the probability of exactly 1 split?', opts:['e^{-2}2^1/1!','2^1/1!','e^{-2}','2'], ans:0},
-        {q:'For a continuous random variable X with PDF f(x)=0.1 for 0≤x≤10, what is the variance Var(X)?', opts:['100/12≈8.33','10/12','1','5'], ans:0},
-        {q:'The mean of a Poisson(λ) distribution is 3. What is the variance?', opts:['3','9','1.732','0'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.15, what is the variance?', opts:['37.78','0.15','0.85','6.67'], ans:0},
-        {q:'The joint PMF of X and Y is given by p(0,0)=0.1, p(0,1)=0.2, p(1,0)=0.3, and p(1,1)=0.4. What is the marginal probability P(X=1)?', opts:['0.7','0.3','0.4','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the marginal probability P(Y=0)?', opts:['0.4','0.6','0.3','0.5'], ans:0},
-        {q:'Using the same joint PMF, what is the expected value E[XY]?', opts:['0.4','0.3','0.7','0.1'], ans:0},
-        {q:'If Cov(X,Y)=5, Var(X)=25, and Var(Y)=36, what is the correlation coefficient ρ?', opts:['1/3','5/6','1','0.5'], ans:0},
-        {q:'If X and Y are independent random variables, what is the value of Cov(X,Y)?', opts:['0','1','Var(X)','Var(Y)'], ans:0},
-        {q:'For a Normal distribution with mean μ=100 and standard deviation σ=15, what is the variance?', opts:['225','15','100','10000'], ans:0},
-        {q:'The PDF of a Uniform(0,1) distribution is 1. What is the CDF evaluated at x=0.9?', opts:['0.9','0.1','1','0'], ans:0},
-        {q:'The mean of an Exponential distribution with rate parameter λ=2 is 0.5. What is the variance?', opts:['0.25','0.5','2','4'], ans:0},
-        {q:'For a Binomial distribution with n=25 trials and p=0.4, what is the correct expression for the probability of exactly 10 successes?', opts:['C(25,10)0.4^10 0.6^15','0.4^10 0.6^15','C(25,10)','25*0.4'], ans:0},
-        {q:'The CDF of a discrete random variable is F(x). How can we express P(X=5) in terms of the CDF?', opts:['F(5)-F(4)','F(5)','1-F(5)','F(4)-F(3)'], ans:0},
-        {q:'For a continuous random variable, P(X=c)=0. What is the CDF evaluated at c?', opts:['F(c)','0','1','F(c)-F(c−)'], ans:0},
-        {q:'The expected value of a constant c is c. What is the variance of this constant?', opts:['0','c','c^2','1'], ans:0},
-        {q:'If E[X]=6 and E[Y]=9, what is the expected value of 4X+2Y?', opts:['42','24+18=42','4*6+2*9=42','42'], ans:3},
-        {q:'If Var(X)=2, Var(Y)=8, and Cov(X,Y)=1, what is the variance of X+Y?', opts:['12','10','8','6'], ans:0},
-        {q:'If X and Y are independent with Var(X)=2 and Var(Y)=8, what is the variance of X−Y?', opts:['10','6','-6','-10'], ans:0},
-        {q:'The correlation coefficient between X and Y is 0.6. What is the correlation between X and 2Y?', opts:['0.6','1.2','0','0.36'], ans:0},
-        {q:'For a Binomial distribution with n=60 trials and p=0.2, what is the standard deviation?', opts:['√9.6≈3.098','9.6','12','0.2'], ans:0},
-        {q:'The PMF of a Poisson distribution is p(k)=e^{-λ}λ^k/k!. What is the probability of zero events, p(0)?', opts:['e^{-λ}','λ','1','0'], ans:0},
-        {q:'For a Normal distribution, the mean and median are equal. The mode is the same as the mean. What is the mode?', opts:['The mean','0','1','σ'], ans:0},
-        {q:'If Cov(X,Y)=0, which of the following statements is true?', opts:['They are uncorrelated','They are independent','ρ=1','Var(X+Y)=Var(X)+Var(Y)+2Cov'], ans:0},
-        {q:'For a Geometric distribution with success probability p=0.08, what is the mean?', opts:['12.5','0.08','0.92','1'], ans:0},
-        {q:'The CDF of a Uniform(a,b) distribution at x=a is:', opts:['0','1','0.5','a'], ans:0},
-        {q:'If Var(X)=9, what is the variance of 2X?', opts:['36','18','9','4'], ans:0},
-        {q:'The covariance formula is Cov(X,Y)=E[XY]−E[X]E[Y]. If E[XY]=12, E[X]=3, and E[Y]=3, what is the covariance?', opts:['3','12','3','3'], ans:0},
-        {q:'The correlation coefficient ρ is always between -1 and 1. What does ρ=0.8 indicate?', opts:['Strong positive linear relationship','No relationship','Perfect positive relationship','Independence'], ans:0},
-        {q:'For a Poisson distribution with mean 6, what is the variance?', opts:['6','36','2.449','0'], ans:0}
-    ];
-    const quizInvest = attachSteps(rawInvest);
-
-    // ---- map contexts ----
-    const quizMap = {
-        llm: quizLLM,
-        cs: quizCS,
-        cyber: quizCyber,
-        meche: quizMeche,
-        social: quizSocial,
-        invest: quizInvest
-    };
-
-    const contextLabels = {
-        llm: 'LLM & AI',
-        cs: 'Computer Science',
-        cyber: 'Cybersecurity',
-        meche: 'Mech & Elec Eng',
-        social: 'Social Sciences',
-        invest: 'Investment'
-    };
-
-    // ---- DOM ----
-    const topicSelect = document.getElementById('topicSelect');
-    const quizSelect = document.getElementById('quizSelect');
-    const toggleBtn = document.getElementById('toggleSolutionBtn');
-    const reviewContent = document.getElementById('reviewContent');
-    const reviewTitle = document.getElementById('reviewTitle');
-    const quizContainer = document.getElementById('quizContainer');
-    const quizTitle = document.getElementById('quizTitle');
-
-    let showSolutions = false;
-
-    function renderReview(topicKey) {
-        const data = reviewData[topicKey];
-        if (!data) return;
-        reviewTitle.innerHTML = `${data.title} <small>concepts</small>`;
-        let html = `<p style="color:#1d3457; margin-bottom:1rem;">${data.desc}</p>`;
-        data.concepts.forEach(c => {
-            html += `<div class="concept-block"><strong>${c.label}</strong><p>${c.text}</p></div>`;
-        });
-        reviewContent.innerHTML = html;
+  // --------------------------------------------------------------
+  // 2. GLOSSARY – terms and definitions with context
+  // --------------------------------------------------------------
+  const glossary = {
+    'MCP': {
+      definition: 'Model Context Protocol – an open standard that acts as a "universal connector" for AI, allowing AI applications to connect to various tools and data sources through a standardized interface, similar to a USB-C port for AI interactions.',
+      context: 'AI / Web Development'
+    },
+    'RAG': {
+      definition: 'Retrieval-Augmented Generation – a technique that enhances LLM outputs by retrieving relevant documents from a corpus and using them as context, improving factual accuracy and grounding the model\'s responses.',
+      context: 'AI / NLP'
+    },
+    'LLM': {
+      definition: 'Large Language Model – a type of AI model trained on vast amounts of text data to understand and generate human-like text. Examples include GPT, Claude, and Llama.',
+      context: 'AI / Machine Learning'
+    },
+    'SIEM': {
+      definition: 'Security Information and Event Management – a system that collects, analyzes, and correlates security alerts from various sources to detect and respond to threats in real-time.',
+      context: 'Cybersecurity'
+    },
+    'RAID': {
+      definition: 'Redundant Array of Independent Disks – a data storage virtualization technology that combines multiple physical disk drives into a single logical unit for data redundancy, performance improvement, or both.',
+      context: 'Computer Science / Storage'
+    },
+    'TCP': {
+      definition: 'Transmission Control Protocol – a core protocol of the internet that provides reliable, ordered, and error-checked delivery of a stream of data between applications running on hosts.',
+      context: 'Computer Science / Networking'
+    },
+    'DNS': {
+      definition: 'Domain Name System – the phonebook of the internet that translates human-readable domain names (e.g., example.com) to IP addresses that computers use to identify each other.',
+      context: 'Computer Science / Networking'
+    },
+    'API': {
+      definition: 'Application Programming Interface – a set of rules and protocols that allows different software applications to communicate with each other, enabling integration and data exchange.',
+      context: 'Web Development / Computer Science'
+    },
+    'IDS': {
+      definition: 'Intrusion Detection System – a device or software application that monitors network or system activities for malicious activities or policy violations and reports them.',
+      context: 'Cybersecurity'
+    },
+    'TLS': {
+      definition: 'Transport Layer Security – a cryptographic protocol designed to provide secure communication over a computer network, commonly used for HTTPS connections.',
+      context: 'Cybersecurity / Networking'
+    },
+    'SSD': {
+      definition: 'Solid State Drive – a storage device that uses integrated circuit assemblies to store data persistently, typically using flash memory, offering faster access times than traditional HDDs.',
+      context: 'Computer Science / Hardware'
+    },
+    'HDD': {
+      definition: 'Hard Disk Drive – a traditional storage device that uses magnetic storage to store and retrieve digital information using one or more rigid rapidly rotating disks (platters).',
+      context: 'Computer Science / Hardware'
+    },
+    'RLHF': {
+      definition: 'Reinforcement Learning from Human Feedback – a technique used to fine-tune AI models by training them to align with human preferences, using human feedback as a reward signal to guide the learning process.',
+      context: 'AI / Machine Learning'
+    },
+    'NLP': {
+      definition: 'Natural Language Processing – a branch of AI that enables computers to understand, interpret, and generate human language, powering applications like chatbots, translation, and sentiment analysis.',
+      context: 'AI / Computer Science'
+    },
+    'AI': {
+      definition: 'Artificial Intelligence – the simulation of human intelligence processes by computer systems, including learning, reasoning, and self-correction. It encompasses machine learning, natural language processing, and robotics.',
+      context: 'AI / Technology'
+    },
+    'ML': {
+      definition: 'Machine Learning – a subset of AI that enables systems to learn and improve from experience without being explicitly programmed, using algorithms that identify patterns in data.',
+      context: 'AI / Machine Learning'
     }
+  };
 
-    function renderQuiz(contextKey) {
-        const qs = quizMap[contextKey];
-        if (!qs) return;
-        const label = contextLabels[contextKey] || contextKey;
-        quizTitle.textContent = `${label} · 40 questions`;
-        let html = '';
-        qs.forEach((q, idx) => {
-            const letters = ['A','B','C','D'];
-            const ansLetter = letters[q.ans];
-            html += `<div class="question-item">`;
-            html += `<div class="qtext"><span class="badge-context">${label}</span> ${idx+1}. ${q.q}</div>`;
-            html += `<div class="options">`;
-            q.opts.forEach((opt, oi) => {
-                html += `<span>${letters[oi]}) ${opt}</span>`;
-            });
-            html += `</div>`;
-            html += `<div class="solution ${showSolutions ? 'show' : ''}" id="sol-${contextKey}-${idx}">`;
-            html += `<strong>📘 Detailed solution:</strong>`;
-            if (q.steps && q.steps.length) {
-                q.steps.forEach(step => {
-                    html += `<div class="step">• ${step}</div>`;
-                });
-            } else {
-                html += `<div class="step">• Apply the relevant rule and compute.</div>`;
-            }
-            html += `<div style="margin-top:0.3rem;"><strong>✅ Correct option: ${ansLetter}</strong> ( ${q.opts[q.ans]} )</div>`;
-            html += `</div>`;
-            html += `</div>`;
-        });
-        quizContainer.innerHTML = html;
-    }
+  // --------------------------------------------------------------
+  // 3. QUIZ DATA – All questions are complete sentences.
+  //    FIXED: Removed all malformed glossary injections.
+  // --------------------------------------------------------------
 
-    function updateAll() {
-        const topic = topicSelect.value;
-        const context = quizSelect.value;
-        renderReview(topic);
-        renderQuiz(context);
-    }
-
-    toggleBtn.addEventListener('click', function() {
-        showSolutions = !showSolutions;
-        this.textContent = showSolutions ? '🙈 Hide detailed solutions' : '🔍 Show detailed solutions';
-        this.classList.toggle('active', showSolutions);
-        const context = quizSelect.value;
-        renderQuiz(context);
+  function attachSteps(arr) {
+    return arr.map(q => {
+      const letters = ['A','B','C','D'];
+      const ansLetter = letters[q.ans];
+      const correctText = q.opts[q.ans];
+      const steps = [
+        `Step 1: Identify the key concept being tested.`,
+        `Step 2: Apply the correct formula or rule (product rule, permutation, combination, conditional probability, total probability, or Bayes).`,
+        `Step 3: Substitute the given values and perform the calculation.`,
+        `Step 4: The correct option is ${ansLetter}) "${correctText}".`
+      ];
+      return { ...q, steps };
     });
+  }
 
-    topicSelect.addEventListener('change', updateAll);
-    quizSelect.addEventListener('change', updateAll);
+  // ---- LLM & AI (40) - ALL questions are complete sentences with NO injected definitions ----
+  const rawLLM = [
+    {q:'An LLM\'s token vocabulary consists of 50,000 tokens. If a response is exactly 5 tokens long and tokens can repeat, what is the size of the sample space?', opts:['5 × 50,000','50,000^5','50,000! / 45,000!','C(50,000, 5)'], ans:1},
+    {q:'A prompt engineering experiment tests 4 different prompt templates, each with 3 different temperature settings, and 2 different system messages. How many unique experimental configurations are in the sample space?', opts:['9','12','24','4! × 3! × 2!'], ans:2},
+    {q:'An AI agent must select 3 distinct tools from a set of 8 available MCP tools to perform a task, and the order in which the tools are called matters. How many possible ordered sequences exist?', opts:['C(8, 3) = 56','8 × 7 × 6 = 336','8^3 = 512','8! = 40,320'], ans:1},
+    {q:'A training dataset contains 10,000 documents, each classified into exactly one of 5 categories. If 100 documents are randomly assigned to a validation set, how many possible validation sets exist?', opts:['100^10,000','C(10,000, 100)','5^100','10,000! / 100!'], ans:1},
+    {q:'In a retrieval-augmented generation (RAG) system, the retriever selects 5 documents from a corpus of 1,000 to provide as context to the LLM, and the order of retrieval does not matter. How many possible context sets exist?', opts:['1,000 × 999 × 998 × 997 × 996','C((1,000), 5)','1,000^5','5!'], ans:1},
+    {q:'An LLM generates responses by sampling tokens from a probability distribution over the vocabulary. If the vocabulary size is V and the response length is n, with each token independently sampled, what is the sample space size?', opts:['n × V','V^n','V! / (V-n)!','C(V, n)'], ans:1},
+    {q:'A recommender system using an LLM suggests 4 movies to a user from a catalog of 50 movies. The system cannot recommend the same movie twice, and the order of recommendations is important to the user. How many possible recommendation lists are there?', opts:['C(50, 4)','50^4','50 × 49 × 48 × 47','4^50'], ans:2},
+    {q:'An AI evaluation benchmark contains 20 test cases, each of which can be either "Pass" or "Fail". How many possible outcome patterns exist for the entire benchmark?', opts:['20^2','2^20','C(20, 2)','20!'], ans:1},
+    {q:'An LLM has a 70% probability of correctly answering a factual question from its training data and an 85% probability of correctly answering a question from a context provided in the prompt. If these events are independent, what is the probability that the LLM answers both correctly?', opts:['0.70 + 0.85 = 1.55','0.70 × 0.85 = 0.595','0.70 + 0.85 − 0.70 × 0.85','0.70 / 0.85'], ans:1},
+    {q:'In a text generation task, the probability that the model produces a response with at least 100 tokens is 0.6, and the probability that it produces a response with at least 50 tokens is 0.9. What can we conclude about these two events?', opts:['The event {≥100 tokens} is a subset of {≥50 tokens}','These events are mutually exclusive','The events are independent','P(≥100) > P(≥50)'], ans:0},
+    {q:'An MCP tool call succeeds with probability 0.95, and the LLM correctly parses the response with probability 0.92. Assuming independence, what is the probability that both the tool call succeeds and the response is parsed correctly?', opts:['0.874','0.95','0.92','0.03'], ans:0},
+    {q:'A language model has a hallucination rate of 8% on medical questions. On a sample of 200 independent medical queries, what is the expected number of hallucinations?', opts:['8','16','20','25'], ans:1},
+    {q:'The probability that an LLM\'s response is factually correct is 0.75 when using retrieval augmentation and 0.45 when not using it. Which of the following statements is true?', opts:['P(Correct | Retrieval) = 0.75 > P(Correct | No Retrieval) = 0.45','P(Retrieval | Correct) is higher than P(Correct | Retrieval)','The unconditional probability P(Correct) must be 0.60','The events are mutually exclusive'], ans:0},
+    {q:'A model generates text with 1200 tokens, where the probability of each token being a stop word is 0.25, independent of others. What is the approximate expected number of stop words?', opts:['25','120','300','480'], ans:2},
+    {q:'In an AI safety benchmark, the probability that a model passes safety check A is 0.8, passes safety check B is 0.7, and passes both is 0.6. What is the probability that the model passes at least one of the two checks?', opts:['0.56','0.80','0.90','1.50'], ans:2},
+    {q:'A retrieval system has a 90% chance of retrieving relevant documents. When relevant documents are retrieved, the LLM answers correctly 95% of the time, and when relevant documents are not retrieved, it answers correctly only 40% of the time. What is the conditional probability P(Correct | Retrieval)?', opts:['0.90','0.95','0.40','0.855'], ans:1},
+    {q:'In an MCP-based agent system, if the tool returns a valid response, the agent solves the task with probability 0.92. If the tool returns an error, the agent solves the task with probability 0.15. Given that the agent solved the task, what is the probability that the tool returned a valid response? Assume P(Tool Valid) = 0.80.', opts:['0.92','0.736 / (0.736 + 0.03) ≈ 0.961','0.80','0.15'], ans:1},
+    {q:'The probability that an LLM generates a response containing code is 0.30. The probability that the response is correct given that it contains code is 0.85, and the probability that it is correct given that it does not contain code is 0.65. What is the overall probability of a correct response?', opts:['0.30 × 0.85 + 0.70 × 0.65 = 0.71','0.85','0.65','0.30'], ans:0},
+    {q:'An AI model has been trained on two datasets: Dataset A (70% of training) and Dataset B (30% of training). The model achieves 95% accuracy on questions from Dataset A and 80% accuracy on questions from Dataset B. Given that the model answered a question correctly, what is the probability that the question came from Dataset B?', opts:['0.80','0.30','(0.30 × 0.80) / (0.70 × 0.95 + 0.30 × 0.80)','0.30 × 0.80'], ans:2},
+    {q:'In a multi-agent system, Agent 1 completes its subtask with probability 0.85. If Agent 1 succeeds, Agent 2 succeeds with probability 0.90. What is the probability that both agents succeed?', opts:['0.85 + 0.90 = 1.75','0.85 × 0.90 = 0.765','0.85','0.90'], ans:1},
+    {q:'For an LLM generating a response, let A be the event "Response contains factual errors" and B be the event "Response is rated as helpful". How are these two events best characterized?', opts:['They are mutually exclusive','They could be independent','They must be mutually exclusive','They cannot be independent'], ans:1},
+    {q:'An AI system has two independent safeguards: System X catches 90% of harmful prompts, and System Y catches 80% of harmful prompts. What is the probability that a harmful prompt is caught by at least one of the two systems?', opts:['0.72','0.90','0.98','1.70'], ans:2},
+    {q:'The probability of an LLM producing a specific token is 0.02 for each of 100 independent generations. Are these events (producing that token in each generation) mutually exclusive?', opts:['No, multiple generations could produce the same token','Yes, because the probability is 0.02 each time','Only if the sample space is limited','Yes, because they are independent'], ans:0},
+    {q:'Let A be the event "Response is coherent" with P(A) = 0.85, and B be the event "Response is relevant" with P(B) = 0.75. If P(A ∩ B) = 0.6375, what can we conclude about these two events?', opts:['They are mutually exclusive','They are independent (since 0.85 × 0.75 = 0.6375)','They are dependent','P(A ∪ B) = 1.60'], ans:1},
+    {q:'In an MCP server context, if the probability that a tool call succeeds is 0.90 and the probability that the tool returns a result within 1 second is 0.80, and these events are independent, what is the probability that the tool call succeeds and returns within 1 second?', opts:['0.90','0.80','0.72','1.70'], ans:2},
+    {q:'Two events A and B have P(A) = 0.6 and P(B) = 0.5. If P(A ∪ B) = 1.0, what can we conclude about these events?', opts:['They are independent','They are mutually exclusive','P(A ∩ B) = 0.1','They must be the same event'], ans:2},
+    {q:'The probability that an LLM passes a certain exam is 0.88, and the probability that it passes a different exam is 0.76. If passing one exam and passing the other are independent, what is the probability that it passes both exams?', opts:['0.12 × 0.24','0.88 × 0.76','0.88 + 0.76','0.88'], ans:1},
+    {q:'An LLM application queries one of three knowledge bases: KB1 (50% of queries), KB2 (30%), and KB3 (20%). The query success rates are 95%, 85%, and 70% respectively. Using the law of total probability, what is the overall success rate?', opts:['0.50 + 0.30 + 0.20 = 1.00','0.50 × 0.95 + 0.30 × 0.85 + 0.20 × 0.70 = 0.865','0.95 + 0.85 + 0.70 = 2.50','0.50 × 0.95'], ans:1},
+    {q:'A model\'s response length depends on the prompt category: Short prompts (60% of cases) average 50 tokens, Medium prompts (30%) average 200 tokens, and Long prompts (10%) average 800 tokens. What is the expected response length?', opts:['50 + 200 + 800 = 1050','0.60 × 50 + 0.30 × 200 + 0.10 × 800 = 170','50','800'], ans:1},
+    {q:'In an AI agent system, the agent uses either Tool A (70% of tasks) or Tool B (30%). Tool A has success probability 0.92, and Tool B has success probability 0.78. What is the probability that the agent fails a task?', opts:['1 - (0.70 × 0.92 + 0.30 × 0.78)','0.70 × 0.08 + 0.30 × 0.22','Both A and B are correct','Neither A nor B'], ans:2},
+    {q:'A language model\'s performance depends on whether the prompt is in-domain (75% of prompts) with accuracy 0.90, or out-of-domain (25%) with accuracy 0.60. What is the overall accuracy?', opts:['0.90 × 0.75 + 0.60 × 0.25 = 0.825','0.90','0.60','0.75'], ans:0},
+    {q:'In a fine-tuning experiment, the training data comes from three sources with equal probability. Source 1 has noise rate 5%, Source 2 has noise rate 10%, and Source 3 has noise rate 15%. What is the overall noise rate?', opts:['(0.05 + 0.10 + 0.15) / 3 = 0.10','0.05 × 0.10 × 0.15','0.05 + 0.10 + 0.15','0.05'], ans:0},
+    {q:'A multi-LLM system uses Model X (60% of queries) with hallucination rate 0.04, and Model Y (40%) with hallucination rate 0.07. What is the overall hallucination rate?', opts:['0.04 + 0.07 = 0.11','0.60 × 0.04 + 0.40 × 0.07 = 0.052','0.60 + 0.40 = 1.00','0.04 × 0.07 = 0.0028'], ans:1},
+    {q:'In a medical diagnosis LLM evaluation, the probability that a patient has a rare disease is 0.001. If the patient has the disease, the model detects it with probability 0.95, and if the patient does not have the disease, the model incorrectly detects it with probability 0.05. Given that the model detects the disease, what is the probability that the patient actually has it?', opts:['0.95','(0.001 × 0.95) / (0.001 × 0.95 + 0.999 × 0.05) ≈ 0.0187','0.001','0.05'], ans:1},
+    {q:'An AI system flags potential misinformation. The probability that a piece of content is actually misinformation is 0.02. The system correctly identifies misinformation with probability 0.88, and falsely flags truthful content with probability 0.10. What is the probability that content is misinformation given that the system flags it?', opts:['(0.02 × 0.88) / (0.02 × 0.88 + 0.98 × 0.10)','0.88','0.02','0.10'], ans:0},
+    {q:'In an MCP tool selection scenario, Tool A is selected for 60% of tasks and Tool B for 40%. When selected, Tool A solves the task with 0.90 probability and Tool B with 0.80 probability. Given that a task was solved, what is the probability that Tool A was used?', opts:['0.60','0.90','(0.60 × 0.90) / (0.60 × 0.90 + 0.40 × 0.80)','0.60 × 0.90'], ans:2},
+    {q:'An LLM generates code with probability 0.25. When generating code, the model\'s output is correct with probability 0.80, and when not generating code, the output is correct with probability 0.90. Given that the output is correct, what is the probability that the model generated code?', opts:['0.25','(0.25 × 0.80) / (0.25 × 0.80 + 0.75 × 0.90)','0.80','0.25 × 0.80'], ans:1},
+    {q:'A spam detector for an email assistant uses an LLM. The probability that an email is spam is 0.15. The model correctly classifies spam with 0.92 accuracy, and correctly classifies non-spam with 0.95 accuracy. Given that the model labels an email as spam, what is the probability that it actually is spam?', opts:['(0.15 × 0.92) / (0.15 × 0.92 + 0.85 × 0.05)','0.92','0.15','0.15 × 0.92'], ans:0},
+    {q:'An evaluation dataset has examples labeled by three annotators with varying accuracy: Annotator 1 (40% of labels) has 95% accuracy, Annotator 2 (35%) has 90% accuracy, and Annotator 3 (25%) has 80% accuracy. If a label is correct, what is the probability that it came from Annotator 1?', opts:['(0.40 × 0.95) / (0.40 × 0.95 + 0.35 × 0.90 + 0.25 × 0.80)','0.40','0.95','0.40 × 0.95'], ans:0},
+    {q:'In a reinforcement learning from human feedback (RLHF) pipeline, a response is high-quality with prior probability 0.20. The reward model correctly identifies high-quality responses with probability 0.85, and incorrectly identifies low-quality responses as high-quality with probability 0.15. Given that the reward model says the response is high-quality, what is the posterior probability that the response is truly high-quality?', opts:['0.85','(0.20 × 0.85) / (0.20 × 0.85 + 0.80 × 0.15)','0.20','0.20 × 0.85'], ans:1}
+  ];
+  const quizLLM = attachSteps(rawLLM);
 
-    updateAll();
+  // ---- CS (40) - All complete sentences ----
+  const rawCS = [
+    {q:'A computer network has 8 nodes. How many possible undirected edges can exist between distinct pairs of nodes?', opts:['8 × 7','C(8, 2) = 28','8^2','8!'], ans:1},
+    {q:'A processor cache has 4 sets, each with 2 ways. An address maps to exactly one set. How many possible cache configurations exist for a single address, including which way it occupies?', opts:['4 × 2 = 8','C(4, 2) = 6','4 + 2 = 6','4^2 = 16'], ans:0},
+    {q:'An operating system schedules 5 distinct processes on a single CPU. In how many different orders can the processes be executed?', opts:['5^5','C(5, 5)','5! = 120','5 × 5'], ans:2},
+    {q:'A binary search tree has n distinct keys inserted in some order. How many possible insertion sequences exist for n keys?', opts:['n!','2^n','n^2','C(n, 2)'], ans:0},
+    {q:'A hash table of size m receives n distinct keys, each independently hashing to one of m buckets. How many possible hash assignments exist?', opts:['m^n','n^m','m × n','C(m + n - 1, n)'], ans:0},
+    {q:'A computer system has 3 redundant power supplies, each of which can be in one of 3 states: working, degraded, or failed. How many possible system states exist?', opts:['3^3 = 27','3 × 3 = 9','3!','C(3, 3)'], ans:0},
+    {q:'In a sorting algorithm, how many possible permutations of 6 elements need to be considered in the worst case?', opts:['6^6','6! = 720','C(6, 2) = 15','2^6 = 64'], ans:1},
+    {q:'A memory management system allocates blocks of size 4KB, 8KB, or 16KB. A process requests 3 blocks, where order matters and blocks can be of different sizes. How many possible block size sequences exist?', opts:['3^3 = 27','3!','C(3 + 3 - 1, 3)','3 × 3'], ans:0},
+    {q:'A disk drive has a 5% chance of failure in the first year and an 8% chance of failure in the second year. If failures are independent, what is the probability that the drive survives both years?', opts:['0.95 × 0.92 = 0.874','0.05 × 0.08 = 0.004','0.95 + 0.92 = 1.87','0.05 + 0.08 = 0.13'], ans:0},
+    {q:'A computer network has 3 independent servers, each with an uptime of 99.9%. What is the probability that at least one server is up at any given time?', opts:['0.999^3','1 - 0.001^3 = 0.999999','3 × 0.999','0.999 + 0.999 + 0.999'], ans:1},
+    {q:'A CPU instruction pipeline has 5 stages with stall probabilities 0.1, 0.05, 0.15, 0.1, and 0.05, respectively. If stalls are independent, what is the probability of at least one stall per instruction?', opts:['1 - (0.9 × 0.95 × 0.85 × 0.9 × 0.95) = 1 - 0.621 = 0.379','0.1 + 0.05 + 0.15 + 0.1 + 0.05 = 0.45','0.1 × 0.05 × 0.15 × 0.1 × 0.05','0.9 × 0.95 × 0.85 × 0.9 × 0.95 = 0.621'], ans:0},
+    {q:'In a database system, the probability that a query is answered within 100ms is 0.70, within 500ms is 0.95, and within 1s is 0.99. What is the probability that the query takes between 100ms and 500ms?', opts:['0.95 - 0.70 = 0.25','0.70 + 0.95 = 1.65','0.70 × 0.95 = 0.665','0.99 - 0.95 = 0.04'], ans:0},
+    {q:'A RAID 1 system has two identical disks. If disk A fails with probability 0.03 and disk B fails with probability 0.04 independently, what is the probability that the system fails (both disks fail)?', opts:['0.03 + 0.04 = 0.07','0.03 × 0.04 = 0.0012','0.03','0.04'], ans:1},
+    {q:'A compiler optimization has a 20% chance of improving performance by 10%, a 30% chance of improving by 5%, and a 50% chance of no change. What is the expected performance improvement?', opts:['0.20 × 10 + 0.30 × 5 + 0.50 × 0 = 3.5%','10 + 5 + 0 = 15%','0.20 × 0.10 + 0.30 × 0.05 = 0.035','(10 + 5 + 0) / 3 = 5%'], ans:0},
+    {q:'A network switch has 8 ports, each with a 10% chance of being busy independently. What is the expected number of busy ports?', opts:['8 × 0.10 = 0.8','0.10^8','8 + 0.10 = 8.10','8 / 0.10 = 80'], ans:0},
+    {q:'In a computer system, the probability that a memory access is a cache hit is 0.90. If it is a hit, the access time is 1ns; if it is a miss, the access time is 50ns. What is the expected memory access time?', opts:['0.90 × 1 + 0.10 × 50 = 5.9ns','1 + 50 = 51ns','0.90 × 50 + 0.10 × 1 = 45.1ns','0.90'], ans:0},
+    {q:'A file system has a 95% chance of recovering a corrupted file using the primary method. If the primary method fails, the secondary method succeeds with 60% probability. What is the probability that a corrupted file is recovered?', opts:['0.95 + 0.05 × 0.60 = 0.98','0.95 × 0.60 = 0.57','0.95 + 0.60 = 1.55','0.05 × 0.60 = 0.03'], ans:0},
+    {q:'A packet in a network has a 30% chance of being lost on the first router. Given that it survives the first router, it has a 20% chance of being lost on the second router. Given that it survives the second, it has a 10% chance of being lost on the third. What is the probability that the packet is delivered?', opts:['0.70 × 0.80 × 0.90 = 0.504','0.30 × 0.20 × 0.10 = 0.006','0.70 + 0.80 + 0.90 = 2.40','1 - (0.30 × 0.20 × 0.10) = 0.994'], ans:0},
+    {q:'A TCP connection has a 90% chance of successful handshake. Given a successful handshake, data transfer succeeds with 95% probability. What is the conditional probability that data transfer succeeds given that the handshake succeeds?', opts:['0.90','0.95','0.90 × 0.95 = 0.855','0.90 + 0.95 = 1.85'], ans:1},
+    {q:'In a database, a tuple is found in the cache with probability 0.80. If found, retrieval time is 1ms; if not found, the disk access time is 20ms. What is the expected retrieval time?', opts:['0.80 × 1 + 0.20 × 20 = 4.8ms','1 + 20 = 21ms','0.80 × 20 + 0.20 × 1 = 16.2ms','0.80'], ans:0},
+    {q:'In a file system, events A = "File is read" and B = "File is written" on the same file. How are these events best characterized?', opts:['They are mutually exclusive','They are independent','They are mutually exclusive if the file cannot be simultaneously read and written','They are neither mutually exclusive nor independent'], ans:2},
+    {q:'A computer has two independent error detection mechanisms. Mechanism 1 detects 95% of errors, and Mechanism 2 detects 90% of errors. What is the probability that an error is detected by at least one of the two mechanisms?', opts:['0.95 × 0.90 = 0.855','1 - 0.05 × 0.10 = 0.995','0.95 + 0.90 = 1.85','0.05 + 0.10 = 0.15'], ans:1},
+    {q:'A network packet can be lost due to congestion (C) or due to corruption (R). If P(C) = 0.05 and P(R) = 0.03, and the events are mutually exclusive, what is the probability that a packet is lost?', opts:['0.05 × 0.03 = 0.0015','0.05 + 0.03 = 0.08','0.05','0.03'], ans:1},
+    {q:'The probability that a CPU instruction is a branch is 0.25, and the probability that it is a load is 0.30. If these events are mutually exclusive (an instruction is exactly one type), what is the probability that an instruction is both a branch and a load?', opts:['0.25 × 0.30 = 0.075','0','0.25 + 0.30 = 0.55','1 - 0.55 = 0.45'], ans:1},
+    {q:'A RAID 5 system has 3 disks with failure probabilities 0.02, 0.03, and 0.025, respectively. If failures are independent, what is the probability that no disk fails?', opts:['0.98 × 0.97 × 0.975 = 0.927','0.02 + 0.03 + 0.025 = 0.075','0.02 × 0.03 × 0.025 = 0.000015','1 - 0.927 = 0.073'], ans:0},
+    {q:'Let A be the event "Cache hit" with P(A) = 0.85, and B be the event "Pipeline stall" with P(B) = 0.20. If P(A ∩ B) = 0.17, are A and B independent?', opts:['Yes, because 0.85 × 0.20 = 0.17','No, because 0.85 × 0.20 ≠ 0.17','Yes, because they can both occur','No, because they are mutually exclusive'], ans:1},
+    {q:'In a binary tree, the probability that a node is a leaf is 0.4, and the probability that it is an internal node is 0.6. How are these events best described?', opts:['They are mutually exclusive and collectively exhaustive','They are independent','They are neither mutually exclusive nor exhaustive','They are only independent'], ans:0},
+    {q:'A computer system uses three types of memory: L1 cache (10% of accesses, 1ns), L2 cache (30%, 5ns), and main memory (60%, 100ns). Using the law of total probability, what is the expected memory access time?', opts:['0.10 × 1 + 0.30 × 5 + 0.60 × 100 = 61.6ns','1 + 5 + 100 = 106ns','0.10 + 0.30 + 0.60 = 1.00','0.10 × 100 + 0.30 × 5 + 0.60 × 1 = 12.1ns'], ans:0},
+    {q:'A compiler performs optimizations based on code type: Integer code (50%, speedup 1.2x), Floating-point code (30%, 1.5x), and String code (20%, 1.1x). What is the expected speedup?', opts:['0.50 × 1.2 + 0.30 × 1.5 + 0.20 × 1.1 = 1.27','1.2 + 1.5 + 1.1 = 3.8','0.50 × 1.5 + 0.30 × 1.2 + 0.20 × 1.1 = 1.33','1.2'], ans:0},
+    {q:'A network router receives packets from three sources: Source A (40%, drop rate 0.02), Source B (35%, drop rate 0.01), and Source C (25%, drop rate 0.03). What is the overall drop rate?', opts:['0.40 × 0.02 + 0.35 × 0.01 + 0.25 × 0.03 = 0.019','0.02 + 0.01 + 0.03 = 0.06','0.40 × 0.01 + 0.35 × 0.02 + 0.25 × 0.03 = 0.0185','0.02 × 0.01 × 0.03 = 0.000006'], ans:0},
+    {q:'An operating system schedules processes using three algorithms: Round Robin (60% of time, overhead 50μs), Priority (30%, overhead 80μs), and FIFO (10%, overhead 30μs). What is the expected context switch overhead?', opts:['0.60 × 50 + 0.30 × 80 + 0.10 × 30 = 57μs','50 + 80 + 30 = 160μs','0.60 + 0.30 + 0.10 = 1','0.60 × 80 + 0.30 × 50 + 0.10 × 30 = 66μs'], ans:0},
+    {q:'A database query can use three execution plans: Plan 1 (chosen 25%, success rate 0.95), Plan 2 (45%, success rate 0.88), and Plan 3 (30%, success rate 0.92). What is the overall success rate?', opts:['0.25 + 0.45 + 0.30 = 1.00','0.25 × 0.95 + 0.45 × 0.88 + 0.30 × 0.92 = 0.9035','0.95 + 0.88 + 0.92 = 2.75','0.25 × 0.88 + 0.45 × 0.95 + 0.30 × 0.92 = 0.9115'], ans:1},
+    {q:'A distributed system has three data centers with equal probability of serving a request, with uptimes 99.9%, 99.5%, and 99.0%. What is the overall uptime?', opts:['(99.9 + 99.5 + 99.0) / 3 = 99.47%','99.9 × 99.5 × 99.0 = 98.4%','99.9%','99.0%'], ans:0},
+    {q:'A spam filter uses a Bayesian classifier. The probability that an email is spam is 0.20. The filter correctly identifies spam with probability 0.95, and incorrectly marks legitimate email as spam with probability 0.08. Given that the filter marks an email as spam, what is the probability that it is actually spam?', opts:['(0.20 × 0.95) / (0.20 × 0.95 + 0.80 × 0.08) = 0.748','0.95','0.20','0.20 × 0.95 = 0.19'], ans:0},
+    {q:'A computer network has a 2% probability of packet loss due to congestion. The network monitoring tool detects congestion with 90% probability when it occurs, and has a 5% false positive rate. Given that the tool alerts to congestion, what is the probability that there is actually congestion?', opts:['(0.02 × 0.90) / (0.02 × 0.90 + 0.98 × 0.05) = 0.269','0.90','0.02','0.05'], ans:0},
+    {q:'In a compiler, an optimization is applied to 40% of code segments. When applied, it improves performance with probability 0.85; when not applied, performance improves with probability 0.25 (due to other factors). Given that performance improved, what is the probability that the optimization was applied?', opts:['0.40','(0.40 × 0.85) / (0.40 × 0.85 + 0.60 × 0.25) = 0.694','0.85','0.40 × 0.85 = 0.34'], ans:1},
+    {q:'A hardware error detection system has three error sources: Source 1 (50% of errors, detected with 98% accuracy), Source 2 (30%, 95%), and Source 3 (20%, 90%). Given a detected error, what is the probability that it came from Source 1?', opts:['0.50','(0.50 × 0.98) / (0.50 × 0.98 + 0.30 × 0.95 + 0.20 × 0.90) = 0.513','0.98','0.50 × 0.98 = 0.49'], ans:1},
+    {q:'A machine learning classifier for network intrusion detection has a prior attack probability of 0.01, a true positive rate of 0.96, and a false positive rate of 0.02. Given that the classifier signals an attack, what is the probability that an attack is actually occurring?', opts:['(0.01 × 0.96) / (0.01 × 0.96 + 0.99 × 0.02) = 0.327','0.96','0.01','0.02'], ans:0},
+    {q:'A file system uses three storage tiers: SSD (20%, corruption rate 0.001), HDD (50%, corruption rate 0.005), and Tape (30%, corruption rate 0.01). Given that a file is corrupted, what is the probability that it was stored on HDD?', opts:['(0.50 × 0.005) / (0.20 × 0.001 + 0.50 × 0.005 + 0.30 × 0.01) = 0.472','0.50','0.005','0.50 × 0.005 = 0.0025'], ans:0},
+    {q:'A cache memory system has two levels: L1 cache (hit rate 90%, access time 1ns) and L2 cache (hit rate 80% when L1 misses, access time 10ns), with main memory access time 100ns. Given that a memory access took 50ns, what is the probability that it was served from L2 cache?', opts:['The probability is 0 because L2 access takes 10ns, not 50ns','(0.10 × 0.80) / (0.90 × 1 + 0.10 × 0.80 + 0.10 × 0.20 × 100)','This is ill-posed because the observed time does not correspond to any possible access time','All of the above are correct'], ans:2}
+  ];
+  const quizCS = attachSteps(rawCS);
+
+  // ---- CYBERSECURITY (40) - All complete sentences ----
+  const rawCyber = [
+    {q:'A password policy requires exactly 8 characters, where each character can be any of 94 printable ASCII characters. How many possible passwords exist?', opts:['8 × 94','94^8','C(94, 8)','94! / 86!'], ans:1},
+    {q:'An intrusion detection system (IDS) monitors 10 distinct network ports, and an alert is generated if any subset of ports shows suspicious activity. How many possible alert patterns exist, including no alert?', opts:['10!','2^10 = 1024','10^2 = 100','C(10, 2) = 45'], ans:1},
+    {q:'A biometric authentication system uses a 4-digit PIN followed by a fingerprint scan from 10 possible fingers. How many unique authentication attempts are possible?', opts:['10^4 × 10 = 100,000','10^4 + 10 = 10,010','C(10, 4) × 10 = 2,100','4^10 × 10 = 104,857,600'], ans:0},
+    {q:'In a ransomware attack, 6 files are encrypted, and an antivirus can recover files in a specific order. How many possible recovery orders exist?', opts:['6^6','6! = 720','C(6, 6) = 1','2^6 = 64'], ans:1},
+    {q:'A firewall has 3 rules (allow, deny, or log) for each of 5 network services. How many possible rule configurations exist?', opts:['3^5 = 243','5^3 = 125','3 × 5 = 15','3! × 5! = 720'], ans:0},
+    {q:'A security team must select 3 distinct vulnerability assessment tools from a set of 10 available tools, and the order of selection does not matter. How many possible selections exist?', opts:['10 × 9 × 8 = 720','C(10, 3) = 120','10^3 = 1,000','10! = 3,628,800'], ans:1},
+    {q:'An encryption key has 128 bits. How many possible keys exist?', opts:['128^2','2^128','128!','C(128, 64)'], ans:1},
+    {q:'A malware analysis sandbox runs 4 different operating system versions and 3 different antivirus products. How many distinct testing environments exist?', opts:['4 + 3 = 7','4 × 3 = 12','C(4, 3) = 4','4^3 = 64'], ans:1},
+    {q:'A password cracking tool has a 1% chance of cracking a password within 1 hour on each of 3 independent attempts. What is the probability that it cracks the password within 1 hour on all three attempts?', opts:['0.01 + 0.01 + 0.01 = 0.03','0.01^3 = 0.000001','0.99^3 = 0.970299','1 - 0.99^3 = 0.029701'], ans:3},
+    {q:'A system has three independent firewalls with success rates of 99%, 98%, and 95%, respectively. What is the probability that at least one firewall fails to block a given attack?', opts:['0.01 × 0.02 × 0.05 = 0.00001','0.99 × 0.98 × 0.95 = 0.92169','1 - 0.92169 = 0.07831','0.01 + 0.02 + 0.05 = 0.08'], ans:2},
+    {q:'The probability of a phishing email being opened by an employee is 0.15. Given that it is opened, the probability that the employee clicks the malicious link is 0.40. What is the probability that a phishing email results in a click?', opts:['0.15 + 0.40 = 0.55','0.15 × 0.40 = 0.06','0.15','0.40'], ans:1},
+    {q:'A SIEM system generates alerts. The probability of a false positive is 0.05 per alert, and the probability of a true positive is 0.20. If these are the only two possibilities, what is the probability that an alert is useful (a true positive)?', opts:['0.05','0.20','0.25','0.75'], ans:1},
+    {q:'An organization has 10,000 users, each with a 1% chance of having a compromised password. What is the expected number of compromised passwords?', opts:['10,000 × 0.01 = 100','0.01^10,000','10,000 / 0.01 = 1,000,000','10,000 + 0.01 = 10,000.01'], ans:0},
+    {q:'A DDoS attack has a 70% chance of being detected by network monitoring, and the detection system has a 5% false positive rate. What is the probability of a false positive in a single monitoring window?', opts:['0.70','0.05','0.70 × 0.05 = 0.035','0.70 + 0.05 = 0.75'], ans:1},
+    {q:'In a zero-day vulnerability window, the probability that the vulnerability is exploited before a patch is available is 0.30, and the probability that a patch is available within the first week is 0.60. Assuming independence, what is the probability that a patch is available and the vulnerability is not exploited in the first week?', opts:['0.60 × 0.70 = 0.42','0.60 + 0.70 = 1.30','0.30 × 0.60 = 0.18','0.70'], ans:0},
+    {q:'In a security audit, the probability that a system has a vulnerability is 0.25. If a vulnerability exists, a scanner detects it with probability 0.90; if no vulnerability exists, the scanner falsely reports one with probability 0.05. What is the probability that the scanner detects a vulnerability?', opts:['0.25 × 0.90 = 0.225','0.25 × 0.90 + 0.75 × 0.05 = 0.2625','0.75 × 0.05 = 0.0375','0.90'], ans:1},
+    {q:'An antivirus program has a 95% chance of detecting a known malware. If it fails to detect, a secondary scanner detects it with 80% probability. What is the probability that the malware is detected?', opts:['0.95 + 0.05 × 0.80 = 0.99','0.95 × 0.80 = 0.76','0.95','0.05 × 0.80 = 0.04'], ans:0},
+    {q:'A user has a 60% chance of correctly identifying a phishing email when trained, and a 30% chance when untrained. The probability that a user is trained is 70%. What is the probability that a randomly selected user correctly identifies a phishing email?', opts:['0.70 × 0.60 + 0.30 × 0.30 = 0.51','0.60','0.30','0.70'], ans:0},
+    {q:'An authentication system requires two factors: password (P) and biometric (B). The probability that password authentication succeeds is 0.95. Given that the password succeeds, biometric succeeds with probability 0.98. What is the probability that both factors succeed?', opts:['0.95 + 0.98 = 1.93','0.95 × 0.98 = 0.931','0.95','0.98'], ans:1},
+    {q:'A network intrusion detection system (IDS) has three stages. Stage 1 detects attacks with probability 0.80. If stage 1 fails, stage 2 detects with probability 0.70. If stage 2 fails, stage 3 detects with probability 0.60. What is the overall detection probability?', opts:['0.80 + 0.70 + 0.60 = 2.10','0.80 + 0.20 × 0.70 + 0.20 × 0.30 × 0.60 = 0.976','0.80 × 0.70 × 0.60 = 0.336','0.80'], ans:1},
+    {q:'In a security context, events A = "A system is compromised by malware" and B = "A system is compromised by a phishing attack" for a single system in a single incident. How are these events best characterized?', opts:['They are mutually exclusive','They are independent','They are neither mutually exclusive nor independent','They are independent only if P(A) = P(B)'], ans:0},
+    {q:'An organization has two independent security controls: Control 1 blocks 90% of attacks, and Control 2 blocks 80% of attacks. What is the probability that an attack is blocked by at least one control?', opts:['0.90 × 0.80 = 0.72','1 - 0.10 × 0.20 = 0.98','0.90 + 0.80 = 1.70','0.10 + 0.20 = 0.30'], ans:1},
+    {q:'A user\'s password is compromised (event C) with probability 0.10, and the user also uses the same password on multiple sites (event M) with probability 0.40. If these events are independent, what is the probability that the password is compromised and the user uses it on multiple sites?', opts:['0.10 + 0.40 = 0.50','0.10 × 0.40 = 0.04','0.10','0.40'], ans:1},
+    {q:'Let A be the event "A packet is malicious" with P(A) = 0.02, and B be the event "A packet is from an untrusted source" with P(B) = 0.15. If P(A ∪ B) = 0.17, what can we conclude about these events?', opts:['A and B are mutually exclusive (since 0.02 + 0.15 = 0.17)','A and B are independent','P(A ∩ B) = 0.003','A and B are dependent'], ans:0},
+    {q:'A cloud environment has three independent availability zones with failure probabilities 0.01, 0.02, and 0.015. What is the probability that all zones are operational?', opts:['0.01 × 0.02 × 0.015 = 0.000003','0.99 × 0.98 × 0.985 = 0.955','0.99 + 0.98 + 0.985 = 2.955','1 - 0.01 - 0.02 - 0.015 = 0.955'], ans:1},
+    {q:'A security breach can occur due to an insider threat (I) with P(I) = 0.05 or an external attack (E) with P(E) = 0.15. If P(I ∩ E) = 0.01, are I and E independent?', opts:['Yes, because P(I) × P(E) = 0.0075 ≠ 0.01, so they are not independent','Yes, because P(I) × P(E) = 0.0075, so they are independent','No, because 0.05 × 0.15 ≠ 0.01','Cannot be determined'], ans:2},
+    {q:'A security tool can be either in "monitoring mode" (M) or "blocking mode" (B). How are these events best described?', opts:['They are mutually exclusive and collectively exhaustive','They are independent','They are mutually exclusive but not exhaustive','They are neither'], ans:0},
+    {q:'An organization has three types of endpoints: Servers (20%, compromise probability 0.08), Workstations (60%, compromise probability 0.05), and Mobile devices (20%, compromise probability 0.12). Using the law of total probability, what is the overall compromise probability?', opts:['0.20 × 0.08 + 0.60 × 0.05 + 0.20 × 0.12 = 0.07','0.08 + 0.05 + 0.12 = 0.25','0.20 + 0.60 + 0.20 = 1.00','0.20 × 0.05 + 0.60 × 0.08 + 0.20 × 0.12 = 0.082'], ans:0},
+    {q:'A phishing attack originates from three sources: Email (60%, click rate 0.12), SMS (25%, click rate 0.08), and Social Media (15%, click rate 0.15). What is the overall click rate?', opts:['0.60 × 0.12 + 0.25 × 0.08 + 0.15 × 0.15 = 0.1145','0.12 + 0.08 + 0.15 = 0.35','0.60 + 0.25 + 0.15 = 1.00','0.60 × 0.08 + 0.25 × 0.12 + 0.15 × 0.15 = 0.1005'], ans:0},
+    {q:'A security incident can be caused by: External attackers (50%, detection rate 0.90), Insiders (30%, detection rate 0.70), and System failures (20%, detection rate 0.50). What is the overall detection rate?', opts:['0.50 × 0.90 + 0.30 × 0.70 + 0.20 × 0.50 = 0.76','0.90 + 0.70 + 0.50 = 2.10','0.50 + 0.30 + 0.20 = 1.00','0.50 × 0.70 + 0.30 × 0.90 + 0.20 × 0.50 = 0.72'], ans:0},
+    {q:'A network has three types of traffic: Web traffic (50%, malicious probability 0.01), Email traffic (30%, malicious probability 0.03), and File transfer traffic (20%, malicious probability 0.02). What is the probability that a randomly selected packet is malicious?', opts:['0.50 × 0.01 + 0.30 × 0.03 + 0.20 × 0.02 = 0.018','0.01 + 0.03 + 0.02 = 0.06','0.50 × 0.03 + 0.30 × 0.01 + 0.20 × 0.02 = 0.022','0.50 × 0.02 + 0.30 × 0.01 + 0.20 × 0.03 = 0.019'], ans:0},
+    {q:'A security awareness program has three training levels: Basic training (60%, phishing identification rate 0.40), Advanced training (30%, identification rate 0.70), and Expert training (10%, identification rate 0.95). What is the overall phishing identification rate?', opts:['0.60 × 0.40 + 0.30 × 0.70 + 0.10 × 0.95 = 0.545','0.40 + 0.70 + 0.95 = 2.05','0.60 × 0.70 + 0.30 × 0.40 + 0.10 × 0.95 = 0.635','0.60 + 0.30 + 0.10 = 1.00'], ans:0},
+    {q:'A multi-cloud environment distributes workloads across three providers: Cloud A (40%, breach probability 0.02), Cloud B (35%, breach probability 0.03), and Cloud C (25%, breach probability 0.01). What is the overall breach probability?', opts:['0.40 × 0.02 + 0.35 × 0.03 + 0.25 × 0.01 = 0.021','0.02 + 0.03 + 0.01 = 0.06','0.40 + 0.35 + 0.25 = 1.00','0.40 × 0.03 + 0.35 × 0.02 + 0.25 × 0.01 = 0.0215'], ans:0},
+    {q:'A security monitoring tool detects malware. The probability that a file is actually malware is 0.05. The tool correctly identifies malware with probability 0.98, and incorrectly flags clean files with probability 0.03. Given that the tool flags a file as malware, what is the probability that it is actually malware?', opts:['(0.05 × 0.98) / (0.05 × 0.98 + 0.95 × 0.03) = 0.632','0.98','0.05','0.05 × 0.98 = 0.049'], ans:0},
+    {q:'A network intrusion detection system has a 1% chance of an actual attack. The system has a 95% true positive rate and a 2% false positive rate. Given that the system raises an alert, what is the probability that an attack is actually occurring?', opts:['(0.01 × 0.95) / (0.01 × 0.95 + 0.99 × 0.02) = 0.324','0.95','0.01','0.02'], ans:0},
+    {q:'A phishing campaign is suspected in an organization. The probability that an employee falls for phishing is 0.08. An email security tool flags a suspicious email with 90% probability when it is phishing, and 10% probability when it is legitimate. Given that the tool flags an email, what is the probability that it is actually a phishing attempt?', opts:['(0.08 × 0.90) / (0.08 × 0.90 + 0.92 × 0.10) = 0.439','0.90','0.08','0.08 × 0.90 = 0.072'], ans:0},
+    {q:'A security incident response team receives alerts from three SIEM rules: Rule 1 generates 40% of alerts with true positive rate 0.85, Rule 2 generates 35% with true positive rate 0.75, and Rule 3 generates 25% with true positive rate 0.90. Given that an alert is a true positive, what is the probability that it came from Rule 1?', opts:['0.40','(0.40 × 0.85) / (0.40 × 0.85 + 0.35 × 0.75 + 0.25 × 0.90) = 0.396','0.85','0.40 × 0.85 = 0.34'], ans:1},
+    {q:'A vulnerability scanner has three severity classifications: Critical (15% of vulnerabilities, detection rate 0.99), High (35%, detection rate 0.95), and Medium (50%, detection rate 0.80). Given that the scanner detects a vulnerability, what is the probability that it is classified as Critical?', opts:['(0.15 × 0.99) / (0.15 × 0.99 + 0.35 × 0.95 + 0.50 × 0.80) = 0.168','0.15','0.99','0.15 × 0.99 = 0.1485'], ans:0},
+    {q:'A security team investigates suspicious login attempts. The probability that a login is malicious is 0.03. An anomaly detection system flags malicious logins with 92% accuracy, and flags legitimate logins with 8% false positive rate. Given that a login is flagged, what is the probability that it is malicious?', opts:['(0.03 × 0.92) / (0.03 × 0.92 + 0.97 × 0.08) = 0.262','0.92','0.03','0.03 × 0.92 = 0.0276'], ans:0},
+    {q:'A security operations center (SOC) receives alerts from three sources with different true and false positive rates and source prior probabilities. The overall prior probability of an incident is 0.005. Given an alert from an unknown source (equal probability of each source), what is the probability that the alert represents a true incident? (Weighted TPR = 0.80, weighted FPR = 0.050.)', opts:['(0.005 × 0.90) / (0.005 × 0.90 + 0.995 × 0.02) = 0.184','(0.005 × 0.80) / (0.005 × 0.80 + 0.995 × 0.050) = 0.0744','The answer cannot be determined without knowing the prior distribution over sources','Both B and C are correct approaches, but B provides the correct calculation'], ans:1}
+  ];
+  const quizCyber = attachSteps(rawCyber);
+
+  // ---- MECH & ELEC (40) - All complete sentences ----
+  const rawMeche = [
+    {q:'A mechanical assembly consists of 6 distinct components that must be installed in a specific sequence. How many possible assembly sequences exist?', opts:['6^6','6! = 720','C(6, 6) = 1','2^6 = 64'], ans:1},
+    {q:'An electrical circuit has 8 switches, each of which can be in either ON or OFF position. How many possible circuit configurations exist?', opts:['8^2 = 64','2^8 = 256','8!','C(8, 2) = 28'], ans:1},
+    {q:'A mechanical system has 3 gears with 4, 5, and 6 teeth respectively. How many possible gear ratio combinations exist, choosing one gear of each type?', opts:['4 + 5 + 6 = 15','4 × 5 × 6 = 120','C(4, 3) × C(5, 3) × C(6, 3)','4^3 + 5^3 + 6^3'], ans:1},
+    {q:'In a control system, 4 different sensors must be selected from a pool of 10 available sensors, and the order of selection does not matter. How many possible sensor sets exist?', opts:['10 × 9 × 8 × 7 = 5,040','C(10, 4) = 210','10^4 = 10,000','10! = 3,628,800'], ans:1},
+    {q:'A digital signal has 16 bits. How many possible distinct signals exist?', opts:['16^2 = 256','2^16 = 65,536','16!','C(16, 8) = 12,870'], ans:1},
+    {q:'A manufacturing process has 5 machines, each with 3 possible operating speeds. How many possible speed configurations exist?', opts:['5 × 3 = 15','3^5 = 243','5^3 = 125','3! × 5! = 720'], ans:1},
+    {q:'A bridge circuit has 4 resistors that can be selected from a set of 20 different resistor values, with replacement allowed. How many possible resistor combinations exist?', opts:['20^4 = 160,000','C(20, 4) = 4,845','4^20','20 × 4 = 80'], ans:0},
+    {q:'In quality control, an inspector must select 3 defective items from a batch of 100 items. How many ways can this be done if order matters?', opts:['100 × 99 × 98 = 970,200','C(100, 3) = 161,700','100^3 = 1,000,000','3! × C(100, 3)'], ans:0},
+    {q:'An electrical component has a 5% probability of failure within the first year. What is the probability that it survives the first year?', opts:['0.05','0.95','0.05^2','1.05'], ans:1},
+    {q:'A mechanical system has two independent redundant pumps. Pump A fails with probability 0.02 per hour, and Pump B fails with probability 0.03 per hour. What is the probability that both pumps fail in the same hour?', opts:['0.02 + 0.03 = 0.05','0.02 × 0.03 = 0.0006','0.02','0.03'], ans:1},
+    {q:'An electrical motor has a 10% chance of overheating under full load, and a 4% chance under half load. What is the probability that the motor overheats given that it is at full load?', opts:['0.04','0.10','0.10 × 0.04 = 0.004','0.10 + 0.04 = 0.14'], ans:1},
+    {q:'A manufacturing line has 3 machines with probabilities of needing maintenance 0.05, 0.07, and 0.06 respectively, independently. What is the probability that at least one machine needs maintenance?', opts:['0.05 + 0.07 + 0.06 = 0.18','0.05 × 0.07 × 0.06 = 0.00021','1 - 0.95 × 0.93 × 0.94 = 0.1695','0.95 × 0.93 × 0.94 = 0.8305'], ans:2},
+    {q:'A transmission line has a 2% probability of outage due to lightning and a 1% probability of outage due to equipment failure. If these events are mutually exclusive, what is the probability of an outage?', opts:['0.02 × 0.01 = 0.0002','0.02 + 0.01 = 0.03','0.02','0.01'], ans:1},
+    {q:'In a batch of 1000 manufactured parts, the expected number of defective parts is 25. What is the probability of defect for a randomly selected part?', opts:['25/1000 = 0.025','25','1000/25 = 40','0.25'], ans:0},
+    {q:'A temperature sensor has a 98% accuracy rate. What is the probability that the sensor is inaccurate in 3 independent readings?', opts:['0.02^3 = 0.000008','0.98^3 = 0.941','3 × 0.02 = 0.06','0.02'], ans:0},
+    {q:'In a mechanical system, the probability of bearing failure is 0.04 under normal load and 0.15 under heavy load. The system operates under heavy load 30% of the time. What is the overall probability of bearing failure?', opts:['0.04 × 0.70 + 0.15 × 0.30 = 0.073','0.04 + 0.15 = 0.19','0.04 × 0.30 + 0.15 × 0.70 = 0.117','0.04'], ans:0},
+    {q:'An electrical system has two circuit breakers in series. Breaker 1 trips with probability 0.03, and given that Breaker 1 does not trip, Breaker 2 trips with probability 0.02. What is the probability that the system operates (neither breaker trips)?', opts:['0.97 × 0.98 = 0.9506','0.03 + 0.02 = 0.05','0.03 × 0.02 = 0.0006','0.97'], ans:0},
+    {q:'A motor has a 90% chance of starting when the temperature is below 30°C, and a 60% chance when the temperature is above 30°C. The probability that the temperature is above 30°C is 40%. What is the overall probability that the motor starts?', opts:['0.90','0.60','0.60 × 0.40 + 0.90 × 0.60 = 0.78','0.90 × 0.40 + 0.60 × 0.60 = 0.72'], ans:2},
+    {q:'A hydraulic system has a 5% leak probability. If a leak exists, pressure drops below threshold with probability 0.80; if no leak exists, pressure still drops below threshold with probability 0.02. What is the probability of a pressure drop?', opts:['0.05 × 0.80 = 0.04','0.95 × 0.02 = 0.019','0.05 × 0.80 + 0.95 × 0.02 = 0.059','0.05 + 0.80 = 0.85'], ans:2},
+    {q:'A power plant has three generators: Generator 1 supplies 50% of power with failure rate 0.01, Generator 2 supplies 30% with failure rate 0.02, and Generator 3 supplies 20% with failure rate 0.015. What is the overall probability of generator failure?', opts:['0.50 × 0.01 + 0.30 × 0.02 + 0.20 × 0.015 = 0.014','0.01 + 0.02 + 0.015 = 0.045','0.50 + 0.30 + 0.20 = 1.00','0.50 × 0.02 + 0.30 × 0.01 + 0.20 × 0.015 = 0.016'], ans:0},
+    {q:'In a mechanical assembly, events A = "Part is oversized" and B = "Part is undersized." For a single part, how are these events best characterized?', opts:['They are mutually exclusive','They are independent','They are neither','They are mutually exclusive only if P(A) = P(B)'], ans:0},
+    {q:'A system has two independent backup batteries. Battery A has a 95% chance of working when needed, and Battery B has a 92% chance. What is the probability that at least one battery works?', opts:['0.95 + 0.92 = 1.87','0.95 × 0.92 = 0.874','1 - 0.05 × 0.08 = 0.996','0.05 + 0.08 = 0.13'], ans:2},
+    {q:'The probability that a resistor is within tolerance is 0.98, and the probability that a capacitor is within tolerance is 0.97. If these events are independent, what is the probability that both are within tolerance?', opts:['0.98 + 0.97 = 1.95','0.98 × 0.97 = 0.9506','0.98','0.97'], ans:1},
+    {q:'Let A be the event "Vibration exceeds 0.5mm" with P(A) = 0.08, and B be the event "Temperature exceeds 80°C" with P(B) = 0.12. If P(A ∪ B) = 0.20, what can we conclude about these events?', opts:['A and B are mutually exclusive (0.08 + 0.12 = 0.20)','A and B are independent','P(A ∩ B) = 0.0096','A and B are dependent'], ans:0},
+    {q:'A three-phase power system has independent phase failures with probabilities 0.01, 0.015, and 0.02. What is the probability that all three phases are operational?', opts:['0.01 × 0.015 × 0.02 = 0.000003','0.99 × 0.985 × 0.98 = 0.956','0.99 + 0.985 + 0.98 = 2.955','1 - 0.01 - 0.015 - 0.02 = 0.955'], ans:1},
+    {q:'The probability of a gear tooth failure is 0.03, and the probability of bearing failure is 0.04. If P(Gear ∩ Bearing) = 0.0012, are these events independent?', opts:['Yes, because 0.03 × 0.04 = 0.0012','No, because 0.03 × 0.04 ≠ 0.0012','Yes, because they are mutually exclusive','Cannot be determined'], ans:0},
+    {q:'A switch can be either "open" (O) or "closed" (C). How are these events best described?', opts:['They are mutually exclusive and collectively exhaustive','They are independent','They are mutually exclusive but not exhaustive','They are neither'], ans:0},
+    {q:'A manufacturing plant operates under three shift conditions: Day shift (50%, defect rate 0.02), Evening shift (30%, defect rate 0.03), and Night shift (20%, defect rate 0.05). Using the law of total probability, what is the overall defect rate?', opts:['0.50 × 0.02 + 0.30 × 0.03 + 0.20 × 0.05 = 0.029','0.02 + 0.03 + 0.05 = 0.10','0.50 + 0.30 + 0.20 = 1.00','0.50 × 0.03 + 0.30 × 0.02 + 0.20 × 0.05 = 0.031'], ans:0},
+    {q:'An electrical grid has three types of loads: Residential (60%, failure rate 0.02), Commercial (30%, failure rate 0.01), and Industrial (10%, failure rate 0.03). What is the overall failure rate?', opts:['0.60 × 0.02 + 0.30 × 0.01 + 0.10 × 0.03 = 0.018','0.02 + 0.01 + 0.03 = 0.06','0.60 × 0.01 + 0.30 × 0.02 + 0.10 × 0.03 = 0.015','0.60 × 0.03 + 0.30 × 0.02 + 0.10 × 0.01 = 0.025'], ans:0},
+    {q:'A control system uses three types of actuators: Electric (40%, failure probability 0.05), Hydraulic (35%, failure probability 0.07), and Pneumatic (25%, failure probability 0.04). What is the overall failure probability?', opts:['0.40 × 0.05 + 0.35 × 0.07 + 0.25 × 0.04 = 0.0545','0.05 + 0.07 + 0.04 = 0.16','0.40 × 0.07 + 0.35 × 0.05 + 0.25 × 0.04 = 0.0555','0.40 + 0.35 + 0.25 = 1.00'], ans:0},
+    {q:'A mechanical system has three lubrication levels: Full (70%, wear rate 0.001), Partial (20%, wear rate 0.005), and None (10%, wear rate 0.02). What is the expected wear rate?', opts:['0.70 × 0.001 + 0.20 × 0.005 + 0.10 × 0.02 = 0.0037','0.001 + 0.005 + 0.02 = 0.026','0.70 × 0.005 + 0.20 × 0.001 + 0.10 × 0.02 = 0.0057','0.70 + 0.20 + 0.10 = 1.00'], ans:0},
+    {q:'A communication system uses three modulation schemes: Scheme A (50%, error probability 0.01), Scheme B (30%, error probability 0.02), and Scheme C (20%, error probability 0.015). What is the overall error probability?', opts:['0.50 × 0.01 + 0.30 × 0.02 + 0.20 × 0.015 = 0.014','0.01 + 0.02 + 0.015 = 0.045','0.50 × 0.02 + 0.30 × 0.01 + 0.20 × 0.015 = 0.016','0.50 × 0.015 + 0.30 × 0.02 + 0.20 × 0.01 = 0.0155'], ans:0},
+    {q:'A power distribution system has three voltage levels: High voltage (20%, fault probability 0.01), Medium voltage (50%, fault probability 0.005), and Low voltage (30%, fault probability 0.008). What is the overall fault probability?', opts:['0.20 × 0.01 + 0.50 × 0.005 + 0.30 × 0.008 = 0.0069','0.01 + 0.005 + 0.008 = 0.023','0.20 × 0.005 + 0.50 × 0.01 + 0.30 × 0.008 = 0.0084','0.20 × 0.008 + 0.50 × 0.01 + 0.30 × 0.005 = 0.0081'], ans:0},
+    {q:'A quality control inspection has two possible test outcomes. The probability that a part is defective is 0.04. The inspection correctly identifies defective parts with probability 0.95, and incorrectly identifies good parts as defective with probability 0.03. Given that a part is flagged as defective, what is the probability that it is actually defective?', opts:['(0.04 × 0.95) / (0.04 × 0.95 + 0.96 × 0.03) = 0.569','0.95','0.04','0.04 × 0.95 = 0.038'], ans:0},
+    {q:'A structural integrity testing system detects cracks. The prior probability of a crack is 0.01. The system detects cracks with 0.98 probability and has a 0.05 false positive rate. Given that the system detects a crack, what is the probability that a crack actually exists?', opts:['(0.01 × 0.98) / (0.01 × 0.98 + 0.99 × 0.05) = 0.165','0.98','0.01','0.05'], ans:0},
+    {q:'A motor fault diagnostic system uses three failure modes: Mode 1 (40%, detection probability 0.90), Mode 2 (35%, detection probability 0.85), and Mode 3 (25%, detection probability 0.95). Given that the system detects a fault, what is the probability that it is Mode 1?', opts:['0.40','(0.40 × 0.90) / (0.40 × 0.90 + 0.35 × 0.85 + 0.25 × 0.95) = 0.396','0.90','0.40 × 0.90 = 0.36'], ans:1},
+    {q:'In an electrical circuit, a short circuit can occur due to: Component failure (60%, detection probability 0.95), Wiring fault (30%, detection probability 0.80), or External cause (10%, detection probability 0.70). Given that a short circuit is detected, what is the probability that it was caused by component failure?', opts:['(0.60 × 0.95) / (0.60 × 0.95 + 0.30 × 0.80 + 0.10 × 0.70) = 0.629','0.60','0.95','0.60 × 0.95 = 0.57'], ans:0},
+    {q:'A temperature monitoring system has three sensor types: Type A (50%, accuracy 0.99), Type B (30%, accuracy 0.97), and Type C (20%, accuracy 0.95). Given that a sensor gives a correct reading, what is the probability that it is Type A?', opts:['(0.50 × 0.99) / (0.50 × 0.99 + 0.30 × 0.97 + 0.20 × 0.95) = 0.505','0.50','0.99','0.50 × 0.99 = 0.495'], ans:0},
+    {q:'A gear manufacturing process has three machines: Machine 1 produces 45% with defect rate 0.02, Machine 2 produces 35% with defect rate 0.03, and Machine 3 produces 20% with defect rate 0.01. Given that a gear is defective, what is the probability that it came from Machine 2?', opts:['(0.35 × 0.03) / (0.45 × 0.02 + 0.35 × 0.03 + 0.20 × 0.01) = 0.467','0.35','0.03','0.35 × 0.03 = 0.0105'], ans:0},
+    {q:'A power plant has three cooling systems: Cooling System A used 50% with failure rate 0.01, System B used 30% with failure rate 0.015, and System C used 20% with failure rate 0.02. During a plant outage, an investigation reveals that a cooling system failed. What is the probability that it was Cooling System A?', opts:['(0.50 × 0.01) / (0.50 × 0.01 + 0.30 × 0.015 + 0.20 × 0.02) = 0.385','0.50','0.01','0.50 × 0.01 = 0.005'], ans:0}
+  ];
+  const quizMeche = attachSteps(rawMeche);
+
+  // ---- SOCIAL SCIENCES (40) - All complete sentences ----
+  const rawSocial = [
+    {q:'A survey asks respondents to select their political affiliation from 4 categories: Democrat, Republican, Independent, and Other. If 3 respondents are surveyed independently, how many possible response patterns exist?', opts:['3 × 4 = 12','4^3 = 64','C(4, 3) = 4','3! = 6'], ans:1},
+    {q:'A researcher selects a committee of 5 people from a group of 12 volunteers, and the order of selection does not matter. How many possible committees exist?', opts:['12 × 11 × 10 × 9 × 8 = 95,040','C(12, 5) = 792','12^5 = 248,832','5! = 120'], ans:1},
+    {q:'In a classroom of 25 students, the teacher wants to assign each student to one of 4 project groups. How many possible assignments exist?', opts:['25 × 4 = 100','4^25','25^4 = 390,625','C(25, 4) = 12,650'], ans:1},
+    {q:'A political poll asks respondents to rank 3 candidates in order of preference. How many possible ranking orders exist?', opts:['3^3 = 27','3! = 6','C(3, 3) = 1','3 × 2 = 6'], ans:1},
+    {q:'A study examines 5 different personality traits, each measured on a 5-point Likert scale (1-5). How many possible personality profiles exist?', opts:['5 × 5 = 25','5^5 = 3,125','5!','C(5, 5) = 1'], ans:1},
+    {q:'A sociologist selects 3 distinct neighborhoods from a city with 10 neighborhoods for a community study, and the order of selection matters for scheduling. How many possible ordered selections exist?', opts:['10 × 9 × 8 = 720','C(10, 3) = 120','10^3 = 1,000','10! = 3,628,800'], ans:0},
+    {q:'An education researcher administers a test with 10 true/false questions. How many possible answer patterns exist?', opts:['10^2 = 100','2^10 = 1,024','10!','C(10, 2) = 45'], ans:1},
+    {q:'A demographer studies age categories: Child, Teen, Adult, and Senior. If a household has 4 members, how many possible age category combinations exist, allowing repetition?', opts:['4^4 = 256','4 × 4 = 16','C(4 + 4 - 1, 4) = C(7, 4) = 35','4! = 24'], ans:0},
+    {q:'According to a survey, the probability that a randomly selected adult has a college degree is 0.35. What is the probability that they do not have a college degree?', opts:['0.35','0.65','1.35','0.35^2 = 0.1225'], ans:1},
+    {q:'A social scientist studies voter turnout. The probability that a registered voter votes in a local election is 0.40. In a sample of 3 independent voters, what is the probability that all three vote?', opts:['0.40 + 0.40 + 0.40 = 1.20','0.40^3 = 0.064','0.60^3 = 0.216','3 × 0.40 = 1.20'], ans:1},
+    {q:'A public health study finds that 25% of adults exercise regularly and 40% eat a healthy diet. If these events are independent, what is the probability that an adult does both?', opts:['0.25 + 0.40 = 0.65','0.25 × 0.40 = 0.10','0.25','0.40'], ans:1},
+    {q:'A psychological study finds that 15% of participants show symptoms of anxiety and 10% show symptoms of depression. If the probability of having both is 0.05, what is the probability of having at least one condition?', opts:['0.15 + 0.10 = 0.25','0.15 × 0.10 = 0.015','0.15 + 0.10 - 0.05 = 0.20','0.15'], ans:2},
+    {q:'In an economics survey, the probability that a household has a savings account is 0.70, and the probability that they have a retirement account is 0.55. If these events are independent, what is the probability that a household has neither?', opts:['0.70 × 0.55 = 0.385','0.30 × 0.45 = 0.135','0.70 + 0.55 = 1.25','1 - 0.70 - 0.55 = -0.25'], ans:1},
+    {q:'A criminology study finds that the probability of recidivism within 5 years is 0.45 for a specific population. In a sample of 200 individuals, what is the expected number of recidivists?', opts:['200 × 0.45 = 90','0.45','200 + 0.45 = 200.45','200 / 0.45 = 444.4'], ans:0},
+    {q:'An educational intervention is successful with probability 0.30. The same intervention is applied to 4 independent classrooms. What is the probability that it is successful in exactly 2 classrooms?', opts:['C(4, 2) × 0.30^2 × 0.70^2 = 0.2646','0.30^2 = 0.09','2 × 0.30 = 0.60','0.30 × 0.70 = 0.21'], ans:0},
+    {q:'A political poll finds that 60% of voters support a policy. Among supporters, 70% are female; among non-supporters, 45% are female. What is the probability that a randomly selected voter is female?', opts:['0.60 × 0.70 + 0.40 × 0.45 = 0.60','0.70','0.45','0.60 × 0.70 = 0.42'], ans:0},
+    {q:'In a public health study, the probability that a person has a disease is 0.02. A diagnostic test correctly identifies the disease with probability 0.95, and has a false positive rate of 0.03. Given a positive test result, what is the probability that the person actually has the disease?', opts:['(0.02 × 0.95) / (0.02 × 0.95 + 0.98 × 0.03) = 0.393','0.95','0.02','0.02 × 0.95 = 0.019'], ans:0},
+    {q:'An economics study finds that 30% of workers are union members. Among union members, 85% have health insurance; among non-union members, 65% have health insurance. What is the overall probability that a worker has health insurance?', opts:['0.30 × 0.85 + 0.70 × 0.65 = 0.71','0.85','0.65','0.30 + 0.85 = 1.15'], ans:0},
+    {q:'A social mobility study tracks income levels across generations. The probability that a child from a low-income family achieves high income is 0.25. Given that they achieve high income, the probability that they attended a selective college is 0.70. What is the probability that a child from a low-income family attends a selective college and achieves high income?', opts:['0.25 + 0.70 = 0.95','0.25 × 0.70 = 0.175','0.25','0.70'], ans:1},
+    {q:'A survey finds that 45% of adults use social media daily. Among daily users, 30% report experiencing cyberbullying; among non-daily users, 10% report experiencing cyberbullying. What is the overall probability that an adult experiences cyberbullying?', opts:['0.45 × 0.30 + 0.55 × 0.10 = 0.19','0.30','0.10','0.45 × 0.30 = 0.135'], ans:0},
+    {q:'In a demographic survey, events A = "Person is under 18" and B = "Person is over 65." For a single individual, how are these events best characterized?', opts:['They are mutually exclusive','They are independent','They are neither','They are mutually exclusive only if the population has no 18-65 year olds'], ans:0},
+    {q:'A social science experiment tests two independent treatment effects. Treatment 1 has success probability 0.40, and Treatment 2 has success probability 0.50. What is the probability that both treatments succeed?', opts:['0.40 + 0.50 = 0.90','0.40 × 0.50 = 0.20','0.40','0.50'], ans:1},
+    {q:'The probability that a student passes statistics is 0.75, and the probability that they pass economics is 0.70. If these events are independent, what is the probability that the student passes both statistics and economics?', opts:['0.75 × 0.70 = 0.525','0.75 + 0.70 = 1.45','0.75','0.70'], ans:0},
+    {q:'Let A be the event "Voter supports Candidate X" with P(A) = 0.55, and B be the event "Voter supports Candidate Y" with P(B) = 0.45. If P(A ∪ B) = 1.00, what can we conclude about these events?', opts:['A and B are mutually exclusive','A and B are independent','P(A ∩ B) = 0.2475','A and B are the same event'], ans:0},
+    {q:'A public health study examines two independent risk factors for heart disease. Risk factor 1 has prevalence 0.30, and risk factor 2 has prevalence 0.20. What is the probability that a person has neither risk factor?', opts:['0.30 + 0.20 = 0.50','0.30 × 0.20 = 0.06','0.70 × 0.80 = 0.56','1 - 0.30 - 0.20 = 0.50'], ans:2},
+    {q:'The probability that a randomly selected person is employed is 0.62, and the probability that they are a college graduate is 0.35. If P(Employed ∩ College Graduate) = 0.217, are these events independent?', opts:['Yes, because 0.62 × 0.35 = 0.217','No, because 0.62 × 0.35 ≠ 0.217','Yes, because they are mutually exclusive','Cannot be determined'], ans:0},
+    {q:'In a survey, the events "Person is male" and "Person is female" are best described as:', opts:['Mutually exclusive and collectively exhaustive','Independent','Mutually exclusive but not exhaustive','Neither'], ans:0},
+    {q:'A sociologist studies three income groups: Low income (30%, high school graduation rate 0.70), Middle income (50%, graduation rate 0.90), and High income (20%, graduation rate 0.98). Using the law of total probability, what is the overall high school graduation rate?', opts:['0.30 × 0.70 + 0.50 × 0.90 + 0.20 × 0.98 = 0.856','0.70 + 0.90 + 0.98 = 2.58','0.30 + 0.50 + 0.20 = 1.00','0.30 × 0.90 + 0.50 × 0.70 + 0.20 × 0.98 = 0.816'], ans:0},
+    {q:'An education researcher studies three types of schools: Public (70%, college attendance rate 0.55), Private (20%, attendance rate 0.85), and Charter (10%, attendance rate 0.65). What is the overall college attendance rate?', opts:['0.70 × 0.55 + 0.20 × 0.85 + 0.10 × 0.65 = 0.62','0.55 + 0.85 + 0.65 = 2.05','0.70 × 0.85 + 0.20 × 0.55 + 0.10 × 0.65 = 0.77','0.70 × 0.65 + 0.20 × 0.85 + 0.10 × 0.55 = 0.68'], ans:0},
+    {q:'A political scientist studies voting behavior across three regions: Urban (45%, turnout rate 0.60), Suburban (35%, turnout rate 0.70), and Rural (20%, turnout rate 0.55). What is the overall voter turnout rate?', opts:['0.45 × 0.60 + 0.35 × 0.70 + 0.20 × 0.55 = 0.625','0.60 + 0.70 + 0.55 = 1.85','0.45 × 0.70 + 0.35 × 0.60 + 0.20 × 0.55 = 0.635','0.45 × 0.55 + 0.35 × 0.70 + 0.20 × 0.60 = 0.6125'], ans:0},
+    {q:'A psychology researcher studies three therapy types: Cognitive-behavioral therapy (40%, recovery rate 0.75), Psychodynamic therapy (35%, recovery rate 0.60), and Humanistic therapy (25%, recovery rate 0.50). What is the overall recovery rate?', opts:['0.40 × 0.75 + 0.35 × 0.60 + 0.25 × 0.50 = 0.635','0.75 + 0.60 + 0.50 = 1.85','0.40 × 0.60 + 0.35 × 0.75 + 0.25 × 0.50 = 0.6275','0.40 × 0.50 + 0.35 × 0.60 + 0.25 × 0.75 = 0.5975'], ans:0},
+    {q:'A demographer studies three age groups: Young (25%, voter registration rate 0.50), Middle-aged (45%, registration rate 0.80), and Elderly (30%, registration rate 0.85). What is the overall voter registration rate?', opts:['0.25 × 0.50 + 0.45 × 0.80 + 0.30 × 0.85 = 0.74','0.50 + 0.80 + 0.85 = 2.15','0.25 × 0.80 + 0.45 × 0.50 + 0.30 × 0.85 = 0.68','0.25 × 0.85 + 0.45 × 0.50 + 0.30 × 0.80 = 0.6775'], ans:0},
+    {q:'An economics study examines three employment sectors: Service (55%, job satisfaction rate 0.65), Manufacturing (25%, satisfaction rate 0.70), and Technology (20%, satisfaction rate 0.85). What is the overall job satisfaction rate?', opts:['0.55 × 0.65 + 0.25 × 0.70 + 0.20 × 0.85 = 0.6925','0.65 + 0.70 + 0.85 = 2.20','0.55 × 0.70 + 0.25 × 0.65 + 0.20 × 0.85 = 0.68','0.55 × 0.85 + 0.25 × 0.70 + 0.20 × 0.65 = 0.7725'], ans:0},
+    {q:'A public health screening program tests for a disease. The probability that a person has the disease is 0.005. The test correctly identifies the disease with probability 0.98, and has a false positive rate of 0.01. Given a positive test result, what is the probability that the person has the disease?', opts:['(0.005 × 0.98) / (0.005 × 0.98 + 0.995 × 0.01) = 0.330','0.98','0.005','0.005 × 0.98 = 0.0049'], ans:0},
+    {q:'A hiring discrimination study examines three applicant pools: Pool A (40%, interview rate 0.60), Pool B (35%, interview rate 0.75), and Pool C (25%, interview rate 0.50). Given that an applicant receives an interview, what is the probability that they are from Pool A?', opts:['0.40','(0.40 × 0.60) / (0.40 × 0.60 + 0.35 × 0.75 + 0.25 × 0.50) = 0.348','0.60','0.40 × 0.60 = 0.24'], ans:1},
+    {q:'A social media platform has three user age groups: Young adults (45%, engage with political content with probability 0.40), Middle-aged (35%, engage with probability 0.55), and Older adults (20%, engage with probability 0.30). Given that a user engages with political content, what is the probability that they are a young adult?', opts:['(0.45 × 0.40) / (0.45 × 0.40 + 0.35 × 0.55 + 0.20 × 0.30) = 0.345','0.45','0.40','0.45 × 0.40 = 0.18'], ans:0},
+    {q:'An educational testing program identifies students as "at risk" for dropping out. The prior probability that a student is at risk is 0.15. The screening tool correctly identifies at-risk students with probability 0.88, and incorrectly flags low-risk students with probability 0.06. Given that a student is flagged as at risk, what is the probability that they actually are at risk?', opts:['(0.15 × 0.88) / (0.15 × 0.88 + 0.85 × 0.06) = 0.721','0.88','0.15','0.15 × 0.88 = 0.132'], ans:0},
+    {q:'A criminology study examines three neighborhood types: High-crime (20%, arrest rate 0.30), Medium-crime (50%, arrest rate 0.15), and Low-crime (30%, arrest rate 0.05). Given that an arrest occurs, what is the probability that it happened in a high-crime neighborhood?', opts:['(0.20 × 0.30) / (0.20 × 0.30 + 0.50 × 0.15 + 0.30 × 0.05) = 0.444','0.20','0.30','0.20 × 0.30 = 0.06'], ans:0},
+    {q:'A political polling firm uses three methods: Phone surveys (50%, accuracy rate 0.92), Online surveys (30%, accuracy rate 0.88), and In-person surveys (20%, accuracy rate 0.95). Given that a response is accurate, what is the probability that it came from a phone survey?', opts:['(0.50 × 0.92) / (0.50 × 0.92 + 0.30 × 0.88 + 0.20 × 0.95) = 0.487','0.50','0.92','0.50 × 0.92 = 0.46'], ans:0},
+    {q:'A social worker screens for poverty risk using three indicators with different true and false positive rates and usage probabilities. The overall prior probability of poverty risk is 0.08. Given a positive screening result from an unknown indicator, what is the probability that the case truly has poverty risk? (Weighted TPR = 0.83, weighted FPR = 0.098.)', opts:['This requires weighting the TPR and FPR by indicator usage','(0.08 × 0.83) / (0.08 × 0.83 + 0.92 × 0.098) = 0.424','The answer cannot be determined without knowing the prior distribution over indicators','Both B and C are correct, but B provides the correct calculation'], ans:1}
+  ];
+  const quizSocial = attachSteps(rawSocial);
+
+  // ---- INVESTMENT (40) - All complete sentences ----
+  const rawInvest = [
+    {q:'An investor wants to build a portfolio of 4 distinct stocks selected from a universe of 50 stocks, and the order of selection does not matter. How many possible portfolios exist?', opts:['50 × 49 × 48 × 47 = 5,527,200','C(50, 4) = 230,300','50^4 = 6,250,000','4! = 24'], ans:1},
+    {q:'A binary option can result in either "In-the-money" or "Out-of-the-money". If an investor trades 5 independent binary options, how many possible outcome patterns exist?', opts:['5^2 = 25','2^5 = 32','5!','C(5, 2) = 10'], ans:1},
+    {q:'A mutual fund offers 7 different asset classes. An investor must choose 3 distinct asset classes to invest in, and the order in which they are ranked for allocation matters. How many possible ordered selections exist?', opts:['7 × 6 × 5 = 210','C(7, 3) = 35','7^3 = 343','7! = 5,040'], ans:0},
+    {q:'A credit rating agency assigns one of 5 ratings (AAA, AA, A, BBB, BB) to each of 3 bonds. How many possible rating assignments exist?', opts:['5 × 3 = 15','5^3 = 125','3^5 = 243','C(5, 3) = 10'], ans:1},
+    {q:'An investment analyst examines 8 different economic indicators, each classified as either "Positive", "Neutral", or "Negative". How many possible economic outlook profiles exist?', opts:['8 × 3 = 24','3^8 = 6,561','8^3 = 512','8!'], ans:1},
+    {q:'A venture capital firm selects 3 startups from a pool of 15 for funding, and the order of selection matters because the first receives the most funding. How many possible ordered selections exist?', opts:['15 × 14 × 13 = 2,730','C(15, 3) = 455','15^3 = 3,375','15!'], ans:0},
+    {q:'An options trader has 4 different strike prices and 3 different expiration dates. How many possible option contracts exist?', opts:['4 + 3 = 7','4 × 3 = 12','C(4, 3) = 4','4^3 = 64'], ans:1},
+    {q:'A portfolio manager constructs a 5-year investment strategy, and each year the portfolio can be in one of 3 states: Growth, Balanced, or Defensive. How many possible strategy sequences exist over the 5 years?', opts:['5 × 3 = 15','3^5 = 243','5^3 = 125','5!'], ans:1},
+    {q:'A stock has a 60% probability of increasing in value on any given day. What is the probability that it does not increase?', opts:['0.60','0.40','1.60','0.60^2 = 0.36'], ans:1},
+    {q:'An investor holds 3 independent stocks, each with a 70% probability of being profitable in a given year. What is the probability that all 3 stocks are profitable?', opts:['0.70 + 0.70 + 0.70 = 2.10','0.70^3 = 0.343','0.30^3 = 0.027','3 × 0.70 = 2.10'], ans:1},
+    {q:'A bond has a 5% probability of default in the first year and a 4% probability in the second year. If defaults are independent, what is the probability that the bond survives both years?', opts:['0.95 × 0.96 = 0.912','0.05 × 0.04 = 0.002','0.95 + 0.96 = 1.91','0.05 + 0.04 = 0.09'], ans:0},
+    {q:'In a market analysis, the probability that an asset\'s price increases is 0.55, decreases is 0.35, and stays the same is 0.10. What is the probability that it either increases or stays the same?', opts:['0.55 + 0.35 = 0.90','0.55 + 0.10 = 0.65','0.55 × 0.10 = 0.055','0.55 × 0.35 = 0.1925'], ans:1},
+    {q:'An investment portfolio has two independent risk factors. Risk factor 1 occurs with probability 0.20, and risk factor 2 occurs with probability 0.30. What is the probability that at least one risk factor occurs?', opts:['0.20 + 0.30 = 0.50','0.20 × 0.30 = 0.06','1 - 0.80 × 0.70 = 0.44','0.20'], ans:2},
+    {q:'A hedge fund has a 65% probability of beating the market in a given year. Over 5 independent years, what is the expected number of years that the fund beats the market?', opts:['5 × 0.65 = 3.25','0.65','5 + 0.65 = 5.65','5 / 0.65 = 7.69'], ans:0},
+    {q:'An investment strategy has a 25% probability of a 10% return, a 45% probability of a 5% return, and a 30% probability of a -2% return. What is the expected return?', opts:['0.25 × 0.10 + 0.45 × 0.05 + 0.30 × (-0.02) = 0.0415 (4.15%)','0.10 + 0.05 - 0.02 = 0.13 (13%)','0.25 × 10 + 0.45 × 5 + 0.30 × 2 = 6.85 (6.85%)','0.25 + 0.45 + 0.30 = 1.00'], ans:0},
+    {q:'An economic forecast model predicts recession with 80% probability when the yield curve inverts. The probability of yield curve inversion is 30%. If there is no inversion, the probability of recession is 10%. What is the overall probability of recession?', opts:['0.30 × 0.80 + 0.70 × 0.10 = 0.31','0.80','0.10','0.30 × 0.80 = 0.24'], ans:0},
+    {q:'A credit scoring model evaluates loan applicants. The probability that an applicant defaults is 0.05. The model correctly identifies defaulters with probability 0.90, and has a false positive rate of 0.02. Given that the model flags an applicant as high risk, what is the probability that they will actually default?', opts:['(0.05 × 0.90) / (0.05 × 0.90 + 0.95 × 0.02) = 0.703','0.90','0.05','0.05 × 0.90 = 0.045'], ans:0},
+    {q:'A stock market analyst studies sector performance. The probability that the technology sector outperforms is 0.55. Given that technology outperforms, the probability that the financial sector also outperforms is 0.60. What is the probability that both sectors outperform?', opts:['0.55 + 0.60 = 1.15','0.55 × 0.60 = 0.33','0.55','0.60'], ans:1},
+    {q:'An options pricing model shows that 40% of call options are exercised. Among exercised options, 70% are profitable; among unexercised options, 20% are profitable. What is the overall probability that an option is profitable?', opts:['0.40 × 0.70 + 0.60 × 0.20 = 0.40','0.70','0.20','0.40 × 0.70 = 0.28'], ans:0},
+    {q:'A merger arbitrage strategy has a 65% probability of success when the deal is approved by regulators. The probability of regulatory approval is 75%. What is the probability of success (i.e., regulatory approval and successful arbitrage)?', opts:['0.65 + 0.75 = 1.40','0.65 × 0.75 = 0.4875','0.65','0.75'], ans:1},
+    {q:'In investment analysis, events A = "Stock price increases" and B = "Stock price decreases" for a single stock in a single trading day. How are these events best characterized?', opts:['They are mutually exclusive','They are independent','They are neither','They are mutually exclusive only if the stock price cannot stay the same'], ans:0},
+    {q:'An investor has two independent investment strategies. Strategy 1 has a success probability of 0.40, and Strategy 2 has a success probability of 0.55. What is the probability that both strategies succeed?', opts:['0.40 + 0.55 = 0.95','0.40 × 0.55 = 0.22','0.40','0.55'], ans:1},
+    {q:'The probability that a stock pays a dividend is 0.60, and the probability that it increases in price is 0.50. If these events are independent, what is the probability that the stock pays a dividend and increases in price?', opts:['0.60 × 0.50 = 0.30','0.60 + 0.50 = 1.10','0.60','0.50'], ans:0},
+    {q:'Let A be the event "Market is bullish" with P(A) = 0.40, and B be the event "Market is bearish" with P(B) = 0.35. If P(A ∪ B) = 0.75, what can we conclude about these events?', opts:['A and B are mutually exclusive (0.40 + 0.35 = 0.75)','A and B are independent','P(A ∩ B) = 0.14','A and B are the same event'], ans:0},
+    {q:'A portfolio has two independent bonds. Bond A defaults with probability 0.03, and Bond B defaults with probability 0.04. What is the probability that neither bond defaults?', opts:['0.03 + 0.04 = 0.07','0.03 × 0.04 = 0.0012','0.97 × 0.96 = 0.9312','1 - 0.03 - 0.04 = 0.93'], ans:2},
+    {q:'The probability that an investor is risk-tolerant is 0.35, and the probability that they invest in equities is 0.60. If P(Risk-tolerant ∩ Invests in Equities) = 0.21, are these events independent?', opts:['Yes, because 0.35 × 0.60 = 0.21','No, because 0.35 × 0.60 ≠ 0.21','Yes, because they are mutually exclusive','Cannot be determined'], ans:0},
+    {q:'In a financial market, the events "Market goes up" and "Market goes down" are best described as:', opts:['Mutually exclusive and collectively exhaustive (ignoring unchanged)','Independent','Mutually exclusive but not exhaustive','Neither'], ans:0},
+    {q:'An investment bank classifies clients into three risk profiles: Conservative (40%, average return 5%), Moderate (35%, average return 8%), and Aggressive (25%, average return 12%). Using the law of total probability, what is the expected return across all clients?', opts:['0.40 × 5 + 0.35 × 8 + 0.25 × 12 = 8.0%','5 + 8 + 12 = 25%','0.40 × 8 + 0.35 × 5 + 0.25 × 12 = 7.95%','0.40 + 0.35 + 0.25 = 1.00'], ans:0},
+    {q:'A financial analyst studies three economic scenarios: Expansion (30%, market return 15%), Stagnation (50%, market return 5%), and Recession (20%, market return -8%). What is the expected market return?', opts:['0.30 × 15 + 0.50 × 5 + 0.20 × (-8) = 5.4%','15 + 5 - 8 = 12%','0.30 × 5 + 0.50 × 15 + 0.20 × (-8) = 8.9%','0.30 × 15 + 0.50 × 5 + 0.20 × 8 = 8.6%'], ans:0},
+    {q:'A venture capital firm invests in three stages: Seed (20%, success rate 0.30), Early (50%, success rate 0.50), and Late (30%, success rate 0.70). What is the overall success rate?', opts:['0.20 × 0.30 + 0.50 × 0.50 + 0.30 × 0.70 = 0.52','0.30 + 0.50 + 0.70 = 1.50','0.20 × 0.50 + 0.50 × 0.30 + 0.30 × 0.70 = 0.46','0.20 × 0.70 + 0.50 × 0.30 + 0.30 × 0.50 = 0.44'], ans:0},
+    {q:'An options trader uses three strategies: Covered calls (50%, profit probability 0.60), Protective puts (30%, profit probability 0.55), and Straddles (20%, profit probability 0.45). What is the overall probability of profit?', opts:['0.50 × 0.60 + 0.30 × 0.55 + 0.20 × 0.45 = 0.555','0.60 + 0.55 + 0.45 = 1.60','0.50 × 0.55 + 0.30 × 0.60 + 0.20 × 0.45 = 0.545','0.50 × 0.45 + 0.30 × 0.60 + 0.20 × 0.55 = 0.515'], ans:0},
+    {q:'A pension fund allocates assets across three classes: Equities (60%, expected return 8%), Bonds (30%, expected return 4%), and Real estate (10%, expected return 6%). What is the expected portfolio return?', opts:['0.60 × 8 + 0.30 × 4 + 0.10 × 6 = 6.6%','8 + 4 + 6 = 18%','0.60 × 4 + 0.30 × 8 + 0.10 × 6 = 5.4%','0.60 × 6 + 0.30 × 4 + 0.10 × 8 = 5.6%'], ans:0},
+    {q:'A currency trader analyzes three exchange rate regimes: Fixed rate (40%, volatility 0.5%), Managed float (35%, volatility 1.2%), and Floating rate (25%, volatility 2.0%). What is the expected daily volatility?', opts:['0.40 × 0.5 + 0.35 × 1.2 + 0.25 × 2.0 = 1.14%','0.5 + 1.2 + 2.0 = 3.7%','0.40 × 1.2 + 0.35 × 0.5 + 0.25 × 2.0 = 1.155%','0.40 × 2.0 + 0.35 × 1.2 + 0.25 × 0.5 = 1.345%'], ans:0},
+    {q:'A financial fraud detection system flags suspicious transactions. The probability that a transaction is fraudulent is 0.005. The system detects fraud with probability 0.97, and has a false positive rate of 0.01. Given that a transaction is flagged, what is the probability that it is actually fraudulent?', opts:['(0.005 × 0.97) / (0.005 × 0.97 + 0.995 × 0.01) = 0.328','0.97','0.005','0.005 × 0.97 = 0.00485'], ans:0},
+    {q:'A credit card company has three customer segments: Segment A (40%, high income, default rate 0.01), Segment B (35%, middle income, default rate 0.03), and Segment C (25%, low income, default rate 0.06). Given that a customer defaults, what is the probability that they are from Segment C?', opts:['0.25','(0.25 × 0.06) / (0.40 × 0.01 + 0.35 × 0.03 + 0.25 × 0.06) = 0.368','0.06','0.25 × 0.06 = 0.015'], ans:1},
+    {q:'An investment newsletter has three prediction models: Model 1 (50%, accuracy 0.75), Model 2 (30%, accuracy 0.85), and Model 3 (20%, accuracy 0.90). Given that a prediction is correct, what is the probability that it came from Model 1?', opts:['0.50','(0.50 × 0.75) / (0.50 × 0.75 + 0.30 × 0.85 + 0.20 × 0.90) = 0.463','0.75','0.50 × 0.75 = 0.375'], ans:1},
+    {q:'A market timing strategy has a 60% chance of correctly predicting market direction. The market goes up 55% of the time overall. Given that the strategy predicts an up market, what is the probability that the market actually goes up? (Assume the strategy\'s false positive rate is 35%.)', opts:['(0.55 × 0.60) / (0.55 × 0.60 + 0.45 × 0.35) = 0.677','0.60','0.55','0.55 × 0.60 = 0.33'], ans:0},
+    {q:'A portfolio manager evaluates three investment styles: Value style (45%, outperformance probability 0.60), Growth style (35%, outperformance probability 0.55), and Blend style (20%, outperformance probability 0.50). Given that the portfolio outperforms, what is the probability that it used the Value style?', opts:['(0.45 × 0.60) / (0.45 × 0.60 + 0.35 × 0.55 + 0.20 × 0.50) = 0.475','0.45','0.60','0.45 × 0.60 = 0.27'], ans:0},
+    {q:'A bank\'s loan approval system has three credit scoring models with different true and false negative rates and application usage. The overall probability of loan default is 0.04. Given that a loan is approved (the model predicts no default), what is the probability that it will actually default? (Weighted TNR = 0.914, weighted FNR = 0.155.)', opts:['This requires weighting by model usage and calculating P(Default | Approval)','(0.04 × 0.155) / (0.04 × 0.155 + 0.96 × 0.914) = 0.0070 (0.70%)','The answer cannot be determined without knowing the distribution of applications across models','Both B and C are correct, but B provides the correct calculation'], ans:1},
+    {q:'An investor has three sources of market information with different true positive and false positive rates and usage probabilities. The market has a 50% probability of going up overall. Given a source predicts the market will go up, what is the probability that the market actually goes up? (Weighted TPR = 0.785, weighted FPR = 0.215.)', opts:['(0.50 × 0.785) / (0.50 × 0.785 + 0.50 × 0.215) = 0.785 (78.5%)','0.50','The accuracy of the source that made the prediction','Cannot be determined'], ans:0}
+  ];
+  const quizInvest = attachSteps(rawInvest);
+
+  // ---- map contexts ----
+  const quizMap = {
+    llm: quizLLM,
+    cs: quizCS,
+    cyber: quizCyber,
+    meche: quizMeche,
+    social: quizSocial,
+    invest: quizInvest
+  };
+
+  const contextLabels = {
+    llm: 'LLM & AI',
+    cs: 'Computer Science',
+    cyber: 'Cybersecurity',
+    meche: 'Mech & Elec Eng',
+    social: 'Social Sciences',
+    invest: 'Investment'
+  };
+
+  // --------------------------------------------------------------
+  // 4. GLOSSARY POPUP LOGIC
+  // --------------------------------------------------------------
+  const popup = document.getElementById('glossaryPopup');
+  const popupTerm = document.getElementById('popupTerm');
+  const popupContext = document.getElementById('popupContext');
+  const popupDefinition = document.getElementById('popupDefinition');
+  const popupCloseBtn = document.getElementById('popupCloseBtn');
+  const popupCloseX = document.getElementById('popupCloseX');
+
+  function showPopup(term, definition, context) {
+    popupTerm.textContent = term;
+    popupContext.textContent = context || 'General';
+    popupDefinition.textContent = definition;
+    popup.classList.add('active');
+  }
+
+  function hidePopup() {
+    popup.classList.remove('active');
+  }
+
+  popupCloseBtn.addEventListener('click', hidePopup);
+  popupCloseX.addEventListener('click', hidePopup);
+  popup.addEventListener('click', function(e) {
+    if (e.target === popup) hidePopup();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') hidePopup();
+  });
+
+  // --------------------------------------------------------------
+  // 5. RENDER FUNCTIONS with glossary term detection
+  //    FIXED: single-pass over the ORIGINAL question text only, so
+  //    glossary definitions that themselves contain other glossary
+  //    terms (e.g. MCP's definition contains "AI") can no longer
+  //    get re-matched and injected into an already-built <span>'s
+  //    data-def attribute, which was corrupting the markup.
+  // --------------------------------------------------------------
+  const glossaryTermRegex = (() => {
+    const terms = Object.keys(glossary).sort((a, b) => b.length - a.length);
+    const escaped = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+    return new RegExp(`\\b(${escaped.join('|')})\\b`, 'g');
+  })();
+
+  function escapeAttr(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function wrapGlossaryTerms(text) {
+    // Single pass over the plain input text — never re-scans HTML
+    // that this function itself produced, so nested/duplicate
+    // matches inside data-def attributes are impossible.
+    return text.replace(glossaryTermRegex, (match) => {
+      const data = glossary[match];
+      if (!data) return match;
+      return `<span class="glossary-term" data-term="${escapeAttr(match)}" data-def="${escapeAttr(data.definition)}" data-ctx="${escapeAttr(data.context)}">${match}</span>`;
+    });
+  }
+
+  function renderReview(topicKey) {
+    const data = reviewData[topicKey];
+    if (!data) return;
+    reviewTitle.innerHTML = `${data.title} <small>concepts</small>`;
+    let html = `<p style="color:#1d3457; margin-bottom:1rem;">${data.desc}</p>`;
+    data.concepts.forEach(c => {
+      html += `<div class="concept-block"><strong>${c.label}</strong><p>${c.text}</p></div>`;
+    });
+    reviewContent.innerHTML = html;
+  }
+
+  function renderQuiz(contextKey) {
+    const qs = quizMap[contextKey];
+    if (!qs) return;
+    const label = contextLabels[contextKey] || contextKey;
+    quizTitle.textContent = `${label} · 40 questions`;
+    let html = '';
+    qs.forEach((q, idx) => {
+      const letters = ['A','B','C','D'];
+      const ansLetter = letters[q.ans];
+      const wrappedQ = wrapGlossaryTerms(q.q);
+      html += `<div class="question-item">`;
+      html += `<div class="qtext"><span class="badge-context">${label}</span> ${idx+1}. ${wrappedQ}</div>`;
+      html += `<div class="options">`;
+      q.opts.forEach((opt, oi) => {
+        html += `<span>${letters[oi]}) ${opt}</span>`;
+      });
+      html += `</div>`;
+      html += `<div class="solution ${showSolutions ? 'show' : ''}" id="sol-${contextKey}-${idx}">`;
+      html += `<strong>📘 Detailed solution:</strong>`;
+      if (q.steps && q.steps.length) {
+        q.steps.forEach(step => {
+          html += `<div class="step">• ${step}</div>`;
+        });
+      } else {
+        html += `<div class="step">• Apply the relevant rule and compute.</div>`;
+      }
+      html += `<div style="margin-top:0.3rem;"><strong>✅ Correct option: ${ansLetter}</strong> ( ${q.opts[q.ans]} )</div>`;
+      html += `</div>`;
+      html += `</div>`;
+    });
+    quizContainer.innerHTML = html;
+
+    document.querySelectorAll('.glossary-term').forEach(el => {
+      el.addEventListener('click', function(e) {
+        const term = this.dataset.term;
+        const def = this.dataset.def;
+        const ctx = this.dataset.ctx;
+        if (term && def) {
+          showPopup(term, def, ctx);
+        }
+      });
+    });
+  }
+
+  // --------------------------------------------------------------
+  // 6. DOM SETUP
+  // --------------------------------------------------------------
+  const topicSelect = document.getElementById('topicSelect');
+  const quizSelect = document.getElementById('quizSelect');
+  const toggleBtn = document.getElementById('toggleSolutionBtn');
+  const reviewContent = document.getElementById('reviewContent');
+  const reviewTitle = document.getElementById('reviewTitle');
+  const quizContainer = document.getElementById('quizContainer');
+  const quizTitle = document.getElementById('quizTitle');
+
+  let showSolutions = false;
+
+  function updateAll() {
+    const topic = topicSelect.value;
+    const context = quizSelect.value;
+    renderReview(topic);
+    renderQuiz(context);
+  }
+
+  toggleBtn.addEventListener('click', function() {
+    showSolutions = !showSolutions;
+    this.textContent = showSolutions ? '🙈 Hide detailed solutions' : '🔍 Show detailed solutions';
+    this.classList.toggle('active', showSolutions);
+    const context = quizSelect.value;
+    renderQuiz(context);
+  });
+
+  topicSelect.addEventListener('change', updateAll);
+  quizSelect.addEventListener('change', updateAll);
+
+  updateAll();
 </script>
 </body>
 </html>
