@@ -3,8 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Probability: Sample Space, Counting, Events, Probability, Bayes' Rule</title>
+  <title>Probability Theory · Complete Sentence Quizzes with Popups</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
   <style>
+    .katex { font-size: 1em; }
+    .qtext .katex, .options .katex, .solution .katex, .concept-block .katex { font-size: 1.02em; }
     * { box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; margin: 0; padding: 0; }
     body {
       background: #f2f6fd;
@@ -280,7 +285,7 @@
 </head>
 <body>
 
-<h1>📊 Probability: Sample Space, Counting, Events, Probability, Bayes' Rule</h1>
+<h1>📊 Sample Space, Counting, Events, Probability, Total Probability, Bayes' Rule </h1>
 
 <div class="toolbar">
   <div class="dropdown-group">
@@ -318,7 +323,7 @@
     <div id="quizContainer"></div>
   </div>
 </div>
-<div class="footer-note">Each practice quiz has 40 multiple‑choice questions· toggle detailed step‑by‑step solutions · <strong>Click on underlined terms</strong> for popup definitions.</div>
+<div class="footer-note">Each practice quiz has 40 multiple‑choice questions · toggle detailed step‑by‑step solutions · <strong>Click on underlined terms</strong> for popup definitions.</div>
 
 <!-- Popup modal -->
 <div class="glossary-popup" id="glossaryPopup">
@@ -470,6 +475,158 @@
   };
 
   // --------------------------------------------------------------
+  // 2b. LATEX / MATH CONVERSION
+  //    Converts the plain-text math notation used in the quiz data
+  //    into LaTeX so it can be rendered by KaTeX. C(n, k) always
+  //    becomes \binom{n}{k}. Pure-math strings (most answer options)
+  //    are wrapped whole; math embedded in ordinary sentences (most
+  //    question stems, review-panel formulas) has just the
+  //    recognizable formula fragments wrapped, leaving the prose as
+  //    plain text.
+  // --------------------------------------------------------------
+  const symbolMap = {
+    '×': '\\times ',
+    '÷': '\\div ',
+    '·': '\\cdot ',
+    '≈': '\\approx ',
+    '≠': '\\neq ',
+    '≤': '\\leq ',
+    '≥': '\\geq ',
+    '∩': '\\cap ',
+    '∪': '\\cup ',
+    '∅': '\\emptyset ',
+    '→': '\\to ',
+    '⇒': '\\Rightarrow ',
+    'Σ': '\\Sigma ',
+    'Ω': '\\Omega ',
+    '√': '\\sqrt ',
+    '−': '-',
+    'ᵢ': '_{i}',
+    'ⱼ': '_{j}',
+    'ᶜ': '^{c}',
+    '₁': '_{1}',
+    '₂': '_{2}',
+    'ₙ': '_{n}',
+  };
+
+  function convertSymbols(str) {
+    let out = str;
+    for (const [glyph, latex] of Object.entries(symbolMap)) {
+      out = out.split(glyph).join(latex);
+    }
+    return out;
+  }
+
+  // '%' is a comment character in (La)TeX math mode; escape it so
+  // "40%" doesn't silently truncate the rest of the expression.
+  function escapePercent(str) {
+    return str.replace(/(?<!\\)%/g, '\\%');
+  }
+
+  // Wrap exponents in braces so multi-character exponents (including
+  // comma-grouped numbers, e.g. "100^10,000") render correctly.
+  function convertExponents(str) {
+    return str.replace(/\^(-?\d{1,3}(?:,\d{3})+|-?\d+(?:\.\d+)?|[A-Za-z])/g, '^{$1}');
+  }
+
+  // Convert C(n, k) -> \binom{n}{k}. Paren-depth aware, so it
+  // correctly handles thousands-separator commas inside n or k and
+  // any nested parentheses.
+  function convertBinom(str) {
+    let result = '';
+    let i = 0;
+    while (i < str.length) {
+      if (str[i] === 'C' && str[i + 1] === '(') {
+        let depth = 0;
+        let j = i + 1;
+        const start = j;
+        for (; j < str.length; j++) {
+          if (str[j] === '(') depth++;
+          else if (str[j] === ')') { depth--; if (depth === 0) break; }
+        }
+        if (depth === 0 && j < str.length) {
+          const inner = str.slice(start + 1, j);
+          let d2 = 0, splitIdx = -1;
+          for (let k = 0; k < inner.length; k++) {
+            if (inner[k] === '(') d2++;
+            else if (inner[k] === ')') d2--;
+            else if (inner[k] === ',' && d2 === 0) splitIdx = k;
+          }
+          if (splitIdx !== -1) {
+            let n = inner.slice(0, splitIdx).trim();
+            let k = inner.slice(splitIdx + 1).trim();
+            n = n.replace(/^\(|\)$/g, '');
+            k = k.replace(/^\(|\)$/g, '');
+            result += `\\binom{${n}}{${k}}`;
+            i = j + 1;
+            continue;
+          }
+        }
+      }
+      result += str[i];
+      i++;
+    }
+    return result;
+  }
+
+  function texify(str) {
+    return escapePercent(convertExponents(convertSymbols(convertBinom(str))));
+  }
+
+  // Does this string read as an English sentence (leave as plain text,
+  // only wrapping embedded formulas) or as a pure math expression
+  // (wrap the whole thing in \( \))?
+  const TEXT_WORD_RE = /\b(the|is|isn't|are|aren't|they|them|their|and|or|but|because|since|when|which|whichever|that|this|these|those|with|from|for|of|to|in|on|at|by|as|be|been|being|has|have|had|will|would|could|should|can|cannot|not|no|yes|true|false|correct|incorrect|independent|dependent|mutually|exclusive|event|events|probability|probabilities|both|neither|either|only|answer|option|options|same|different|higher|lower|greater|less|than|it|its|his|her|our|your|my|cache|access|packet|system|systems|model|models|tool|tools|source|value|values|approach|approaches|distribution|over|under|without|knowing|prior|posterior|requires|weighting|usage|method|methods|actually|actual|equal|corresponds|does|do|did|cause|caused|occur|occurs|ill-posed|observed|any|possible|time)\b/i;
+
+  const MATH_SAFE_RE = /^[A-Za-z0-9\s.,!%\^+\-*/=<>≥≤≈≠∩∪∅→⇒×÷·√ΩΣ()|_{}]*$/;
+
+  function isPureMath(str) {
+    const s = str.trim();
+    if (!s) return false;
+    if (TEXT_WORD_RE.test(s)) return false;
+    if (/[0-9]/.test(s) || /[×÷·+\-\/^!=<>≥≤≈≠∩∪]/.test(s)) return true;
+    return MATH_SAFE_RE.test(s);
+  }
+
+  function wrapWholeMath(str) {
+    return `\\(${texify(str)}\\)`;
+  }
+
+  // For mixed prose: convert binom notation everywhere, and wrap
+  // recognizable embedded formulas (P(...) expressions and short
+  // numeric/variable runs) in inline math, leaving the rest as text.
+  function wrapEmbeddedMath(str) {
+    let out = convertBinom(str);
+
+    out = out.replace(/\\binom\{[^{}]*\}\{[^{}]*\}/g, (m) => `\\(${m}\\)`);
+
+    out = out.replace(/P\([^()]*(?:\([^()]*\))?[^()]*\)(?:\s*[=<>≥≤≈≠]\s*[0-9.,]+)*/g, (m) => {
+      return `\\(${escapePercent(convertExponents(convertSymbols(m)))}\\)`;
+    });
+
+    // Boundary guards stop the run from starting/ending mid-word (so
+    // "Likelihood × Prior" is never chopped into a fake token like "od").
+    const TOKEN = '(?:[0-9][0-9.,]*|[A-Za-z]{1,2})';
+    const runRe = new RegExp(
+      String.raw`(?<![A-Za-z0-9])` + TOKEN +
+      String.raw`(?:\s*[×÷·+\-\/^!]\s*` + TOKEN + ')+' +
+      String.raw`(?:\s*=\s*` + TOKEN + ')*' +
+      String.raw`(?![A-Za-z0-9])`,
+      'g'
+    );
+    out = out.replace(runRe, (m) => {
+      if (m.includes('\\(') || m.includes('\\binom')) return m;
+      return `\\(${escapePercent(convertExponents(convertSymbols(m)))}\\)`;
+    });
+
+    return out;
+  }
+
+  function classifyAndWrap(str) {
+    return isPureMath(str) ? wrapWholeMath(str) : wrapEmbeddedMath(str);
+  }
+
+  // --------------------------------------------------------------
   // 3. QUIZ DATA – All questions are complete sentences.
   //    FIXED: Removed all malformed glossary injections.
   // --------------------------------------------------------------
@@ -478,14 +635,15 @@
     return arr.map(q => {
       const letters = ['A','B','C','D'];
       const ansLetter = letters[q.ans];
-      const correctText = q.opts[q.ans];
+      const qMath = wrapEmbeddedMath(q.q);
+      const optsMath = q.opts.map(o => classifyAndWrap(o));
       const steps = [
         `Step 1: Identify the key concept being tested.`,
         `Step 2: Apply the correct formula or rule (product rule, permutation, combination, conditional probability, total probability, or Bayes).`,
         `Step 3: Substitute the given values and perform the calculation.`,
-        `Step 4: The correct option is ${ansLetter}) "${correctText}".`
+        `Step 4: The correct option is ${ansLetter}) "${optsMath[q.ans]}".`
       ];
-      return { ...q, steps };
+      return { ...q, steps, qMath, optsMath };
     });
   }
 
@@ -846,11 +1004,17 @@
     const data = reviewData[topicKey];
     if (!data) return;
     reviewTitle.innerHTML = `${data.title} <small>concepts</small>`;
-    let html = `<p style="color:#1d3457; margin-bottom:1rem;">${data.desc}</p>`;
+    let html = `<p style="color:#1d3457; margin-bottom:1rem;">${classifyAndWrap(data.desc)}</p>`;
     data.concepts.forEach(c => {
-      html += `<div class="concept-block"><strong>${c.label}</strong><p>${c.text}</p></div>`;
+      html += `<div class="concept-block"><strong>${c.label}</strong><p>${classifyAndWrap(c.text)}</p></div>`;
     });
     reviewContent.innerHTML = html;
+    if (window.renderMathInElement) {
+      renderMathInElement(reviewContent, {
+        delimiters: [{ left: '\\(', right: '\\)', display: false }],
+        throwOnError: false
+      });
+    }
   }
 
   function renderQuiz(contextKey) {
@@ -862,11 +1026,11 @@
     qs.forEach((q, idx) => {
       const letters = ['A','B','C','D'];
       const ansLetter = letters[q.ans];
-      const wrappedQ = wrapGlossaryTerms(q.q);
+      const wrappedQ = wrapGlossaryTerms(q.qMath);
       html += `<div class="question-item">`;
       html += `<div class="qtext"><span class="badge-context">${label}</span> ${idx+1}. ${wrappedQ}</div>`;
       html += `<div class="options">`;
-      q.opts.forEach((opt, oi) => {
+      q.optsMath.forEach((opt, oi) => {
         html += `<span>${letters[oi]}) ${opt}</span>`;
       });
       html += `</div>`;
@@ -879,7 +1043,7 @@
       } else {
         html += `<div class="step">• Apply the relevant rule and compute.</div>`;
       }
-      html += `<div style="margin-top:0.3rem;"><strong>✅ Correct option: ${ansLetter}</strong> ( ${q.opts[q.ans]} )</div>`;
+      html += `<div style="margin-top:0.3rem;"><strong>✅ Correct option: ${ansLetter}</strong> ( ${q.optsMath[q.ans]} )</div>`;
       html += `</div>`;
       html += `</div>`;
     });
@@ -895,6 +1059,13 @@
         }
       });
     });
+
+    if (window.renderMathInElement) {
+      renderMathInElement(quizContainer, {
+        delimiters: [{ left: '\\(', right: '\\)', display: false }],
+        throwOnError: false
+      });
+    }
   }
 
   // --------------------------------------------------------------
